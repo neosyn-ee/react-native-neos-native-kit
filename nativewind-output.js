@@ -98,16 +98,10 @@ _NativeWindStyleSheet.create({
       "paddingLeft": 0
     },
     "select": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "textarea": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='button']": {
       "backgroundColor": "transparent"
@@ -242,82 +236,43 @@ _NativeWindStyleSheet.create({
       "textDecorationLine": "underline"
     },
     "[type='text']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='email']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='url']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='password']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='number']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='date']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='datetime-local']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='month']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='search']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='tel']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='time']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='week']": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[multiple]": {
-      "borderTopLeftRadius": "0.325em",
-      "borderTopRightRadius": "0.325em",
-      "borderBottomRightRadius": "0.325em",
-      "borderBottomLeftRadius": "0.325em"
+      "width": "100%"
     },
     "[type='text']@0": {
       "elevation": 0,
@@ -649,38 +604,6 @@ _NativeWindStyleSheet.create({
       "shadowColor": "rgba(0, 0, 0, 0)",
       "shadowOpacity": 1
     },
-    "[type='checkbox']": {
-      "borderTopColor": "#f73911",
-      "borderRightColor": "#f73911",
-      "borderBottomColor": "#f73911",
-      "borderLeftColor": "#f73911",
-      "color": "#f73911"
-    },
-    "[type='radio']": {
-      "borderTopColor": "#f73911",
-      "borderRightColor": "#f73911",
-      "borderBottomColor": "#f73911",
-      "borderLeftColor": "#f73911",
-      "color": "#f73911"
-    },
-    "[type='checkbox'].hasSuccess": {
-      "color": "#4cad6e"
-    },
-    "[type='radio'].hasSuccess": {
-      "color": "#4cad6e"
-    },
-    "[type='checkbox'].hasWarning": {
-      "color": "#ffb830"
-    },
-    "[type='radio'].hasWarning": {
-      "color": "#ffb830"
-    },
-    "[type='checkbox'].hasError": {
-      "color": "#f2686e"
-    },
-    "[type='radio'].hasError": {
-      "color": "#f2686e"
-    },
     "btn": {
       "borderTopWidth": 2,
       "borderRightWidth": 2,
@@ -690,21 +613,6 @@ _NativeWindStyleSheet.create({
     },
     "btn:disabled": {
       "opacity": 0.4
-    },
-    "btn.btn-primary": {
-      "color": "#fff"
-    },
-    "btn.btn-secondary": {
-      "color": "#fff"
-    },
-    "btn.btn-success": {
-      "color": "#000"
-    },
-    "btn.btn-danger": {
-      "color": "#000"
-    },
-    "btn.btn-warning": {
-      "color": "#000"
     },
     "btn.btn-small": {
       "paddingTop": 10,
@@ -717,12 +625,6 @@ _NativeWindStyleSheet.create({
     "btn.btn-large": {
       "paddingTop": 12,
       "paddingBottom": 12
-    },
-    "font-black": {
-      "fontWeight": "900"
-    },
-    "text-primary": {
-      "color": "#f73911"
     }
   },
   atRules: {
