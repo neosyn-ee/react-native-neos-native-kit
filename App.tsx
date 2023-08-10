@@ -1,17 +1,23 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import Button from '@components/Button/button';
+import HomeScreen from '@screens/HomeScreen';
+
 import './nativewind-output';
-export default () => (
+
+const RootStack = createStackNavigator();
+
+export default (): JSX.Element => (
   <SafeAreaProvider>
-    <SafeAreaView>
-      <View>
-        <Text className="text-primary">Application</Text>
-        <Button label="test" />
-      </View>
-    </SafeAreaView>
+    <SafeAreaView />
+    <NavigationContainer>
+      <RootStack.Navigator>
+        <RootStack.Screen name="Homescreen" component={HomeScreen} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   </SafeAreaProvider>
 );
