@@ -16,7 +16,7 @@ export default (): JSX.Element => (
     <SafeAreaView />
     <NavigationContainer>
       <RootStack.Navigator>
-        <RootStack.Screen name="Homescreen" component={HomeScreen} />
+        <RootStack.Screen name="Home" component={HomeScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   </SafeAreaProvider>

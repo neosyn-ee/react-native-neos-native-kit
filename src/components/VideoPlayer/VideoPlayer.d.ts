@@ -1,8 +1,11 @@
-import {VideoProperties} from 'react-native-video';
+import {VideoPlayerProps} from 'react-native-media-console';
 
-type VideoPlayerProps = VideoProperties & {
-  height?: number;
-  isFullscreen?: boolean;
+export type PlayerProps = VideoPlayerProps & {
+  isFullscreen: boolean;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  playerInfo: React.MutableRefObject<{
+    elapsedSecs: number;
+  }>;
 };
 
-export default VideoPlayerProps;
+export type VideoPlayerProps = {sourceUri: string};
