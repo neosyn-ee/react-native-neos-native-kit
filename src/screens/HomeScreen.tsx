@@ -7,8 +7,9 @@ const HomeScreen: FC = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="bg-secondary p-5 h-[400px]">
+        <View className="bg-secondary">
           <VideoPlayer
+            // height={400}
             source={{
               uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             }}

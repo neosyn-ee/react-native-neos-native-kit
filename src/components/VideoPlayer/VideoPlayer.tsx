@@ -11,12 +11,13 @@ const VideoPlayer: FC<PlayerProps> = ({
   isFullscreen,
   ...props
 }) => {
-  const dynmClass = height && 'h-[' + height + 'px]';
+  const dynmClass = height && `h-[${height}px]`;
   let className = dynmClass || 'h-[250px]';
   return (
     <View className={isFullscreen ? 'h-screen' : className}>
       <RnmcVideoPlayer
         {...props}
+        paused={true}
         source={source}
         isFullscreen={isFullscreen || false}
         onEnterFullscreen={() => {}}

@@ -12,7 +12,8 @@
     "prestart": "yarn update-stories",
     "storybook-watcher": "sb-rn-watcher --config-path .ondevice",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "react-devtools": "react-devtools"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -24,6 +25,7 @@
     "@types/react-native-video": "^5.0.15",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
+    "react-devtools": "^4.28.0",
     "react-dom": "^18.2.0",
     "react-native": "0.72.3",
     "react-native-gesture-handler": "^2.12.1",
