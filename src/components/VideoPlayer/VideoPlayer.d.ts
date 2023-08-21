@@ -5,6 +5,7 @@ export type PlayerProps = VideoPlayerProps & {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   playerInfo: React.MutableRefObject<{
     elapsedSecs: number;
+    isFullscreen: boolean;
   }>;
 };
 

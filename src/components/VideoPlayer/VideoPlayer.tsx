@@ -14,10 +14,18 @@ export const Player: FC<PlayerProps> = ({
   ...props
 }) => {
   const videoRef = useRef<Video | null>(null);
-  const onLoadOrPlay = () => {
+  const handleOnLoadOrPlay = () => {
     if (playerInfo.current.elapsedSecs) {
       videoRef.current?.seek(playerInfo.current.elapsedSecs);
     }
+  };
+  const handleOnEnterFullscreen = () => {
+    playerInfo.current.isFullscreen = true;
+    setModalVisible(true);
+  };
+  const handleOnExitFullscreen = () => {
+    playerInfo.current.isFullscreen = false;
+    setModalVisible(false);
   };
   return (
     <RnmcVideoPlayer
@@ -27,14 +35,10 @@ export const Player: FC<PlayerProps> = ({
       isFullscreen={isFullscreen}
       resizeMode="contain"
       toggleResizeModeOnFullscreen={false}
-      onPlay={onLoadOrPlay}
-      onLoad={onLoadOrPlay}
-      onEnterFullscreen={() => {
-        setModalVisible(true);
-      }}
-      onExitFullscreen={() => {
-        setModalVisible(false);
-      }}
+      onPlay={handleOnLoadOrPlay}
+      onLoad={handleOnLoadOrPlay}
+      onEnterFullscreen={handleOnEnterFullscreen}
+      onExitFullscreen={handleOnExitFullscreen}
       onProgress={({currentTime}) => {
         playerInfo.current.elapsedSecs = currentTime;
       }}
@@ -46,7 +50,7 @@ export const Player: FC<PlayerProps> = ({
 
 const VideoPlayer: FC<VideoPlayerProps> = ({sourceUri}) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const playerInfo = useRef({elapsedSecs: 0});
+  const playerInfo = useRef({elapsedSecs: 0, isFullscreen: false});
   return (
     <>
       {modalVisible && (
@@ -60,7 +64,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({sourceUri}) => {
               uri: sourceUri,
             }}
             setModalVisible={setModalVisible}
-            isFullscreen={true}
+            isFullscreen={playerInfo.current.isFullscreen}
             playerInfo={playerInfo}
           />
         </Modal>
@@ -70,7 +74,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({sourceUri}) => {
           source={{
             uri: sourceUri,
           }}
-          isFullscreen={false}
+          isFullscreen={playerInfo.current.isFullscreen}
           paused={modalVisible}
           setModalVisible={setModalVisible}
           playerInfo={playerInfo}
