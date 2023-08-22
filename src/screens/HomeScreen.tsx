@@ -9,9 +9,9 @@ const HomeScreen: FC = () => {
       <ScrollView>
         <View className="bg-secondary">
           <VideoPlayer
-            sourceUri={
-              'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-            }
+            source={{
+              uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            }}
           />
         </View>
       </ScrollView>

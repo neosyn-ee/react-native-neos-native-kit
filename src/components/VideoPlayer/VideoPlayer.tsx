@@ -4,28 +4,27 @@ import {Modal, View} from 'react-native';
 import RnmcVideoPlayer from 'react-native-media-console';
 import Video from 'react-native-video';
 
-import {PlayerProps, VideoPlayerProps} from './VideoPlayer.d';
+import {VideoPlayerProps, VideoSizeProps} from './VideoPlayer.type';
 
-export const Player: FC<PlayerProps> = ({
+export const Player: FC<VideoPlayerProps> = ({
   source,
   isFullscreen,
-  setModalVisible,
+  setFullscreen,
   playerInfo,
+  disableControls,
   ...props
 }) => {
   const videoRef = useRef<Video | null>(null);
   const handleOnLoadOrPlay = () => {
-    if (playerInfo.current.elapsedSecs) {
-      videoRef.current?.seek(playerInfo.current.elapsedSecs);
+    if (playerInfo?.current.elapsedSecs) {
+      videoRef.current!.seek(playerInfo?.current.elapsedSecs);
     }
   };
   const handleOnEnterFullscreen = () => {
-    playerInfo.current.isFullscreen = true;
-    setModalVisible(true);
+    setFullscreen?.(true);
   };
   const handleOnExitFullscreen = () => {
-    playerInfo.current.isFullscreen = false;
-    setModalVisible(false);
+    setFullscreen?.(false);
   };
   return (
     <RnmcVideoPlayer
@@ -37,49 +36,62 @@ export const Player: FC<PlayerProps> = ({
       toggleResizeModeOnFullscreen={false}
       onPlay={handleOnLoadOrPlay}
       onLoad={handleOnLoadOrPlay}
+      onBack={handleOnExitFullscreen}
       onEnterFullscreen={handleOnEnterFullscreen}
       onExitFullscreen={handleOnExitFullscreen}
       onProgress={({currentTime}) => {
-        playerInfo.current.elapsedSecs = currentTime;
+        playerInfo!.current.elapsedSecs = currentTime;
       }}
-      disableBack
+      disableFullscreen={!isFullscreen && disableControls}
+      disablePlayPause={!isFullscreen && disableControls}
+      disableSeekButtons={!isFullscreen && disableControls}
+      disableSeekbar={!isFullscreen && disableControls}
+      disableVolume={!isFullscreen && disableControls}
+      disableTimer={!isFullscreen && disableControls}
+      disableBack={!isFullscreen || disableControls}
       {...props}
     />
   );
 };
 
-const VideoPlayer: FC<VideoPlayerProps> = ({sourceUri}) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const playerInfo = useRef({elapsedSecs: 0, isFullscreen: false});
+const VideoPlayer: FC<VideoPlayerProps> = ({
+  width,
+  height,
+  isFullscreen,
+  disableControls,
+  ...props
+}) => {
+  const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen ?? false);
+  const playerInfo = useRef({elapsedSecs: 0});
+  const RenderedPlayer = (
+    <Player
+      setFullscreen={setFullscreen}
+      isFullscreen={fullscreen}
+      playerInfo={playerInfo}
+      {...props}
+    />
+  );
+  const sizes: VideoSizeProps = {
+    width: width ?? '100%',
+    height: height ?? 250,
+  };
   return (
     <>
-      {modalVisible && (
+      {fullscreen ? (
         <Modal
           animationType="fade"
           transparent={true}
-          visible={modalVisible}
+          visible={fullscreen}
           supportedOrientations={['portrait', 'landscape']}>
-          <Player
-            source={{
-              uri: sourceUri,
-            }}
-            setModalVisible={setModalVisible}
-            isFullscreen={playerInfo.current.isFullscreen}
-            playerInfo={playerInfo}
-          />
+          {RenderedPlayer}
         </Modal>
+      ) : (
+        <View
+          style={!fullscreen && sizes}
+          pointerEvents={disableControls ? 'none' : undefined}>
+          {RenderedPlayer}
+        </View>
       )}
-      <View className="flex-1 h-[250px]">
-        <Player
-          source={{
-            uri: sourceUri,
-          }}
-          isFullscreen={playerInfo.current.isFullscreen}
-          paused={modalVisible}
-          setModalVisible={setModalVisible}
-          playerInfo={playerInfo}
-        />
-      </View>
     </>
   );
 };
