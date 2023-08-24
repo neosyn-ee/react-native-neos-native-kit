@@ -9,8 +9,13 @@ const HomeScreen: FC = () => {
       <ScrollView>
         <View className="bg-secondary">
           <VideoPlayer
+            // autoplay
+            // poster="https://fastly.picsum.photos/id/805/1920/1080.jpg?hmac=ojjmQ6qddjxToiegG5R2YbQMusmeXlivOqSfBXkbJUk"
+            fullscreenAutorotate
+            fullscreenOrientation="landscape"
+            disableControlsWhen={{default: false, fullscreen: false}}
             source={{
-              uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
             }}
           />
         </View>

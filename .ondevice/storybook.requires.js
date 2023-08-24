@@ -43,6 +43,7 @@ if (parameters) {
 const getStories = () => {
   return {
     "./src/components/Button/Button.stories.tsx": require("../src/components/Button/Button.stories.tsx"),
+    "./src/components/VideoPlayer/VideoPlayer.stories.tsx": require("../src/components/VideoPlayer/VideoPlayer.stories.tsx"),
   };
 };
 
