@@ -12,6 +12,7 @@ module.exports = {
     builder: 'webpack5',
   },
   webpackFinal: async config => {
+    config.resolve.alias['../Utilities/Platform'] = 'react-native-web/dist/exports/Platform';
     config.module?.rules?.push({
       test: /\.css$/,
       use: [
