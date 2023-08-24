@@ -625,6 +625,12 @@ _NativeWindStyleSheet.create({
     "btn.btn-large": {
       "paddingTop": 12,
       "paddingBottom": 12
+    },
+    "h-full": {
+      "height": "100%"
+    },
+    "font-black": {
+      "fontWeight": "900"
     }
   },
   atRules: {

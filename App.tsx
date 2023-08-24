@@ -1,17 +1,31 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {SingletonHooksContainer} from 'react-singleton-hook';
 
-import Button from '@components/Button/button';
+import HomeScreen from '@screens/HomeScreen';
+
 import './nativewind-output';
-export default () => (
-  <SafeAreaProvider>
-    <SafeAreaView>
-      <View>
-        <Text className="text-primary">Application</Text>
-        <Button label="test" />
-      </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
+
+const RootStack = createStackNavigator();
+
+export default (): JSX.Element => (
+  <>
+    <SingletonHooksContainer />
+    <SafeAreaProvider>
+      <SafeAreaView />
+      <NavigationContainer>
+        <RootStack.Navigator>
+          <RootStack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  </>
 );
