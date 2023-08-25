@@ -93,19 +93,21 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen ?? false);
   const {isLandscape} = useScreenOrientation();
   const playerInfo = useRef({elapsedSecs: 0, paused: false});
-  const autoFullscreenOnRotateTriggered: boolean =
-    isAndroid() &&
-    !!fullscreenAutorotate &&
-    fullscreenOrientation === 'landscape' &&
-    !!isLandscape;
   const handleFullscreenChanges = () => {
-    if (!fullscreen && autoFullscreenOnRotateTriggered) {
-      setFullscreen(true);
-    } else if (fullscreen && !autoFullscreenOnRotateTriggered) {
-      setFullscreen(false);
+    if (fullscreenAutorotate) {
+      const autoFullscreenOnRotateTriggered: boolean =
+        isAndroid() &&
+        !!fullscreenAutorotate &&
+        fullscreenOrientation === 'landscape' &&
+        !!isLandscape;
+      if (!fullscreen && autoFullscreenOnRotateTriggered) {
+        setFullscreen(true);
+      } else if (fullscreen && !isLandscape) {
+        setFullscreen(false);
+      }
     }
   };
-  useEffect(handleFullscreenChanges, [autoFullscreenOnRotateTriggered]);
+  useEffect(handleFullscreenChanges, [isLandscape]);
   const disableControls =
     (disableControlsWhen?.fullscreen && fullscreen) ||
     (disableControlsWhen?.default && !fullscreen) ||

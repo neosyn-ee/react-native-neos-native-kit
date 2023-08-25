@@ -10,6 +10,12 @@ import {VideoPlayerProps} from './VideoPlayer.type';
 export default {
   title: 'Example/VideoPlayer',
   component: VideoPlayer,
+  argTypes: {
+    fullscreenOrientation: {
+      control: 'select',
+      options: ['all', 'landscape', 'portrait'],
+    },
+  },
   tags: ['autodocs'],
   decorators: [
     Story => (
@@ -32,7 +38,7 @@ export const Default: StoryObj<VideoPlayerProps> = {
 
 export const Fullscreen: StoryObj<VideoPlayerProps> = {
   args: {
-    autoplay: false,
+    autoplay: true,
     isFullscreen: true,
     source: Default.args!.source,
   },
@@ -40,7 +46,7 @@ export const Fullscreen: StoryObj<VideoPlayerProps> = {
 
 export const FullscreenOnRotate: StoryObj<VideoPlayerProps> = {
   args: {
-    autoplay: false,
+    autoplay: true,
     fullscreenAutorotate: true,
     fullscreenOrientation: 'landscape',
     source: Default.args!.source,
