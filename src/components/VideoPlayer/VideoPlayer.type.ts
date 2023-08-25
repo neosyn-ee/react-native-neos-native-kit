@@ -7,13 +7,10 @@ type disableControlsType = {
   fullscreen: boolean;
 };
 
-export type PlayerProps = CorePlayerProps & {
-  disableControls?: boolean;
-  setFullscreen?: React.Dispatch<React.SetStateAction<boolean>>;
-  playerInfo?: React.MutableRefObject<{
-    elapsedSecs: number;
-  }>;
-};
+export type PlayerProps = CorePlayerProps &
+  Pick<VideoPlayerProps, 'playerInfo' | 'setFullscreen'> & {
+    disableControls?: boolean;
+  };
 
 export type VideoPlayerProps = CorePlayerProps &
   VideoSizeProps & {
@@ -23,6 +20,7 @@ export type VideoPlayerProps = CorePlayerProps &
     setFullscreen?: React.Dispatch<React.SetStateAction<boolean>>;
     playerInfo?: React.MutableRefObject<{
       elapsedSecs: number;
+      paused: boolean;
     }>;
   };
 

@@ -9,7 +9,7 @@ const HomeScreen: FC = () => {
       <ScrollView>
         <View className="bg-secondary">
           <VideoPlayer
-            // autoplay
+            autoplay
             // poster="https://fastly.picsum.photos/id/805/1920/1080.jpg?hmac=ojjmQ6qddjxToiegG5R2YbQMusmeXlivOqSfBXkbJUk"
             fullscreenAutorotate
             fullscreenOrientation="landscape"

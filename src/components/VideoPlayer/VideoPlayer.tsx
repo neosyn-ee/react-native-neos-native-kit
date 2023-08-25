@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, memo, useEffect, useRef, useState} from 'react';
 import {Modal, View} from 'react-native';
 
 import RnmcVideoPlayer from 'react-native-media-console';
@@ -13,66 +13,72 @@ import {
   VideoSizeProps,
 } from './VideoPlayer.type';
 
-export const Player: FC<PlayerProps> = ({
-  source,
-  isFullscreen,
-  setFullscreen,
-  playerInfo,
-  disableControls,
-  ...props
-}) => {
-  const videoRef = useRef<Video | null>(null);
+export const Player: FC<PlayerProps> = memo(
+  ({
+    source,
+    isFullscreen,
+    setFullscreen,
+    playerInfo,
+    disableControls,
+    ...props
+  }) => {
+    const videoRef = useRef<Video | null>(null);
 
-  const handleOnLoadOrPlay = () => {
-    if (playerInfo?.current.elapsedSecs) {
-      videoRef.current!.seek(playerInfo?.current.elapsedSecs);
-    }
-  };
-  const handleOnEnterFullscreen = () => {
-    setFullscreen?.(true);
-  };
-  const handleOnExitFullscreen = () => {
-    setFullscreen?.(false);
-  };
-  const handleOnProgress = ({currentTime}: OnProgressData) => {
-    playerInfo!.current.elapsedSecs = currentTime;
-  };
-  const handleOnSeek = ({seekTime}: OnSeekData) => {
-    const {
-      props: {paused},
-    } = videoRef.current!;
-    if (paused) {
-      playerInfo!.current.elapsedSecs = seekTime;
-    }
-  };
+    const handleOnLoadOrPlay = () => {
+      if (playerInfo?.current.elapsedSecs) {
+        videoRef.current!.seek(playerInfo?.current.elapsedSecs);
+      }
+    };
+    const handleOnPause = () => {
+      playerInfo!.current.paused = true;
+    };
+    const handleOnEnterFullscreen = () => {
+      setFullscreen?.(true);
+    };
+    const handleOnExitFullscreen = () => {
+      setFullscreen?.(false);
+    };
+    const handleOnProgress = ({currentTime}: OnProgressData) => {
+      playerInfo!.current.elapsedSecs = currentTime;
+    };
+    const handleOnSeek = ({seekTime}: OnSeekData) => {
+      const {
+        props: {paused},
+      } = videoRef.current!;
+      if (paused) {
+        playerInfo!.current.elapsedSecs = seekTime;
+      }
+    };
 
-  return (
-    <RnmcVideoPlayer
-      videoRef={videoRef}
-      className="h-full"
-      source={source}
-      isFullscreen={isFullscreen}
-      resizeMode="contain"
-      toggleResizeModeOnFullscreen={false}
-      onPlay={handleOnLoadOrPlay}
-      onLoad={handleOnLoadOrPlay}
-      onBack={handleOnExitFullscreen}
-      onEnterFullscreen={handleOnEnterFullscreen}
-      onExitFullscreen={handleOnExitFullscreen}
-      onProgress={handleOnProgress}
-      onSeek={handleOnSeek}
-      disableFullscreen={disableControls}
-      disablePlayPause={disableControls}
-      disableSeekButtons={disableControls}
-      disableSeekbar={disableControls}
-      disableVolume={disableControls}
-      disableTimer={disableControls}
-      disableBack={!isFullscreen || disableControls}
-      controlAnimationTiming={250}
-      {...props}
-    />
-  );
-};
+    return (
+      <RnmcVideoPlayer
+        videoRef={videoRef}
+        className="h-full"
+        source={source}
+        isFullscreen={isFullscreen}
+        resizeMode="contain"
+        toggleResizeModeOnFullscreen={false}
+        onPlay={handleOnLoadOrPlay}
+        onPause={handleOnPause}
+        onLoad={handleOnLoadOrPlay}
+        onBack={handleOnExitFullscreen}
+        onEnterFullscreen={handleOnEnterFullscreen}
+        onExitFullscreen={handleOnExitFullscreen}
+        onProgress={handleOnProgress}
+        onSeek={handleOnSeek}
+        disableFullscreen={disableControls}
+        disablePlayPause={disableControls}
+        disableSeekButtons={disableControls}
+        disableSeekbar={disableControls}
+        disableVolume={disableControls}
+        disableTimer={disableControls}
+        disableBack={!isFullscreen || disableControls}
+        controlAnimationTiming={250}
+        {...props}
+      />
+    );
+  },
+);
 
 const VideoPlayer: FC<VideoPlayerProps> = ({
   width,
@@ -86,19 +92,20 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 }) => {
   const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen ?? false);
   const {isLandscape} = useScreenOrientation();
-  const playerInfo = useRef({elapsedSecs: 0});
-  const autoFullscreenOnRotate =
+  const playerInfo = useRef({elapsedSecs: 0, paused: false});
+  const autoFullscreenOnRotateTriggered: boolean =
     isAndroid() &&
-    fullscreenAutorotate &&
+    !!fullscreenAutorotate &&
     fullscreenOrientation === 'landscape' &&
-    isLandscape;
-  useEffect(() => {
-    if (!fullscreen && autoFullscreenOnRotate) {
+    !!isLandscape;
+  const handleFullscreenChanges = () => {
+    if (!fullscreen && autoFullscreenOnRotateTriggered) {
       setFullscreen(true);
-    } else if (!autoFullscreenOnRotate) {
+    } else if (fullscreen && !autoFullscreenOnRotateTriggered) {
       setFullscreen(false);
     }
-  }, [autoFullscreenOnRotate]);
+  };
+  useEffect(handleFullscreenChanges, [autoFullscreenOnRotateTriggered]);
   const disableControls =
     (disableControlsWhen?.fullscreen && fullscreen) ||
     (disableControlsWhen?.default && !fullscreen) ||
@@ -109,7 +116,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       isFullscreen={fullscreen}
       playerInfo={playerInfo}
       disableControls={disableControls}
-      paused={!autoplay}
+      paused={!autoplay || playerInfo.current.paused}
       {...props}
     />
   );
