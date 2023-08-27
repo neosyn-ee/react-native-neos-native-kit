@@ -90,10 +90,6 @@ npm run test
 
 To run the E2E tests, you first need to run the following command:
 
-```shell
-npm run e2e:prepare # Only need to run once
-```
-
 Then, you can run the following command to run the E2E tests:
 
 ```shell
