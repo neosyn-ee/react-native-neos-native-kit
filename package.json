@@ -13,7 +13,14 @@
     "storybook-watcher": "sb-rn-watcher --config-path .ondevice",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "react-devtools": "react-devtools"
+    "react-devtools": "react-devtools",
+    "e2e:ios:build": "detox build --configuration ios.release",
+    "e2e:ios:test": "detox test --configuration ios.release",
+    "e2e:ios": "run-s e2e:ios:*",
+    "e2e:android:build": "detox build --configuration android.release",
+    "e2e:android:test": "detox test --configuration android.release",
+    "e2e:android": "run-s e2e:android:*",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
