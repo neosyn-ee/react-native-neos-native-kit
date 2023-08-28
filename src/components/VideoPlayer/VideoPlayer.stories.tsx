@@ -52,3 +52,11 @@ export const FullscreenOnRotate: StoryObj<VideoPlayerProps> = {
     source: Default.args!.source,
   },
 };
+
+export const ControlsDisabled: StoryObj<VideoPlayerProps> = {
+  args: {
+    autoplay: true,
+    disableControlsWhen: {default: true, fullscreen: true},
+    source: Default.args!.source,
+  },
+};

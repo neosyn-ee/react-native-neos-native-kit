@@ -74,6 +74,7 @@ export const Player: FC<PlayerProps> = memo(
         disableTimer={disableControls}
         disableBack={!isFullscreen || disableControls}
         controlAnimationTiming={250}
+        showOnStart={false}
         {...props}
       />
     );
@@ -111,7 +112,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const disableControls =
     (disableControlsWhen?.fullscreen && fullscreen) ||
     (disableControlsWhen?.default && !fullscreen) ||
-    (disableControlsWhen?.fullscreen && disableControlsWhen?.default);
+    (disableControlsWhen?.fullscreen && disableControlsWhen?.default) ||
+    false;
   const RenderedPlayer = (
     <Player
       setFullscreen={setFullscreen}
@@ -134,7 +136,11 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
           transparent={true}
           visible={fullscreen}
           supportedOrientations={['portrait', 'landscape']}>
-          {RenderedPlayer}
+          <View
+            className="h-full"
+            pointerEvents={disableControls ? 'none' : undefined}>
+            {RenderedPlayer}
+          </View>
         </Modal>
       ) : (
         <View
