@@ -11,9 +11,11 @@ export default {
   title: 'Example/VideoPlayer',
   component: VideoPlayer,
   argTypes: {
-    fullscreenOrientation: {
-      control: 'select',
-      options: ['all', 'landscape', 'portrait'],
+    source: {
+      control: 'object',
+    },
+    autoplay: {
+      control: 'boolean',
     },
   },
   tags: ['autodocs'],
@@ -42,6 +44,11 @@ export const Fullscreen: StoryObj<VideoPlayerProps> = {
     isFullscreen: true,
     source: Default.args!.source,
   },
+  argTypes: {
+    isFullscreen: {
+      control: 'boolean',
+    },
+  },
 };
 
 export const FullscreenOnRotate: StoryObj<VideoPlayerProps> = {
@@ -51,12 +58,31 @@ export const FullscreenOnRotate: StoryObj<VideoPlayerProps> = {
     fullscreenOrientation: 'landscape',
     source: Default.args!.source,
   },
+  argTypes: {
+    fullscreenOrientation: {
+      control: 'select',
+      options: ['all', 'landscape', 'portrait'],
+    },
+    fullscreenAutorotate: {
+      if: {arg: 'fullscreenOrientation'},
+      control: 'boolean',
+    },
+  },
 };
 
 export const ControlsDisabled: StoryObj<VideoPlayerProps> = {
   args: {
     autoplay: true,
+    thumb: 'https://picsum.photos/1920/1080',
     disableControlsWhen: {default: true, fullscreen: true},
     source: Default.args!.source,
+  },
+  argTypes: {
+    thumb: {
+      control: 'text',
+    },
+    disableControlsWhen: {
+      control: 'object',
+    },
   },
 };

@@ -1,5 +1,5 @@
 import React, {FC, memo, useEffect, useRef, useState} from 'react';
-import {Modal, View} from 'react-native';
+import {Modal, StatusBar, View} from 'react-native';
 
 import RnmcVideoPlayer from 'react-native-media-console';
 import Video, {OnProgressData, OnSeekData} from 'react-native-video';
@@ -74,6 +74,7 @@ export const Player: FC<PlayerProps> = memo(
         disableTimer={disableControls}
         disableBack={!isFullscreen || disableControls}
         controlAnimationTiming={250}
+        controlTimeoutDelay={3000}
         showOnStart={false}
         {...props}
       />
@@ -84,6 +85,7 @@ export const Player: FC<PlayerProps> = memo(
 const VideoPlayer: FC<VideoPlayerProps> = ({
   width,
   height,
+  thumb,
   isFullscreen,
   autoplay,
   fullscreenOrientation,
@@ -109,6 +111,11 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
     }
   };
   useEffect(handleFullscreenChanges, [isLandscape]);
+  if (fullscreen) {
+    StatusBar.setHidden(true);
+  } else {
+    StatusBar.setHidden(false);
+  }
   const disableControls =
     (disableControlsWhen?.fullscreen && fullscreen) ||
     (disableControlsWhen?.default && !fullscreen) ||
@@ -116,6 +123,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
     false;
   const RenderedPlayer = (
     <Player
+      poster={thumb ?? undefined}
       setFullscreen={setFullscreen}
       isFullscreen={fullscreen}
       playerInfo={playerInfo}
@@ -133,7 +141,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       {fullscreen ? (
         <Modal
           animationType="fade"
-          transparent={true}
+          transparent={false}
           visible={fullscreen}
           supportedOrientations={['portrait', 'landscape']}>
           <View
