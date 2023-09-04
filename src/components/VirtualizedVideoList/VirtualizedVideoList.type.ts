@@ -1,1 +1,4 @@
-export type VirtualizedVideoListProps = {};
+export type VirtualizedVideoListProps<T> = {
+  data: T[];
+  refetch: () => void;
+};

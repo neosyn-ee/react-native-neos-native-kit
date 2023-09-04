@@ -1,43 +1,36 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Dimensions, FlatList, Text, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 
-import useMaterialNavBarHeight from '@hooks/useMaterialNavBarHeight';
+import Post from '@components/Post/Post';
+// import useMaterialNavBarHeight from '@hooks/useMaterialNavBarHeight';
 
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
-const VirtualizedVideoList = (
-  _props: VirtualizedVideoListProps,
-): JSX.Element => {
-  const array = [...Array.from({length: 6}, (v, i) => i + 1)];
-  const feedItemHeight = Math.floor(
-    Dimensions.get('window').height - useMaterialNavBarHeight(false),
-  );
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: number;
-    index: number;
-  }): JSX.Element => {
+const VirtualizedVideoList = ({
+  data,
+}: VirtualizedVideoListProps<number>): JSX.Element => {
+  const feedItemHeight = 70;
+  const renderItem = ({item}: {item: number}): JSX.Element => {
     return (
       <View
         style={{
           height: feedItemHeight,
-          backgroundColor: index % 2 === 0 ? 'blue' : 'pink',
+          backgroundColor: 'black',
         }}>
-        <Text>{item}</Text>
+        <Post item={item} />
       </View>
     );
   };
   return (
     <View className="flex-1" style={{backgroundColor: 'black'}}>
       <FlatList
-        data={array}
+        data={data}
         renderItem={renderItem}
-        pagingEnabled
         keyExtractor={item => item.toString()}
         decelerationRate="normal"
+        onEndReachedThreshold={0.25}
+        onEndReached={({distanceFromEnd}) => console.log(distanceFromEnd)}
       />
     </View>
   );
