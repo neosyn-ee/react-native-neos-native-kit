@@ -1,23 +1,38 @@
 import React from 'react';
+import {View} from 'react-native';
 
 import VideoPlayer from 'react-native-media-console';
 
-// import {PostProps} from './Post.types';
+import {PostProps} from './Post.types';
 
-const Post = (): JSX.Element => {
+const Post = ({
+  video: {source, paused, controls, ...others},
+  body,
+  actions,
+}: PostProps): JSX.Element => {
   return (
-    <>
+    <View className="bg-[#fff]">
       <VideoPlayer
-        paused={true}
+        containerStyle={{height: 250}}
+        paused={paused}
         resizeMode="cover"
-        poster="https://upload.wikimedia.org/wikipedia/commons/1/18/Tears_of_Steel_frame_01_2a.jpg"
         posterResizeMode="cover"
-        source={{uri: ''}} // video.source
-        // {...video}
+        source={source!}
+        disableBack={!controls}
+        disableFocus={!controls}
+        disableFullscreen={!controls}
+        disablePlayPause={!controls}
+        disableSeekButtons={!controls}
+        disableSeekbar={!controls}
+        disableTimer={!controls}
+        disableVolume={!controls}
+        {...others}
       />
-      {/* custom content */
-      /* custom Icon */}
-    </>
+      <View className="p-3">
+        {actions}
+        {body}
+      </View>
+    </View>
   );
 };
 
