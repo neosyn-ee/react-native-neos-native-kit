@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View} from 'react-native';
 
 import VideoPlayer from 'react-native-media-console';
@@ -36,4 +36,4 @@ const Post = ({
   );
 };
 
-export default Post;
+export default memo(Post);

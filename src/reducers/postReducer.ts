@@ -29,10 +29,10 @@ export default function postReducer(state: PostState, action: PostAction) {
     case PostActionKind.INCREASE: {
       const start =
         page > 1
-          ? currentData.indexOf(currentData[currentData.length - 1]) + 1
+          ? (data as PostType[]).indexOf(currentData[currentData.length - 1]) +
+            1
           : 0;
       const end = start + pageLength;
-      //   console.log({start, end});
       return {
         prev: page > 1 ? currentData : [],
         data: data.slice(start, end),
@@ -40,7 +40,7 @@ export default function postReducer(state: PostState, action: PostAction) {
       };
     }
     case PostActionKind.DECREASE: {
-      const start = currentData.indexOf(currentData[0]) - pageLength;
+      const start = (data as PostType[]).indexOf(currentData[0]) - pageLength;
       const end = start + pageLength;
       return {
         prev: data.slice(start - pageLength, end - pageLength),

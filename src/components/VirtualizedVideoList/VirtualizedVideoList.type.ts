@@ -1,5 +1,4 @@
 export type VirtualizedVideoListProps<T> = {
   data: T[];
-  fetchDataByPage: (page: number) => void;
-  maxToRenderPerBatch?: number;
+  fetchDataByPage: (page: number, prevPage: number) => Promise<number>;
 };

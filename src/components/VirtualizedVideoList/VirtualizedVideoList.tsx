@@ -10,22 +10,35 @@ import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 const VirtualizedVideoList = ({
   data,
   fetchDataByPage,
-  maxToRenderPerBatch,
 }: VirtualizedVideoListProps<PostType>): JSX.Element => {
-  // state currentPage
   const [currentPage, setCurrentPage] = useState<number>(1);
+  // const handleOnViewableItemsChanged = ({changed}: any) => {
+  //   changed.forEach((element: any) => {
+  //     console.log('handleOnViewableItemsChanged', element);
+  //   });
+  // };
   const handleOnEndReached = async () => {
     console.log('End reached');
     try {
-      await fetchDataByPage(currentPage + 1);
-      setCurrentPage(currentPage + 1);
+      const res = await fetchDataByPage(currentPage + 1, currentPage);
+      if (res) {
+        setCurrentPage(currentPage + 1);
+      }
     } catch (error) {
       console.error(error);
     }
   };
-  // onEndReachedHandler
-  //  props.OnRefresh (async)
-  //    se ok setCurrentPage(curr + 1) altrimenti die
+  const handleStartReached = async () => {
+    console.log('Start reached');
+    try {
+      const res = await fetchDataByPage(currentPage - 1, currentPage);
+      if (res) {
+        setCurrentPage(currentPage - 1);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const renderItem = ({
     item: {
       videoUrl,
@@ -42,6 +55,7 @@ const VirtualizedVideoList = ({
       controls: controls,
       paused: !autoplay,
       poster: thumbnailUrl,
+      muted: true,
     };
     const body =
       typeof bodyContent === 'string' ? (
@@ -55,12 +69,18 @@ const VirtualizedVideoList = ({
     <SafeAreaView className="flex-1">
       <FlatList
         data={data}
+        // windowSize={4}
         renderItem={renderItem}
-        keyExtractor={({id}) => id.toString()}
-        decelerationRate="normal"
-        onEndReachedThreshold={0.75}
-        onEndReached={handleOnEndReached} // passare pagina corrente e futura
-        maxToRenderPerBatch={maxToRenderPerBatch}
+        // keyExtractor={({id}) => id.toString()}
+        onEndReachedThreshold={0.2}
+        onStartReached={handleStartReached}
+        onEndReached={handleOnEndReached}
+        // initialNumToRender={5}
+        // maxToRenderPerBatch={5}
+        // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
+        // onViewableItemsChanged={handleOnViewableItemsChanged}
+        removeClippedSubviews
+        pagingEnabled
       />
     </SafeAreaView>
   );

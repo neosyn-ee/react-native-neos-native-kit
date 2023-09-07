@@ -10,23 +10,28 @@ import {delay} from '@utils/helpers';
 const INITIAL_STATE: PostState = {
   prev: [],
   data: data.slice(0, 20),
-  next: data.slice(39, 60),
+  next: data.slice(20, 40),
 };
 
 const FeedScreen: FC = () => {
   const [posts, dispatch] = useReducer(postReducer, INITIAL_STATE);
-  const fetchDataByPage = async (page: number = 1): Promise<void> => {
+  const fetchDataByPage = async (
+    page: number = 1,
+    prevPage: number,
+  ): Promise<number> => {
     await delay(2000);
-    dispatch({type: PostActionKind.INCREASE, payload: page});
+    console.log('new page triggered');
+    dispatch({
+      type: page > prevPage ? PostActionKind.INCREASE : PostActionKind.DECREASE,
+      payload: page,
+    });
+    return 1;
   };
 
+  const {data} = posts;
   return (
     <SafeAreaView className="h-full">
-      <VirtualizedVideoList
-        data={posts.data}
-        fetchDataByPage={fetchDataByPage}
-        maxToRenderPerBatch={2}
-      />
+      <VirtualizedVideoList data={data} fetchDataByPage={fetchDataByPage} />
     </SafeAreaView>
   );
 };
