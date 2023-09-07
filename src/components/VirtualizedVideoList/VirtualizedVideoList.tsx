@@ -3,15 +3,18 @@ import {FlatList, SafeAreaView} from 'react-native';
 
 import Post from '@components/Post/Post';
 import {PostType} from '@components/Post/Post.types';
+import Spinner from '@components/Spinner/Spinner';
 
 import {PostBody} from './PostBody';
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
 const VirtualizedVideoList = ({
   data,
-  fetchDataByPage,
+  pagesNum,
+  refreshData,
 }: VirtualizedVideoListProps<PostType>): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   // const handleOnViewableItemsChanged = ({changed}: any) => {
   //   changed.forEach((element: any) => {
   //     console.log('handleOnViewableItemsChanged', element);
@@ -19,24 +22,18 @@ const VirtualizedVideoList = ({
   // };
   const handleOnEndReached = async () => {
     console.log('End reached');
-    try {
-      const res = await fetchDataByPage(currentPage + 1, currentPage);
-      if (res) {
-        setCurrentPage(currentPage + 1);
+    if (currentPage < pagesNum!) {
+      setRefreshing(true);
+      try {
+        const res = await refreshData();
+        if (res) {
+          setCurrentPage(currentPage + 1);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setRefreshing(false);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleStartReached = async () => {
-    console.log('Start reached');
-    try {
-      const res = await fetchDataByPage(currentPage - 1, currentPage);
-      if (res) {
-        setCurrentPage(currentPage - 1);
-      }
-    } catch (error) {
-      console.error(error);
     }
   };
   const renderItem = ({
@@ -67,21 +64,24 @@ const VirtualizedVideoList = ({
   };
   return (
     <SafeAreaView className="flex-1">
-      <FlatList
-        data={data}
-        // windowSize={4}
-        renderItem={renderItem}
-        // keyExtractor={({id}) => id.toString()}
-        onEndReachedThreshold={0.2}
-        onStartReached={handleStartReached}
-        onEndReached={handleOnEndReached}
-        // initialNumToRender={5}
-        // maxToRenderPerBatch={5}
-        // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
-        // onViewableItemsChanged={handleOnViewableItemsChanged}
-        removeClippedSubviews
-        pagingEnabled
-      />
+      <>
+        <FlatList
+          data={data}
+          windowSize={11}
+          renderItem={renderItem}
+          keyExtractor={({id}) => id.toString()}
+          onEndReachedThreshold={0.25}
+          onEndReached={handleOnEndReached}
+          initialNumToRender={5}
+          maxToRenderPerBatch={5}
+          refreshing={refreshing}
+          // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
+          // onViewableItemsChanged={handleOnViewableItemsChanged}
+          // removeClippedSubviews
+          // pagingEnabled
+        />
+        {refreshing && <Spinner />}
+      </>
     </SafeAreaView>
   );
 };
