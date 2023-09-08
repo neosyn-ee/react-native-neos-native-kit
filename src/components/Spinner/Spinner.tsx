@@ -1,24 +1,12 @@
-import React from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import React, {memo} from 'react';
+import {ActivityIndicator, View} from 'react-native';
 
-const Spinner = (): JSX.Element => {
+const Spinner = memo((): JSX.Element => {
   return (
-    <View style={[styles.container, styles.horizontal]}>
+    <View className="h-[60px] justify-center items-center">
       <ActivityIndicator size="large" color="#007AFF" />
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
 });
 
 export default Spinner;

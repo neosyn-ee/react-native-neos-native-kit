@@ -12,7 +12,6 @@ const FeedScreen: FC = () => {
   const [posts, setPosts] = useState<PostType[]>(data.slice(0, pageLength));
   const refreshData = async (): Promise<number> => {
     await delay(2000);
-    console.log('new page loaded!');
     setPosts(prev => {
       const start = (data as PostType[]).indexOf(prev[prev.length - 1]) + 1;
       return [...prev, ...data.slice(start, start + pageLength)];

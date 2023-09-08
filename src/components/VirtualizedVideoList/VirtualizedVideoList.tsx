@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
+import {FlatList, View} from 'react-native';
 
 import Post from '@components/Post/Post';
 import {PostType} from '@components/Post/Post.types';
@@ -21,10 +21,9 @@ const VirtualizedVideoList = ({
   //   });
   // };
   const handleOnEndReached = async () => {
-    console.log('End reached');
-    if (currentPage < pagesNum!) {
-      setRefreshing(true);
+    if (currentPage < pagesNum! && !refreshing) {
       try {
+        setRefreshing(true);
         const res = await refreshData();
         if (res) {
           setCurrentPage(currentPage + 1);
@@ -66,24 +65,23 @@ const VirtualizedVideoList = ({
     [],
   );
   return (
-    <SafeAreaView className="flex-1">
-      <>
-        <FlatList
-          data={data}
-          windowSize={11}
-          renderItem={renderItem}
-          keyExtractor={({id}) => id.toString()}
-          onEndReachedThreshold={0.25}
-          onEndReached={handleOnEndReached}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
-          refreshing={refreshing}
-          // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
-          // onViewableItemsChanged={handleOnViewableItemsChanged}
-        />
-        {refreshing && <Spinner />}
-      </>
-    </SafeAreaView>
+    <View className="flex-1">
+      <FlatList
+        data={data}
+        windowSize={5}
+        renderItem={renderItem}
+        keyExtractor={({id}) => id.toString()}
+        onEndReachedThreshold={0.1}
+        onEndReached={handleOnEndReached}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        refreshing={refreshing}
+        removeClippedSubviews
+        // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
+        // onViewableItemsChanged={handleOnViewableItemsChanged}
+      />
+      {refreshing && <Spinner />}
+    </View>
   );
 };
 
