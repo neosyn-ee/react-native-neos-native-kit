@@ -7,12 +7,6 @@ import {PostType} from '@components/Post/Post.types';
 import VirtualizedVideoList from '@components/VirtualizedVideoList/VirtualizedVideoList';
 import {delay} from '@utils/helpers';
 
-// const INITIAL_STATE: PostState = {
-//   prev: [],
-//   data: data.slice(0, 20),
-//   next: data.slice(20, 40),
-// };
-
 const FeedScreen: FC = () => {
   const [pagesNum, pageLength] = [5, 20];
   const [posts, setPosts] = useState<PostType[]>(data.slice(0, pageLength));
@@ -26,7 +20,6 @@ const FeedScreen: FC = () => {
     return 1;
   };
 
-  // const {data} = posts;
   return (
     <SafeAreaView className="h-full">
       <VirtualizedVideoList

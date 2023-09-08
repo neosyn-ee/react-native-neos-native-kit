@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 
 import Post from '@components/Post/Post';
@@ -36,32 +36,35 @@ const VirtualizedVideoList = ({
       }
     }
   };
-  const renderItem = ({
-    item: {
-      videoUrl,
-      thumbnailUrl,
-      bodyContent,
-      actionsContent,
-      videoControls: {controls, autoplay},
+  const renderItem = useCallback(
+    ({
+      item: {
+        videoUrl,
+        thumbnailUrl,
+        bodyContent,
+        actionsContent,
+        videoControls: {controls, autoplay},
+      },
+    }: {
+      item: PostType;
+    }): JSX.Element => {
+      const video = {
+        source: {uri: videoUrl},
+        controls: controls,
+        paused: !autoplay,
+        poster: thumbnailUrl,
+        muted: true,
+      };
+      const body =
+        typeof bodyContent === 'string' ? (
+          <PostBody>{bodyContent}</PostBody>
+        ) : (
+          bodyContent
+        );
+      return <Post video={video} body={body} actions={actionsContent} />;
     },
-  }: {
-    item: PostType;
-  }): JSX.Element => {
-    const video = {
-      source: {uri: videoUrl},
-      controls: controls,
-      paused: !autoplay,
-      poster: thumbnailUrl,
-      muted: true,
-    };
-    const body =
-      typeof bodyContent === 'string' ? (
-        <PostBody>{bodyContent}</PostBody>
-      ) : (
-        bodyContent
-      );
-    return <Post video={video} body={body} actions={actionsContent} />;
-  };
+    [],
+  );
   return (
     <SafeAreaView className="flex-1">
       <>
@@ -77,8 +80,6 @@ const VirtualizedVideoList = ({
           refreshing={refreshing}
           // viewabilityConfig={{itemVisiblePercentThreshold: 30}}
           // onViewableItemsChanged={handleOnViewableItemsChanged}
-          // removeClippedSubviews
-          // pagingEnabled
         />
         {refreshing && <Spinner />}
       </>
