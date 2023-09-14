@@ -1,6 +1,8 @@
-export type VirtualizedVideoListProps<T> = {
-  data: T[];
+import {type PostType} from '@components/Post/Post.types';
+
+export type VirtualizedVideoListProps = {
+  data: Array<PostType>;
   paginated?: boolean;
   pagesNum?: number;
-  refreshData: () => Promise<number>;
+  fetchData: (page: number) => Promise<void | number>;
 };

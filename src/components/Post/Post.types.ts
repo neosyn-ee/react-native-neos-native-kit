@@ -1,19 +1,10 @@
-import {VideoPlayerProps} from 'react-native-media-console';
+import {VideoPlayerProps} from '@components/VideoPlayer/VideoPlayer.type';
 
 export type PostProps = {
-  video: Partial<VideoPlayerProps>;
-  body: JSX.Element;
-  actions: JSX.Element;
-};
-
-export type PostType = {
   id: number;
-  name: string;
-  videoUrl: string;
-  thumbnailUrl: string;
-  bodyContent: JSX.Element | string;
-  actionsContent: JSX.Element;
-  videoControls: {[key: string]: any};
+  video: VideoPlayerProps;
+  bodyContent?: JSX.Element | string;
+  actionsContent?: JSX.Element;
 };
 
-export type sourceType = VideoPlayerProps['source'];
+export type PostType = PostProps;

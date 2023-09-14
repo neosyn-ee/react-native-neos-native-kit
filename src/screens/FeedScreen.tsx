@@ -1,29 +1,34 @@
 import React, {FC, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 
-import data from 'storage/database/post';
+import fakeData from 'storage/database/post';
 
 import {PostType} from '@components/Post/Post.types';
 import VirtualizedVideoList from '@components/VirtualizedVideoList/VirtualizedVideoList';
 import {delay} from '@utils/helpers';
 
 const FeedScreen: FC = () => {
-  const [pagesNum, pageLength] = [5, 20];
-  const [posts, setPosts] = useState<PostType[]>(data.slice(0, pageLength));
-  const refreshData = async (): Promise<number> => {
+  const pageLength = 20;
+  const pagesNum = fakeData.length / pageLength;
+  const [data, setData] = useState<PostType[]>(fakeData.slice(0, pageLength));
+
+  const fetchData = async (page: number): Promise<void | number> => {
+    if (page > pagesNum) {
+      throw new Error(`Error: page ${page} does not exist`);
+    }
     await delay(2000);
-    setPosts(prev => {
-      const start = (data as PostType[]).indexOf(prev[prev.length - 1]) + 1;
-      return [...prev, ...data.slice(start, start + pageLength)];
-    });
+    const end = page * pageLength;
+    const start = end - pageLength;
+    const newData = fakeData.slice(start, end);
+    setData(newData);
     return 1;
   };
 
   return (
     <SafeAreaView className="h-full">
       <VirtualizedVideoList
-        data={posts}
-        refreshData={refreshData}
+        data={data}
+        fetchData={fetchData}
         paginated={true}
         pagesNum={pagesNum}
       />
