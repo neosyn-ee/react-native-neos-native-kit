@@ -1,4 +1,11 @@
-import React, {memo, PropsWithChildren} from 'react';
+import React, {
+  forwardRef,
+  memo,
+  PropsWithChildren,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import {Text, View} from 'react-native';
 
 import VideoPlayer from '@components/VideoPlayer/VideoPlayer';
@@ -18,23 +25,67 @@ export const PostActions = ({children}: PropsWithChildren) => {
 };
 
 const Post = memo(
-  ({video, bodyContent, actionsContent}: PostProps): JSX.Element => {
-    const renderedBody =
-      typeof bodyContent === 'string' ? (
-        <PostBody>{bodyContent}</PostBody>
-      ) : (
-        bodyContent
-      );
-    return (
-      <View className="bg-[#fff]">
-        <VideoPlayer {...video} />
-        <View className="p-3">
-          {actionsContent && <PostActions>{actionsContent}</PostActions>}
-          {bodyContent && renderedBody}
+  forwardRef(
+    (
+      {video, bodyContent, actionsContent}: PostProps,
+      parentRef,
+    ): JSX.Element => {
+      const [autoplay, setAutoplay] = useState<boolean>(false);
+      const [source, setSource] = useState(video.source);
+
+      useImperativeHandle(parentRef, () => ({
+        play,
+        stop,
+        unload,
+      }));
+
+      useEffect(() => {
+        return () => unload();
+      }, []);
+
+      const play = () => {
+        const {autoplay: isPlaying} = video;
+        if (isPlaying) {
+          return;
+        }
+        setAutoplay(true);
+      };
+
+      const stop = () => {
+        const {paused} = video;
+        if (paused) {
+          return;
+        }
+        setAutoplay(false);
+      };
+
+      const unload = () => {
+        if (
+          typeof source !== 'number' &&
+          source.hasOwnProperty('uri') &&
+          !source.uri
+        ) {
+          setSource({uri: undefined});
+        }
+      };
+
+      const renderedBody =
+        typeof bodyContent === 'string' ? (
+          <PostBody>{bodyContent}</PostBody>
+        ) : (
+          bodyContent
+        );
+      return (
+        <View className="bg-[#fff]">
+          <VideoPlayer {...video} source={source} autoplay={autoplay} />
+          <View className="p-3">
+            {actionsContent && <PostActions>{actionsContent}</PostActions>}
+            {bodyContent && renderedBody}
+          </View>
         </View>
-      </View>
-    );
-  },
+      );
+    },
+  ),
 );
 
 export default Post;

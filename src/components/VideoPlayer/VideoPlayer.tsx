@@ -25,7 +25,7 @@ export const Player: FC<PlayerProps> = ({
 
   const handleOnLoadOrPlay = () => {
     if (playerInfo?.current.elapsedSecs) {
-      videoRef.current!.seek(playerInfo?.current.elapsedSecs);
+      videoRef.current?.seek(playerInfo?.current.elapsedSecs);
     }
   };
   const handleOnEnterFullscreen = () => {
@@ -38,11 +38,14 @@ export const Player: FC<PlayerProps> = ({
     playerInfo!.current.elapsedSecs = currentTime;
   };
   const handleOnSeek = ({seekTime}: OnSeekData) => {
+    if (!playerInfo?.current) {
+      return;
+    }
     const {
       props: {paused},
     } = videoRef.current!;
     if (paused) {
-      playerInfo!.current.elapsedSecs = seekTime;
+      playerInfo.current.elapsedSecs = seekTime;
     }
   };
 

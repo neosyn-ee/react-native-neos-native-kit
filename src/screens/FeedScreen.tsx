@@ -31,6 +31,7 @@ const FeedScreen: FC = () => {
         fetchData={fetchData}
         paginated={true}
         pagesNum={pagesNum}
+        viewAreaCoveragePercentThreshold={60}
       />
     </SafeAreaView>
   );

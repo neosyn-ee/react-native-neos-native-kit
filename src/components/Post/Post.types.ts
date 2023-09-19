@@ -8,3 +8,10 @@ export type PostProps = {
 };
 
 export type PostType = PostProps;
+
+export type PostExposedInstanceValue = {
+  itemHeight: number;
+  play: () => void;
+  stop: () => void;
+  unload: () => void;
+};
