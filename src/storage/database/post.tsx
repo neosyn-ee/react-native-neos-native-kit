@@ -17,6 +17,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -51,6 +52,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -76,6 +78,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -108,6 +111,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -135,6 +139,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -165,6 +170,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -191,6 +197,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -222,6 +229,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -258,6 +266,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -291,6 +300,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -320,6 +330,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -354,6 +365,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -379,6 +391,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -411,6 +424,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -438,6 +452,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -468,6 +483,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -494,6 +510,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -525,6 +542,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -561,6 +579,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -594,6 +613,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -623,6 +643,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -657,6 +678,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -682,6 +704,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -714,6 +737,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -741,6 +765,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -771,6 +796,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -797,6 +823,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -828,6 +855,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -864,6 +892,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -897,6 +926,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -926,6 +956,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -960,6 +991,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -985,6 +1017,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1017,6 +1050,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -1044,6 +1078,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1074,6 +1109,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -1100,6 +1136,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1131,6 +1168,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1167,6 +1205,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1200,6 +1239,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -1229,6 +1269,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1263,6 +1304,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -1288,6 +1330,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1320,6 +1363,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -1347,6 +1391,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1377,6 +1422,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -1403,6 +1449,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1434,6 +1481,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1470,6 +1518,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1503,6 +1552,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -1532,6 +1582,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1566,6 +1617,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -1591,6 +1643,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1623,6 +1676,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -1650,6 +1704,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1680,6 +1735,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -1706,6 +1762,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1737,6 +1794,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1773,6 +1831,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1806,6 +1865,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -1835,6 +1895,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1869,6 +1930,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -1894,6 +1956,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1926,6 +1989,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -1953,6 +2017,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -1983,6 +2048,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -2009,6 +2075,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2040,6 +2107,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2076,6 +2144,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2109,6 +2178,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -2138,6 +2208,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2172,6 +2243,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -2197,6 +2269,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2229,6 +2302,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -2256,6 +2330,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2286,6 +2361,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -2312,6 +2388,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2343,6 +2420,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2379,6 +2457,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2412,6 +2491,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -2441,6 +2521,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2475,6 +2556,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -2500,6 +2582,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2532,6 +2615,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -2559,6 +2643,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2589,6 +2674,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -2615,6 +2701,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2646,6 +2733,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2682,6 +2770,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2715,6 +2804,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -2744,6 +2834,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2778,6 +2869,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -2803,6 +2895,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2835,6 +2928,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -2862,6 +2956,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2892,6 +2987,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -2918,6 +3014,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2949,6 +3046,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -2985,6 +3083,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3018,6 +3117,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -3047,6 +3147,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3081,6 +3182,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -3106,6 +3208,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3138,6 +3241,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -3165,6 +3269,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3195,6 +3300,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -3221,6 +3327,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3252,6 +3359,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3288,6 +3396,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3321,6 +3430,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \
@@ -3350,6 +3460,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3384,6 +3495,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: 'The first Blender Open Movie from 2006',
     actionsContent: (
@@ -3409,6 +3521,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3441,6 +3554,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       "Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for when Batman's escapes aren\t quite big enough. \
@@ -3468,6 +3582,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3498,6 +3613,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Introducing Chromecast. The easiest way to enjoy online video and music on your TV—for the times that call for bigger joyrides. For $35. Learn how to use Chromecast with YouTube and more at google.com/chromecast.',
@@ -3524,6 +3640,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3555,6 +3672,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3591,6 +3709,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent: (
       <Text>
@@ -3624,6 +3743,7 @@ const data: PostType[] = [
       autoplay: false,
       disableControlsWhen: {default: true, fullscreen: true},
       muted: true,
+      repeat: true,
     },
     bodyContent:
       'Subaru is ready to take and bring any family on top of any road, just for keep driving some more and roam where \

@@ -66,11 +66,11 @@ const VirtualizedVideoList = ({
       }
       viewableItems.forEach(({key}: ViewToken) => {
         const cell = mediaRefs.current[+key];
-        if (cell && keyToPlay) {
+        if (keyToPlay) {
           if (keyToPlay === key) {
-            cell.play();
+            cell?.play();
           } else {
-            cell.stop();
+            cell?.stop();
           }
         } else {
           cell?.play();
