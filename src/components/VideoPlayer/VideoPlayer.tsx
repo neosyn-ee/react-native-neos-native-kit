@@ -29,9 +29,6 @@ export const Player: FC<PlayerProps> = memo(
         videoRef.current!.seek(playerInfo?.current.elapsedSecs);
       }
     };
-    const handleOnPause = () => {
-      playerInfo!.current.paused = true;
-    };
     const handleOnEnterFullscreen = () => {
       setFullscreen?.(true);
     };
@@ -59,7 +56,6 @@ export const Player: FC<PlayerProps> = memo(
         resizeMode="contain"
         toggleResizeModeOnFullscreen={false}
         onPlay={handleOnLoadOrPlay}
-        onPause={handleOnPause}
         onLoad={handleOnLoadOrPlay}
         onBack={handleOnExitFullscreen}
         onEnterFullscreen={handleOnEnterFullscreen}
