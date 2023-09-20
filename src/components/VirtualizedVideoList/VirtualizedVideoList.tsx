@@ -1,0 +1,157 @@
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {View, ViewToken} from 'react-native';
+
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
+
+import Post from '@components/Post/Post';
+import {PostExposedInstanceValue, PostType} from '@components/Post/Post.types';
+import Spinner from '@components/Spinner/Spinner';
+
+import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
+
+const VirtualizedVideoList = ({
+  data,
+  paginated,
+  pagesNum,
+  viewAreaCoveragePercentThreshold,
+  fetchData,
+}: VirtualizedVideoListProps): JSX.Element => {
+  const [posts, setPosts] = useState<PostType[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const mediaRefs = useRef<PostExposedInstanceValue[]>([]);
+  const lastContentOffset = useSharedValue(0);
+  const isScrolling = useSharedValue(false);
+  const scrollDirection = useSharedValue('');
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      if (lastContentOffset.value > event.contentOffset.y) {
+        if (isScrolling.value) {
+          scrollDirection.value = 'UP';
+        }
+      } else if (lastContentOffset.value < event.contentOffset.y) {
+        if (isScrolling.value) {
+          scrollDirection.value = 'DOWN';
+        }
+      }
+      lastContentOffset.value = event.contentOffset.y;
+    },
+    onBeginDrag: () => {
+      isScrolling.value = true;
+    },
+    onEndDrag: () => {
+      isScrolling.value = false;
+    },
+  });
+
+  const onViewableItemsChanged = useCallback(
+    ({
+      changed,
+      viewableItems,
+    }: {
+      changed: ViewToken[];
+      viewableItems: ViewToken[];
+    }) => {
+      let keyToPlay: ViewToken['key'];
+      if (viewableItems.length > 1) {
+        if (scrollDirection.value === 'DOWN') {
+          keyToPlay = viewableItems[viewableItems.length - 1].key;
+        } else if (scrollDirection.value === 'UP') {
+          keyToPlay = viewableItems[viewableItems.length - 2].key;
+        }
+      }
+      viewableItems.forEach(({key}: ViewToken) => {
+        const cell = mediaRefs.current[+key];
+        if (keyToPlay) {
+          if (keyToPlay === key) {
+            cell?.play();
+          } else {
+            cell?.stop();
+          }
+        } else {
+          cell?.play();
+        }
+      });
+
+      changed.forEach(({key, isViewable}) => {
+        const cell = mediaRefs.current[+key];
+        if (cell) {
+          if (!isViewable) {
+            cell.stop();
+          }
+        }
+      });
+    },
+    [],
+  );
+
+  const handleOnEndReached = async () => {
+    if (currentPage < pagesNum! && !refreshing) {
+      try {
+        setRefreshing(true);
+        const res = await fetchData(currentPage + 1);
+        if (res) {
+          setCurrentPage(currentPage + 1);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setRefreshing(false);
+      }
+    }
+  };
+
+  const renderItem = useCallback(
+    ({item: itemProps}: {item: PostType}): JSX.Element => (
+      <Post
+        {...itemProps}
+        ref={(postRef: PostExposedInstanceValue) =>
+          (mediaRefs.current[itemProps.id] = postRef)
+        }
+      />
+    ),
+    [],
+  );
+
+  const maxItemNum = 100;
+  const itemsCount = data.length;
+  useEffect(() => {
+    setPosts(prev => {
+      const oldData =
+        prev.length <= maxItemNum - itemsCount ? prev : prev.slice(itemsCount);
+      return [...oldData, ...data];
+    });
+  }, [data]);
+
+  return (
+    <View className="flex-1">
+      {posts.length ? (
+        <Animated.FlatList
+          data={posts}
+          windowSize={5}
+          renderItem={renderItem}
+          keyExtractor={({id}) => id.toString()}
+          onEndReachedThreshold={0.1}
+          onEndReached={paginated ? handleOnEndReached : undefined}
+          initialNumToRender={5}
+          maxToRenderPerBatch={5}
+          refreshing={refreshing}
+          viewabilityConfig={{
+            minimumViewTime: 800,
+            viewAreaCoveragePercentThreshold,
+          }}
+          onViewableItemsChanged={onViewableItemsChanged}
+          onScroll={scrollHandler}
+          removeClippedSubviews
+        />
+      ) : null}
+      {refreshing && <Spinner />}
+    </View>
+  );
+};
+
+export default VirtualizedVideoList;

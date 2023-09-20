@@ -24,7 +24,6 @@ export const useScreenOrientation = singletonHook<ScreenOrientationContextType>(
     useEffect(() => {
       const onChange = (result: OrientationType) => {
         setScreenOrientation(result);
-        console.log(result);
       };
       Orientation.addOrientationListener(onChange);
       return () => {
