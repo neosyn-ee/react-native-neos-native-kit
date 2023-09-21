@@ -141,7 +141,7 @@ const VirtualizedVideoList = ({
           maxToRenderPerBatch={5}
           refreshing={refreshing}
           viewabilityConfig={{
-            minimumViewTime: 800,
+            minimumViewTime: 100,
             viewAreaCoveragePercentThreshold,
           }}
           onViewableItemsChanged={onViewableItemsChanged}

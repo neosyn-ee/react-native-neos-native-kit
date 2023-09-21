@@ -624,6 +624,12 @@ _NativeWindStyleSheet.create({
       paddingTop: 12,
       paddingBottom: 12,
     },
+    'mb-2': {
+      marginBottom: 8,
+    },
+    'h-[60px]': {
+      height: 60,
+    },
     'h-full': {
       height: '100%',
     },
@@ -632,8 +638,34 @@ _NativeWindStyleSheet.create({
       flexShrink: 1,
       flexBasis: '0%',
     },
+    'flex-row': {
+      flexDirection: 'row',
+    },
+    'items-center': {
+      alignItems: 'center',
+    },
+    'justify-center': {
+      justifyContent: 'center',
+    },
+    'bg-[#fff]': {
+      backgroundColor: '#fff',
+    },
+    'p-3': {
+      paddingTop: 12,
+      paddingRight: 12,
+      paddingBottom: 12,
+      paddingLeft: 12,
+    },
     'font-black': {
       fontWeight: '900',
+    },
+    'gap-3': {
+      marginLeft: -12,
+      marginTop: -12,
+    },
+    'gap-3.children@0': {
+      marginLeft: 12,
+      marginTop: 12,
     },
   },
   atRules: {
@@ -704,6 +736,7 @@ _NativeWindStyleSheet.create({
     ],
     textarea: [[['media', 'android']], [['media', 'ios']], [['media', 'web']]],
     select: [[['media', 'android']], [['media', 'ios']], [['media', 'web']]],
+    'gap-3.children': [[['selector', '(> *)']]],
   },
   masks: {
     "[type='text']": 512,
@@ -721,5 +754,8 @@ _NativeWindStyleSheet.create({
     '[multiple]': 512,
     textarea: 512,
     select: 512,
+  },
+  childClasses: {
+    'gap-3': ['gap-3.children'],
   },
 });
