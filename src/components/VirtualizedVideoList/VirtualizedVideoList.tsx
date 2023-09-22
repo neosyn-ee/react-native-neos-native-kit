@@ -93,7 +93,7 @@ const VirtualizedVideoList = ({
     if (currentPage < pagesNum! && !refreshing) {
       try {
         setRefreshing(true);
-        const res = await fetchData(currentPage + 1);
+        const res = await fetchData?.(currentPage + 1);
         if (res) {
           setCurrentPage(currentPage + 1);
         }
