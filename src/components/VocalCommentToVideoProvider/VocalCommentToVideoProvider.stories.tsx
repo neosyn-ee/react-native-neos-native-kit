@@ -23,9 +23,8 @@ export default {
 export const Default: StoryObj<VocalCommentToVideoProviderProps> = {
   args: {
     video: {
-      height: '90%',
+      height: '100%',
       posterResizeMode: 'cover',
-      // resizeMode: 'cover',
       muted: true,
       thumb:
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg',
