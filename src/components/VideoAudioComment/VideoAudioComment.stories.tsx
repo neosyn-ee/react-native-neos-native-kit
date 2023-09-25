@@ -2,13 +2,13 @@ import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 import {SingletonHooksContainer} from 'react-singleton-hook';
 
-import {VocalCommentToVideoProvider} from '@components/VocalCommentToVideoProvider';
+import {VideoAudioComment} from '@components/VideoAudioComment';
 
-import {VocalCommentToVideoProviderProps} from './VocalCommentToVideoProvider.types';
+import {VideoAudioCommentProps} from './VideoAudioComment.types';
 
 export default {
-  component: VocalCommentToVideoProvider,
-  title: 'Example/VocalCommentToVideoProvider',
+  component: VideoAudioComment,
+  title: 'Example/VideoAudioComment',
   tags: ['autodocs'],
   decorators: [
     Story => (
@@ -18,9 +18,9 @@ export default {
       </>
     ),
   ],
-} as ComponentMeta<typeof VocalCommentToVideoProvider>;
+} as ComponentMeta<typeof VideoAudioComment>;
 
-export const Default: StoryObj<VocalCommentToVideoProviderProps> = {
+export const Default: StoryObj<VideoAudioCommentProps> = {
   args: {
     video: {
       height: '100%',
@@ -34,21 +34,3 @@ export const Default: StoryObj<VocalCommentToVideoProviderProps> = {
     },
   },
 };
-
-// export const Pinned = {
-//   args: {
-//     task: {
-//       ...Default.args.task,
-//       state: 'TASK_PINNED',
-//     },
-//   },
-// };
-
-// export const Archived = {
-//   args: {
-//     task: {
-//       ...Default.args.task,
-//       state: 'TASK_ARCHIVED',
-//     },
-//   },
-// };
