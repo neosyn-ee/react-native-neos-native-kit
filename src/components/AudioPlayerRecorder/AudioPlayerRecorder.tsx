@@ -88,29 +88,27 @@ const AudioPlayerRecorder = (): JSX.Element => {
 
   return (
     <View
-      className="absolute left-0 right-0 bottom-0 flex-row items-center p-2"
+      className="absolute left-0 right-0 bottom-0 flex-row items-center p-4"
       style={[
         {
           height: BOTTOM_APPBAR_HEIGHT + bottom,
           backgroundColor: theme.colors.elevation.level2,
         },
       ]}>
-      <View className="flex-auto flex-row items-center gap-x-2">
+      <View className="flex-auto flex-row items-center">
         <IconButton
           icon="play"
-          mode="contained"
-          iconColor={theme.colors.onPrimary}
-          containerColor={theme.colors.primary}
-          size={20}
+          iconColor={theme.colors.primary}
+          size={30}
           onPress={() => onStartPlay()}
         />
         <View className="flex-column">
           <Image
-            className="h-full w-[240px]"
+            className="flex-1 w-[200px]"
             source={require('@assets/img/soundwaves.png')}
           />
           <Text
-            className="absolute bottom-0"
+            className="absolute left-0 top-10"
             style={{
               fontSize: 13,
               color: theme.colors.onSecondaryContainer,
