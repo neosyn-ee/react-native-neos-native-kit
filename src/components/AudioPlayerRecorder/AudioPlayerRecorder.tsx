@@ -12,14 +12,43 @@ import AudioRecorderPlayer, {
 } from 'react-native-audio-recorder-player';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import {IconButton, useTheme} from 'react-native-paper';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {isAndroid} from '@utils/helpers';
 
 import {AudioPlayerRecorderStateType} from './AudioPlayerRecorder.types';
+
+const BlinkingMicIcon = () => {
+  const opacity = useSharedValue(0);
+
+  // Set the opacity value to animate between 0 and 1
+  opacity.value = withRepeat(
+    withTiming(1, {duration: 100, easing: Easing.ease}),
+    -1,
+    true,
+  );
+  const theme = useTheme();
+  const style = useAnimatedStyle(() => ({opacity: opacity.value}), []);
+
+  return (
+    <Animated.View style={style}>
+      <IconButton icon="microphone" iconColor={theme.colors.error} size={25} />
+    </Animated.View>
+  );
+};
+
 const BOTTOM_APPBAR_HEIGHT = 80;
 
 const AudioPlayerRecorder = (): JSX.Element => {
+  // const [isRecording, setIsRecording] = useState<boolean>(false);
+  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [state, setState] = useState<AudioPlayerRecorderStateType>({
     recordSecs: 0,
     recordTime: '00:00',
@@ -81,6 +110,8 @@ const AudioPlayerRecorder = (): JSX.Element => {
     });
   };
 
+  // useEffect(() => {}, [state.duration]);
+
   const {bottom} = useSafeAreaInsets();
   const theme = useTheme();
 
@@ -96,26 +127,42 @@ const AudioPlayerRecorder = (): JSX.Element => {
         },
       ]}>
       <View className="flex-auto flex-row items-center">
-        <IconButton
-          icon="play"
-          iconColor={theme.colors.primary}
-          size={30}
-          onPress={() => onStartPlay()}
-        />
-        <View className="flex-column">
-          <Image
-            className="flex-1 w-[200px]"
-            source={require('@assets/img/soundwaves.png')}
-          />
-          <Text
-            className="absolute left-0 top-10"
-            style={{
-              fontSize: 13,
-              color: theme.colors.onSecondaryContainer,
-            }}>
-            {state.playTime || ''}
-          </Text>
-        </View>
+        {true ? (
+          <>
+            <IconButton
+              icon={true ? 'play' : 'pause'}
+              iconColor={theme.colors.primary}
+              size={25}
+              onPress={() => onStartPlay()}
+            />
+            <View className="flex-column">
+              <Image
+                className="flex-1 w-[200px]"
+                source={require('@assets/img/soundwaves.png')}
+              />
+              <Text
+                className="absolute left-0 top-10"
+                style={{
+                  fontSize: 13,
+                  color: theme.colors.onSecondaryContainer,
+                }}>
+                {state.playTime || ''}
+              </Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <BlinkingMicIcon />
+            <Text
+              className="flex-1"
+              style={{
+                fontSize: 13,
+                color: theme.colors.onSecondaryContainer,
+              }}>
+              {state.recordTime}
+            </Text>
+          </>
+        )}
       </View>
       <View className="flex-auto items-center">
         <IconButton
