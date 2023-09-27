@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 
 import AudioRecorderPlayer, {
@@ -25,7 +25,7 @@ import {isAndroid} from '@utils/helpers';
 
 import {AudioPlayerRecorderStateType} from './AudioPlayerRecorder.types';
 
-const BlinkingMicIcon = () => {
+const BlinkingMicIcon = memo(() => {
   const opacity = useSharedValue(0);
 
   // Set the opacity value to animate between 0 and 1
@@ -42,13 +42,16 @@ const BlinkingMicIcon = () => {
       <IconButton icon="microphone" iconColor={theme.colors.error} size={25} />
     </Animated.View>
   );
-};
+});
 
 const BOTTOM_APPBAR_HEIGHT = 80;
+const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = (): JSX.Element => {
-  // const [isRecording, setIsRecording] = useState<boolean>(false);
-  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState<boolean>();
+  const [readyToPlay, setReadyToPlay] = useState<boolean>();
+  const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
+  const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
   const [state, setState] = useState<AudioPlayerRecorderStateType>({
     recordSecs: 0,
     recordTime: '00:00',
@@ -60,9 +63,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
 
   const audioRecorderPlayer = new AudioRecorderPlayer();
   audioRecorderPlayer.setSubscriptionDuration(0.09);
-  const path = isAndroid()
-    ? `${ReactNativeBlobUtil.fs.dirs.CacheDir}/sample.aac`
-    : 'sample.aac';
+  const path = isAndroid() ? `${FS.dirs.CacheDir}/sound.m4a` : 'sound.m4a';
 
   const onStartRecord = useCallback(async () => {
     const audioSet: AudioSet = {
@@ -72,36 +73,51 @@ const AudioPlayerRecorder = (): JSX.Element => {
       AVNumberOfChannelsKeyIOS: 2,
       AVFormatIDKeyIOS: AVEncodingOption.aac,
     };
-    const uri = await audioRecorderPlayer.startRecorder(path, audioSet);
-    audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
-      const secs = Math.floor(e.currentPosition / 1000);
-      setState({
-        recordSecs: secs,
-        recordTime: audioRecorderPlayer.mmss(secs),
+    try {
+      const uri = await audioRecorderPlayer.startRecorder(path, audioSet);
+      setIsRecording(true);
+      audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
+        const secs = Math.floor(e.currentPosition / 1000);
+        setState({
+          ...state,
+          recordSecs: secs,
+          recordTime: audioRecorderPlayer.mmss(secs),
+        });
       });
-    });
-    console.log(`uri: ${uri}`);
+      console.log(`uri: ${uri}`);
+    } catch (error) {
+      console.error('Oops! Failed to start recording:', error);
+    }
   }, []);
 
   const onStopRecord = useCallback(async () => {
-    const result = await audioRecorderPlayer.stopRecorder();
-    audioRecorderPlayer.removeRecordBackListener();
-    setState({
-      recordSecs: 0,
-    });
-    console.log(result);
+    try {
+      // Stop the recording and see what we've got
+      const result = await audioRecorderPlayer.stopRecorder();
+      audioRecorderPlayer.removeRecordBackListener();
+      setIsRecording(false);
+      setReadyToPlay(true);
+      setState({
+        ...state,
+        recordSecs: 0,
+      });
+      console.log(result);
+    } catch (error) {
+      console.error('Oops! Failed to stop recording:', error);
+    }
   }, []);
 
   const onStartPlay = async () => {
-    const msg = await audioRecorderPlayer.startPlayer(path);
+    const result = await audioRecorderPlayer.startPlayer(path);
     audioRecorderPlayer.setVolume(1.0);
-    console.log(msg);
+    console.log(result);
     audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
       const secs = Math.floor(e.currentPosition / 1000);
       if (e.currentPosition === e.duration) {
         audioRecorderPlayer.stopPlayer();
       }
       setState({
+        ...state,
         currentPositionSec: e.currentPosition,
         currentDurationSec: e.duration,
         playTime: audioRecorderPlayer.mmss(Math.floor(secs)),
@@ -110,12 +126,42 @@ const AudioPlayerRecorder = (): JSX.Element => {
     });
   };
 
-  // useEffect(() => {}, [state.duration]);
+  useEffect(() => {
+    readyToPlay &&
+      FS.exists(path)
+        .then(exist => {
+          return new Promise((resolve, reject) => {
+            if (exist) {
+              resolve(FS.readFile(path, 'base64'));
+            } else {
+              const error = new Error("File doesn't exist");
+              reject(error);
+            }
+          });
+        })
+        .then(data => {
+          data && setIsPlayerEnabled(true);
+        })
+        .catch(error => console.log(`Error: ${error.message}`));
+
+    return () => {
+      // remove file from cache by specifying a path
+      readyToPlay &&
+        FS.exists(path).then(exist => {
+          if (exist) {
+            FS.unlink(path);
+          }
+        });
+    };
+  }, [readyToPlay]);
+
+  useEffect(() => {
+    setIsPlayerEnabled(!isRecording);
+    setIsRecorderEnabled(isRecording);
+  }, [isRecording]);
 
   const {bottom} = useSafeAreaInsets();
   const theme = useTheme();
-
-  console.log(audioRecorderPlayer);
 
   return (
     <View
@@ -127,10 +173,15 @@ const AudioPlayerRecorder = (): JSX.Element => {
         },
       ]}>
       <View className="flex-auto flex-row items-center">
-        {true ? (
+        {isPlayerEnabled ? (
           <>
             <IconButton
-              icon={true ? 'play' : 'pause'}
+              icon={
+                state.currentPositionSec &&
+                state.currentPositionSec !== state.currentDurationSec
+                  ? 'pause'
+                  : 'play'
+              }
               iconColor={theme.colors.primary}
               size={25}
               onPress={() => onStartPlay()}
@@ -152,15 +203,28 @@ const AudioPlayerRecorder = (): JSX.Element => {
           </>
         ) : (
           <>
-            <BlinkingMicIcon />
-            <Text
-              className="flex-1"
-              style={{
-                fontSize: 13,
-                color: theme.colors.onSecondaryContainer,
-              }}>
-              {state.recordTime}
-            </Text>
+            {isRecorderEnabled ? (
+              <>
+                <BlinkingMicIcon />
+                <Text
+                  className="flex-1"
+                  style={{
+                    fontSize: 13,
+                    color: theme.colors.onSecondaryContainer,
+                  }}>
+                  {state.recordTime}
+                </Text>
+              </>
+            ) : (
+              <Text
+                className="flex-1"
+                style={{
+                  fontSize: 13,
+                  color: theme.colors.onSecondaryContainer,
+                }}>
+                Hold down the button to record your comment
+              </Text>
+            )}
           </>
         )}
       </View>
