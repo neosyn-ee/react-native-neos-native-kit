@@ -30,7 +30,7 @@ const BlinkingMicIcon = memo(() => {
 
   // Set the opacity value to animate between 0 and 1
   opacity.value = withRepeat(
-    withTiming(1, {duration: 100, easing: Easing.ease}),
+    withTiming(1, {duration: 700, easing: Easing.ease}),
     -1,
     true,
   );
@@ -75,6 +75,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
     };
     try {
       const uri = await audioRecorderPlayer.startRecorder(path, audioSet);
+      setReadyToPlay(false);
       setIsRecording(true);
       audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
         const secs = Math.floor(e.currentPosition / 1000);
@@ -95,8 +96,8 @@ const AudioPlayerRecorder = (): JSX.Element => {
       // Stop the recording and see what we've got
       const result = await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
-      setIsRecording(false);
       setReadyToPlay(true);
+      setIsRecording(false);
       setState({
         ...state,
         recordSecs: 0,
@@ -127,6 +128,18 @@ const AudioPlayerRecorder = (): JSX.Element => {
   };
 
   useEffect(() => {
+    return () => {
+      // remove file from cache by specifying a path
+      FS.exists(path).then(exist => {
+        if (exist) {
+          FS.unlink(path);
+        }
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    !readyToPlay && isPlayerEnabled && setIsPlayerEnabled(false);
     readyToPlay &&
       FS.exists(path)
         .then(exist => {
@@ -143,21 +156,16 @@ const AudioPlayerRecorder = (): JSX.Element => {
           data && setIsPlayerEnabled(true);
         })
         .catch(error => console.log(`Error: ${error.message}`));
-
-    return () => {
-      // remove file from cache by specifying a path
-      readyToPlay &&
-        FS.exists(path).then(exist => {
-          if (exist) {
-            FS.unlink(path);
-          }
-        });
-    };
   }, [readyToPlay]);
 
   useEffect(() => {
-    setIsPlayerEnabled(!isRecording);
-    setIsRecorderEnabled(isRecording);
+    if (isRecording) {
+      setIsRecorderEnabled(true);
+    } else {
+      if (isRecording !== undefined) {
+        setIsRecorderEnabled(false);
+      }
+    }
   }, [isRecording]);
 
   const {bottom} = useSafeAreaInsets();
@@ -197,7 +205,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
                   fontSize: 13,
                   color: theme.colors.onSecondaryContainer,
                 }}>
-                {state.playTime || ''}
+                {state.playTime}
               </Text>
             </View>
           </>
