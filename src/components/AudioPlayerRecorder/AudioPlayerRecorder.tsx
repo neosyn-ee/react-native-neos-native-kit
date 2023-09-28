@@ -121,8 +121,8 @@ const AudioPlayerRecorder = (): JSX.Element => {
         ...state,
         currentPositionSec: e.currentPosition,
         currentDurationSec: e.duration,
-        playTime: audioRecorderPlayer.mmss(Math.floor(secs)),
-        duration: audioRecorderPlayer.mmssss(Math.floor(e.duration / 1000)),
+        playTime: audioRecorderPlayer.mmss(secs),
+        duration: audioRecorderPlayer.mmss(Math.floor(e.duration / 1000)),
       });
     });
   };
@@ -153,7 +153,10 @@ const AudioPlayerRecorder = (): JSX.Element => {
           });
         })
         .then(data => {
-          data && setIsPlayerEnabled(true);
+          if (data) {
+            setIsRecorderEnabled(false);
+            setIsPlayerEnabled(true);
+          }
         })
         .catch(error => console.log(`Error: ${error.message}`));
   }, [readyToPlay]);
@@ -161,10 +164,6 @@ const AudioPlayerRecorder = (): JSX.Element => {
   useEffect(() => {
     if (isRecording) {
       setIsRecorderEnabled(true);
-    } else {
-      if (isRecording !== undefined) {
-        setIsRecorderEnabled(false);
-      }
     }
   }, [isRecording]);
 
