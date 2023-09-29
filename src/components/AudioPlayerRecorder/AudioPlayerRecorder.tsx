@@ -76,7 +76,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
       AVFormatIDKeyIOS: AVEncodingOption.aac,
     };
     try {
-      const uri = await audioRecorderPlayer.startRecorder(path, audioSet);
+      await audioRecorderPlayer.startRecorder(path, audioSet);
       setReadyToPlay(false);
       setIsRecording(true);
       audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
@@ -87,7 +87,6 @@ const AudioPlayerRecorder = (): JSX.Element => {
           recordTime: audioRecorderPlayer.mmss(secs),
         }));
       });
-      console.log(`uri: ${uri}`);
     } catch (error) {
       console.error('Oops! Failed to start recording:', error);
     }
@@ -96,7 +95,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
   const onStopRecord = useCallback(async (): Promise<void> => {
     try {
       // Stop the recording and see what we've got
-      const result = await audioRecorderPlayer.stopRecorder();
+      await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setReadyToPlay(true);
       setIsRecording(false);
@@ -107,7 +106,6 @@ const AudioPlayerRecorder = (): JSX.Element => {
           ? audioRecorderPlayer.mmss(prevState.recordSecs)
           : '00:00',
       }));
-      console.log(result);
     } catch (error) {
       console.error('Oops! Failed to stop recording:', error);
     }
@@ -118,10 +116,9 @@ const AudioPlayerRecorder = (): JSX.Element => {
       return;
     }
     try {
-      const result = await audioRecorderPlayer.startPlayer(path);
+      await audioRecorderPlayer.startPlayer(path);
       setIsPlaying(true);
       audioRecorderPlayer.setVolume(1.0);
-      console.log(result);
       audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
         const secs = Math.floor(e.currentPosition / 1000);
         if (e.currentPosition === e.duration) {
@@ -176,6 +173,17 @@ const AudioPlayerRecorder = (): JSX.Element => {
       setIsPlaying(false);
     } catch (error) {
       console.error('Oops! Failed to pause the recorded note:', error);
+    }
+  }, []);
+
+  const onDiscardRecord = useCallback(async (): Promise<void> => {
+    onStopPlay();
+    try {
+      const fileExists = await FS.exists(path);
+      fileExists && FS.unlink(path);
+      setIsPlayerEnabled(false);
+    } catch (error) {
+      console.error('Oops! Failed to remove the recorded note:', error);
     }
   }, []);
 
@@ -242,7 +250,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
             />
             <View className="flex-column">
               <Image
-                className="flex-1 w-[200px]"
+                className="flex-1 w-[175px]"
                 source={require('@assets/img/soundwaves.png')}
               />
               <Text
@@ -254,6 +262,12 @@ const AudioPlayerRecorder = (): JSX.Element => {
                 {state.playTime}
               </Text>
             </View>
+            <IconButton
+              icon="trash-can-outline"
+              iconColor={theme.colors.error}
+              size={25}
+              onPress={() => onDiscardRecord()}
+            />
           </>
         ) : (
           <>
