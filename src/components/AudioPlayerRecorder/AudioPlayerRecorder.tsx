@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 
@@ -49,6 +50,7 @@ const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = (): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
+  const [isPlaying, setIsPlaying] = useState<boolean>();
   const [readyToPlay, setReadyToPlay] = useState<boolean>();
   const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
   const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
@@ -65,7 +67,7 @@ const AudioPlayerRecorder = (): JSX.Element => {
   audioRecorderPlayer.setSubscriptionDuration(0.09);
   const path = isAndroid() ? `${FS.dirs.CacheDir}/sound.m4a` : 'sound.m4a';
 
-  const onStartRecord = useCallback(async () => {
+  const onStartRecord = useCallback(async (): Promise<void> => {
     const audioSet: AudioSet = {
       AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
       AudioSourceAndroid: AudioSourceAndroidType.MIC,
@@ -79,11 +81,11 @@ const AudioPlayerRecorder = (): JSX.Element => {
       setIsRecording(true);
       audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
         const secs = Math.floor(e.currentPosition / 1000);
-        setState({
-          ...state,
+        setState(prevState => ({
+          ...prevState,
           recordSecs: secs,
           recordTime: audioRecorderPlayer.mmss(secs),
-        });
+        }));
       });
       console.log(`uri: ${uri}`);
     } catch (error) {
@@ -91,41 +93,91 @@ const AudioPlayerRecorder = (): JSX.Element => {
     }
   }, []);
 
-  const onStopRecord = useCallback(async () => {
+  const onStopRecord = useCallback(async (): Promise<void> => {
     try {
       // Stop the recording and see what we've got
       const result = await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setReadyToPlay(true);
       setIsRecording(false);
-      setState({
-        ...state,
+      setState(prevState => ({
+        ...prevState,
         recordSecs: 0,
-      });
+        playTime: prevState.recordSecs
+          ? audioRecorderPlayer.mmss(prevState.recordSecs)
+          : '00:00',
+      }));
       console.log(result);
     } catch (error) {
       console.error('Oops! Failed to stop recording:', error);
     }
   }, []);
 
-  const onStartPlay = async () => {
-    const result = await audioRecorderPlayer.startPlayer(path);
-    audioRecorderPlayer.setVolume(1.0);
-    console.log(result);
-    audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
-      const secs = Math.floor(e.currentPosition / 1000);
-      if (e.currentPosition === e.duration) {
-        audioRecorderPlayer.stopPlayer();
-      }
-      setState({
-        ...state,
-        currentPositionSec: e.currentPosition,
-        currentDurationSec: e.duration,
-        playTime: audioRecorderPlayer.mmss(secs),
-        duration: audioRecorderPlayer.mmss(Math.floor(e.duration / 1000)),
+  const onStartPlay = useCallback(async () => {
+    if (isPlaying) {
+      return;
+    }
+    try {
+      const result = await audioRecorderPlayer.startPlayer(path);
+      setIsPlaying(true);
+      audioRecorderPlayer.setVolume(1.0);
+      console.log(result);
+      audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
+        const secs = Math.floor(e.currentPosition / 1000);
+        if (e.currentPosition === e.duration) {
+          audioRecorderPlayer.stopPlayer();
+        }
+        setState(prevState => ({
+          ...prevState,
+          currentPositionSec: e.currentPosition,
+          currentDurationSec: e.duration,
+          playTime: audioRecorderPlayer.mmss(secs),
+          duration: audioRecorderPlayer.mmss(Math.floor(e.duration / 1000)),
+        }));
+
+        if (e.currentPosition === e.duration) {
+          onStopPlay();
+          setState(prevState => ({
+            ...prevState,
+            currentPositionSec: 0,
+            currentDurationSec: 0,
+            playTime: prevState.currentDurationSec
+              ? audioRecorderPlayer.mmss(
+                  Math.floor(prevState.currentDurationSec / 1000),
+                )
+              : '00:00',
+          }));
+        }
       });
-    });
-  };
+    } catch (error) {
+      console.error('Oops! Failed to play the recorded note:', error);
+    }
+  }, []);
+
+  const onStopPlay = useCallback(async (): Promise<void> => {
+    if (isPlaying === false) {
+      return;
+    }
+    try {
+      await audioRecorderPlayer.stopPlayer();
+      audioRecorderPlayer.removePlayBackListener();
+      setIsPlaying(false);
+    } catch (error) {
+      console.error('Oops! Failed to stop player:', error);
+    }
+  }, []);
+
+  const onPausePlay = useCallback(async (): Promise<void> => {
+    if (isPlaying === false) {
+      return;
+    }
+    try {
+      await audioRecorderPlayer.pausePlayer();
+      setIsPlaying(false);
+    } catch (error) {
+      console.error('Oops! Failed to pause the recorded note:', error);
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -183,15 +235,10 @@ const AudioPlayerRecorder = (): JSX.Element => {
         {isPlayerEnabled ? (
           <>
             <IconButton
-              icon={
-                state.currentPositionSec &&
-                state.currentPositionSec !== state.currentDurationSec
-                  ? 'pause'
-                  : 'play'
-              }
+              icon={isPlaying ? 'pause' : 'play'}
               iconColor={theme.colors.primary}
               size={25}
-              onPress={() => onStartPlay()}
+              onPress={isPlaying ? () => onPausePlay() : () => onStartPlay()}
             />
             <View className="flex-column">
               <Image
