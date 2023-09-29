@@ -12,7 +12,12 @@ import AudioRecorderPlayer, {
   RecordBackType,
 } from 'react-native-audio-recorder-player';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import {IconButton, useTheme} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Avatar,
+  IconButton,
+  useTheme,
+} from 'react-native-paper';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -24,7 +29,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {isAndroid} from '@utils/helpers';
 
-import {AudioPlayerRecorderStateType} from './AudioPlayerRecorder.types';
+import {
+  AudioPlayerRecorderProps,
+  AudioPlayerRecorderStateType,
+  IsSentEnum,
+} from './AudioPlayerRecorder.types';
 
 const BlinkingMicIcon = memo(() => {
   const opacity = useSharedValue(0);
@@ -48,9 +57,12 @@ const BlinkingMicIcon = memo(() => {
 const BOTTOM_APPBAR_HEIGHT = 80;
 const FS = ReactNativeBlobUtil.fs;
 
-const AudioPlayerRecorder = (): JSX.Element => {
+const AudioPlayerRecorder = ({
+  onSendAudioNote,
+}: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
+  const [isSent, setIsSent] = useState<IsSentEnum>(IsSentEnum.Idle);
   const [readyToPlay, setReadyToPlay] = useState<boolean>();
   const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
   const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
@@ -77,8 +89,8 @@ const AudioPlayerRecorder = (): JSX.Element => {
     };
     try {
       await audioRecorderPlayer.startRecorder(path, audioSet);
-      setReadyToPlay(false);
       setIsRecording(true);
+      setReadyToPlay(false);
       audioRecorderPlayer.addRecordBackListener((e: RecordBackType) => {
         const secs = Math.floor(e.currentPosition / 1000);
         setState(prevState => ({
@@ -97,8 +109,8 @@ const AudioPlayerRecorder = (): JSX.Element => {
       // Stop the recording and see what we've got
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
-      setReadyToPlay(true);
       setIsRecording(false);
+      setReadyToPlay(true);
       setState(prevState => ({
         ...prevState,
         recordSecs: 0,
@@ -182,8 +194,20 @@ const AudioPlayerRecorder = (): JSX.Element => {
       const fileExists = await FS.exists(path);
       fileExists && FS.unlink(path);
       setIsPlayerEnabled(false);
+      setReadyToPlay(false);
     } catch (error) {
       console.error('Oops! Failed to remove the recorded note:', error);
+    }
+  }, []);
+
+  const onSendAudio = useCallback(async () => {
+    setIsSent(IsSentEnum.Sending);
+    try {
+      await onSendAudioNote();
+      setIsSent(IsSentEnum.Sent);
+    } catch (error) {
+      setIsSent(IsSentEnum.Error);
+      console.log('Oops! Failed to send recorded note:', error);
     }
   }, []);
 
@@ -262,12 +286,32 @@ const AudioPlayerRecorder = (): JSX.Element => {
                 {state.playTime}
               </Text>
             </View>
-            <IconButton
-              icon="trash-can-outline"
-              iconColor={theme.colors.error}
-              size={25}
-              onPress={() => onDiscardRecord()}
-            />
+            {isSent === IsSentEnum.Idle && (
+              <IconButton
+                icon="trash-can-outline"
+                iconColor={theme.colors.error}
+                size={25}
+                onPress={() => onDiscardRecord()}
+              />
+            )}
+            {isSent === IsSentEnum.Sent && (
+              <IconButton icon="check-circle" iconColor="#50C878" size={25} />
+            )}
+            {isSent === IsSentEnum.Sending && (
+              <ActivityIndicator
+                className="p-4"
+                animating={true}
+                size={20}
+                color={theme.colors.secondary}
+              />
+            )}
+            {isSent === IsSentEnum.Error && (
+              <IconButton
+                icon="alert-circle-outline"
+                iconColor={theme.colors.error}
+                size={25}
+              />
+            )}
           </>
         ) : (
           <>
@@ -297,15 +341,20 @@ const AudioPlayerRecorder = (): JSX.Element => {
         )}
       </View>
       <View className="flex-auto items-center">
-        <IconButton
-          icon="microphone"
-          mode="contained"
-          iconColor={theme.colors.onPrimary}
-          containerColor={theme.colors.primary}
-          size={20}
-          onLongPress={() => onStartRecord()}
-          onPressOut={() => onStopRecord()}
-        />
+        {isSent === IsSentEnum.Idle ? (
+          <IconButton
+            icon={readyToPlay ? 'send' : 'microphone'}
+            mode="contained"
+            iconColor={theme.colors.onPrimary}
+            containerColor={theme.colors.primary}
+            size={20}
+            onPress={readyToPlay ? () => onSendAudio() : undefined}
+            onLongPress={readyToPlay ? undefined : () => onStartRecord()}
+            onPressOut={readyToPlay ? undefined : () => onStopRecord()}
+          />
+        ) : (
+          <Avatar.Text size={35} label="FD" />
+        )}
       </View>
     </View>
   );
