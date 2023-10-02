@@ -60,7 +60,7 @@ const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = ({
   onSendAudioNote,
-  progressDisplayMode = 'soundwave',
+  progressDisplayMode = 'progressBar',
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
