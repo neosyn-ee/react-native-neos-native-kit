@@ -21,7 +21,10 @@ const VideoAudioComment = ({video}: VideoAudioCommentProps) => {
       <View className="flex-1" style={{marginBottom: BOTTOM_APPBAR_HEIGHT}}>
         <VideoPlayer {...video} />
       </View>
-      <AudioPlayerRecorder onSendAudioNote={onSendAudioNote} />
+      <AudioPlayerRecorder
+        onSendAudioNote={onSendAudioNote}
+        progressDisplayMode="progressBar"
+      />
     </>
   );
 };

@@ -16,6 +16,7 @@ import {
   ActivityIndicator,
   Avatar,
   IconButton,
+  ProgressBar,
   useTheme,
 } from 'react-native-paper';
 import Animated, {
@@ -35,7 +36,7 @@ import {
   IsSentEnum,
 } from './AudioPlayerRecorder.types';
 
-const BlinkingMicIcon = memo(() => {
+const BlinkingMicIcon = memo((): JSX.Element => {
   const opacity = useSharedValue(0);
 
   // Set the opacity value to animate between 0 and 1
@@ -59,6 +60,7 @@ const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = ({
   onSendAudioNote,
+  progressDisplayMode = 'soundwave',
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -79,6 +81,7 @@ const AudioPlayerRecorder = ({
   const audioRecorderPlayer = new AudioRecorderPlayer();
   audioRecorderPlayer.setSubscriptionDuration(0.09);
   const path = isAndroid() ? `${FS.dirs.CacheDir}/sound.m4a` : 'sound.m4a';
+  const progress = useSharedValue(0);
 
   const onStartRecord = useCallback(async (): Promise<void> => {
     const audioSet: AudioSet = {
@@ -136,6 +139,10 @@ const AudioPlayerRecorder = ({
         const secs = Math.floor(e.currentPosition / 1000);
         if (e.currentPosition === e.duration) {
           audioRecorderPlayer.stopPlayer();
+        }
+        if (progressDisplayMode === 'progressBar') {
+          const x = e.currentPosition / e.duration;
+          progress.value = Number(x.toFixed(2));
         }
         setState(prevState => ({
           ...prevState,
@@ -207,7 +214,10 @@ const AudioPlayerRecorder = ({
       await onSendAudioNote();
       setIsSent(IsSentEnum.Sent);
       const date = new Date(Date.now());
-      const formatted = `${date.getHours()}:${date.getMinutes()}`;
+      const formatted = date.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
       setSendingTime(formatted);
     } catch (error) {
       setIsSent(IsSentEnum.Error);
@@ -255,6 +265,16 @@ const AudioPlayerRecorder = ({
     }
   }, [isRecording]);
 
+  const playTimeClassName =
+    progressDisplayMode === 'progressBar'
+      ? 'absolute left-1 top-4'
+      : 'absolute left-1 top-10';
+
+  const sendingTimeClassName =
+    progressDisplayMode === 'progressBar'
+      ? 'absolute right-1 top-4'
+      : 'absolute right-0 top-10';
+
   const {bottom} = useSafeAreaInsets();
   const theme = useTheme();
 
@@ -276,13 +296,21 @@ const AudioPlayerRecorder = ({
               size={25}
               onPress={isPlaying ? () => onPausePlay() : () => onStartPlay()}
             />
-            <View className="flex-column">
-              <Image
-                className="flex-1 w-[175px]"
-                source={require('@assets/img/soundwaves.png')}
-              />
+            <View className="flex-column flex-1 p-1">
+              {progressDisplayMode === 'progressBar' ? (
+                <ProgressBar
+                  className="w-full"
+                  progress={progress.value}
+                  color={theme.colors.primary}
+                />
+              ) : (
+                <Image
+                  className="flex-1 w-full"
+                  source={require('@assets/img/soundwaves.png')}
+                />
+              )}
               <Text
-                className="absolute left-0 top-10"
+                className={playTimeClassName}
                 style={{
                   fontSize: 13,
                   color: theme.colors.onSecondaryContainer,
@@ -291,7 +319,7 @@ const AudioPlayerRecorder = ({
               </Text>
               {sendingTime && (
                 <Text
-                  className="absolute right-0 top-10"
+                  className={sendingTimeClassName}
                   style={{
                     fontSize: 13,
                     color: theme.colors.onSecondaryContainer,
@@ -312,11 +340,15 @@ const AudioPlayerRecorder = ({
               <IconButton icon="check-circle" iconColor="#50C878" size={25} />
             )}
             {isSent === IsSentEnum.Sending && (
-              <ActivityIndicator
-                className="p-4"
-                animating={true}
-                size={20}
-                color={theme.colors.secondary}
+              <IconButton
+                icon={() => (
+                  <ActivityIndicator
+                    animating={true}
+                    size={20}
+                    color={theme.colors.secondary}
+                  />
+                )}
+                size={25}
               />
             )}
             {isSent === IsSentEnum.Error && (
