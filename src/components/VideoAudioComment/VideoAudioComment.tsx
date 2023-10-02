@@ -11,7 +11,7 @@ const BOTTOM_APPBAR_HEIGHT = 80;
 
 const VideoAudioComment = ({video}: VideoAudioCommentProps) => {
   const onSendAudioNote = async (): Promise<any> => {
-    await delay(200);
+    await delay(500);
     // throw new Error('This is a fake error message');
     return {status: 'ok', message: 'Audio note sent successfully'};
   };

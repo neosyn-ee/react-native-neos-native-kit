@@ -207,7 +207,7 @@ const AudioPlayerRecorder = ({
       setIsSent(IsSentEnum.Sent);
     } catch (error) {
       setIsSent(IsSentEnum.Error);
-      console.log('Oops! Failed to send recorded note:', error);
+      console.error(error);
     }
   }, []);
 
@@ -350,7 +350,9 @@ const AudioPlayerRecorder = ({
             size={20}
             onPress={readyToPlay ? () => onSendAudio() : undefined}
             onLongPress={readyToPlay ? undefined : () => onStartRecord()}
-            onPressOut={readyToPlay ? undefined : () => onStopRecord()}
+            onPressOut={
+              readyToPlay || !isRecording ? undefined : () => onStopRecord()
+            }
           />
         ) : (
           <Avatar.Text size={35} label="FD" />
