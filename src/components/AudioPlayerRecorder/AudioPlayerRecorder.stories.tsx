@@ -30,6 +30,12 @@ const onSendAudioNote = async (): Promise<any> => {
 export const Default: StoryObj<AudioPlayerRecorderProps> = {
   args: {
     onSendAudioNote,
-    progressDisplayMode: 'progressBar',
+  },
+};
+
+export const Soundwave: StoryObj<AudioPlayerRecorderProps> = {
+  args: {
+    onSendAudioNote,
+    progressDisplayMode: 'soundwave',
   },
 };
