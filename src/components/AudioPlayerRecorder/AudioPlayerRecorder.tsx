@@ -63,6 +63,7 @@ const AudioPlayerRecorder = ({
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
   const [isSent, setIsSent] = useState<IsSentEnum>(IsSentEnum.Idle);
+  const [sendingTime, setSendingTime] = useState<string>();
   const [readyToPlay, setReadyToPlay] = useState<boolean>();
   const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
   const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
@@ -205,6 +206,9 @@ const AudioPlayerRecorder = ({
     try {
       await onSendAudioNote();
       setIsSent(IsSentEnum.Sent);
+      const date = new Date(Date.now());
+      const formatted = `${date.getHours()}:${date.getMinutes()}`;
+      setSendingTime(formatted);
     } catch (error) {
       setIsSent(IsSentEnum.Error);
       console.error(error);
@@ -285,6 +289,16 @@ const AudioPlayerRecorder = ({
                 }}>
                 {state.playTime}
               </Text>
+              {sendingTime && (
+                <Text
+                  className="absolute right-0 top-10"
+                  style={{
+                    fontSize: 13,
+                    color: theme.colors.onSecondaryContainer,
+                  }}>
+                  {sendingTime}
+                </Text>
+              )}
             </View>
             {isSent === IsSentEnum.Idle && (
               <IconButton
