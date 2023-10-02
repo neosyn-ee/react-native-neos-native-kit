@@ -22,6 +22,7 @@ export const Player: FC<PlayerProps> = memo(
     setFullscreen,
     playerInfo,
     disableControls,
+    resizeMode,
     ...props
   }) => {
     const videoRef = useRef<Video | null>(null);
@@ -41,7 +42,9 @@ export const Player: FC<PlayerProps> = memo(
       setPaused(true);
     };
     const handleOnEnterFullscreen = () => {
-      setFullscreen?.(true);
+      if (resizeMode !== 'cover') {
+        setFullscreen?.(true);
+      }
     };
     const handleOnExitFullscreen = () => {
       setFullscreen?.(false);
@@ -61,7 +64,6 @@ export const Player: FC<PlayerProps> = memo(
         className="h-full"
         source={source}
         isFullscreen={isFullscreen}
-        resizeMode="contain"
         toggleResizeModeOnFullscreen={false}
         onLoad={handleOnLoad}
         onPlay={handleOnPlay}
@@ -80,8 +82,8 @@ export const Player: FC<PlayerProps> = memo(
         disableBack={!isFullscreen || disableControls}
         controlAnimationTiming={250}
         controlTimeoutDelay={3000}
-        showOnStart={false}
         paused={paused}
+        resizeMode={resizeMode}
         {...props}
       />
     );

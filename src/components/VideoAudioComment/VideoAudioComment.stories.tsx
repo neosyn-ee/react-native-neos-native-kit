@@ -24,6 +24,9 @@ export const Default: StoryObj<VideoAudioCommentProps> = {
   args: {
     video: {
       height: '100%',
+      autoplay: true,
+      showOnStart: false,
+      resizeMode: 'cover',
       posterResizeMode: 'cover',
       muted: true,
       thumb:
