@@ -42,7 +42,7 @@ export const Player: FC<PlayerProps> = memo(
       setPaused(true);
     };
     const handleOnEnterFullscreen = () => {
-      if (isFullscreen !== false) {
+      if (resizeMode !== 'cover') {
         setFullscreen?.(true);
       }
     };
