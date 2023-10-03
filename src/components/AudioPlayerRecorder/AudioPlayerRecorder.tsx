@@ -61,6 +61,7 @@ const FS = ReactNativeBlobUtil.fs;
 const AudioPlayerRecorder = ({
   onSendAudioNote,
   progressDisplayMode = 'progressBar',
+  playTimeDisplayMode = 'default',
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -137,6 +138,9 @@ const AudioPlayerRecorder = ({
       audioRecorderPlayer.setVolume(1.0);
       audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
         const secs = Math.floor(e.currentPosition / 1000);
+        const remainingTime = e.duration - e.currentPosition;
+        const remainingTimeInSec = Math.round(remainingTime / 1000);
+        const durationInSec = Math.floor(e.duration / 1000);
         if (e.currentPosition === e.duration) {
           audioRecorderPlayer.stopPlayer();
         }
@@ -148,21 +152,23 @@ const AudioPlayerRecorder = ({
           ...prevState,
           currentPositionSec: e.currentPosition,
           currentDurationSec: e.duration,
-          playTime: audioRecorderPlayer.mmss(secs),
+          playTime: audioRecorderPlayer.mmss(
+            playTimeDisplayMode === 'default' ? secs : remainingTimeInSec,
+          ),
           duration: audioRecorderPlayer.mmss(Math.floor(e.duration / 1000)),
         }));
 
-        if (e.currentPosition === e.duration) {
+        if (!remainingTime) {
           onStopPlay();
           setState(prevState => ({
             ...prevState,
             currentPositionSec: 0,
             currentDurationSec: 0,
-            playTime: prevState.currentDurationSec
-              ? audioRecorderPlayer.mmss(
-                  Math.floor(prevState.currentDurationSec / 1000),
-                )
-              : '00:00',
+            playTime: audioRecorderPlayer.mmss(
+              playTimeDisplayMode === 'default'
+                ? durationInSec
+                : remainingTimeInSec,
+            ),
           }));
         }
       });

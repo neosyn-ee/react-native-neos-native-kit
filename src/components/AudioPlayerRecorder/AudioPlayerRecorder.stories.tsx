@@ -3,14 +3,24 @@ import {ComponentMeta} from '@storybook/react-native';
 import {SingletonHooksContainer} from 'react-singleton-hook';
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
-import {delay} from '@utils/helpers';
+import {onSendAudioNote} from '@components/VideoAudioComment/VideoAudioComment';
 
 import {AudioPlayerRecorderProps} from './AudioPlayerRecorder.types';
 
 export default {
   component: AudioPlayerRecorder,
-  title: 'Example/AudioPlayerRecorder',
+  title: 'AudioPlayerRecorder',
   tags: ['autodocs'],
+  argTypes: {
+    progressDisplayMode: {
+      control: {type: 'select', required: false},
+      options: ['progressBar', 'soundwave'],
+    },
+    playTimeDisplayMode: {
+      control: {type: 'select', required: false},
+      options: ['default', 'countdown'],
+    },
+  },
   decorators: [
     Story => (
       <>
@@ -21,15 +31,19 @@ export default {
   ],
 } as ComponentMeta<typeof AudioPlayerRecorder>;
 
-const onSendAudioNote = async (): Promise<any> => {
-  await delay(500);
-  // throw new Error('This is a fake error message');
-  return {status: 'ok', message: 'Audio note sent successfully'};
-};
-
 export const Default: StoryObj<AudioPlayerRecorderProps> = {
   args: {
     onSendAudioNote,
+    progressDisplayMode: 'progressBar',
+    playTimeDisplayMode: 'default',
+  },
+};
+
+export const Countdown: StoryObj<AudioPlayerRecorderProps> = {
+  args: {
+    onSendAudioNote,
+    progressDisplayMode: 'progressBar',
+    playTimeDisplayMode: 'countdown',
   },
 };
 
@@ -37,5 +51,6 @@ export const Soundwave: StoryObj<AudioPlayerRecorderProps> = {
   args: {
     onSendAudioNote,
     progressDisplayMode: 'soundwave',
+    playTimeDisplayMode: 'default',
   },
 };

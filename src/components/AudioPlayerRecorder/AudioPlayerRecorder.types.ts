@@ -1,6 +1,7 @@
 export type AudioPlayerRecorderProps = {
   onSendAudioNote: () => Promise<any>;
   progressDisplayMode?: 'progressBar' | 'soundwave';
+  playTimeDisplayMode?: 'default' | 'countdown';
 };
 
 export type AudioPlayerRecorderStateType = {
