@@ -40,7 +40,7 @@
     "react-native-audio-recorder-player": "^3.6.0",
     "react-native-blob-util": "^0.19.1",
     "react-native-gesture-handler": "^2.12.1",
-    "react-native-media-console": "^2.0.7",
+    "react-native-media-console": "^2.1.0",
     "react-native-orientation-locker": "^1.5.0",
     "react-native-paper": "^5.10.3",
     "react-native-permissions": "^3.9.2",
