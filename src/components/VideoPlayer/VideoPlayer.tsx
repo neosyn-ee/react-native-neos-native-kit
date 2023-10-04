@@ -42,9 +42,7 @@ export const Player: FC<PlayerProps> = memo(
       setPaused(true);
     };
     const handleOnEnterFullscreen = () => {
-      if (resizeMode !== 'cover') {
-        setFullscreen?.(true);
-      }
+      setFullscreen?.(true);
     };
     const handleOnExitFullscreen = () => {
       setFullscreen?.(false);
@@ -94,15 +92,15 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   width,
   height,
   thumb,
-  isFullscreen,
-  autoplay,
+  isFullscreen = false,
+  autoplay = false,
   fullscreenOrientation,
   fullscreenAutorotate,
   disableControlsWhen,
   ...props
 }) => {
-  const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen ?? false);
-  const [paused, setPaused] = useState<boolean>(!autoplay ?? false);
+  const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen);
+  const [paused, setPaused] = useState<boolean>(!autoplay);
   const {isLandscape} = useScreenOrientation();
   const playerInfo = useRef({
     elapsedSecs: 0,
@@ -143,6 +141,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       isFullscreen={fullscreen}
       playerInfo={playerInfo}
       disableControls={disableControls}
+      disableOverlay={disableControls}
       paused={paused}
       {...props}
     />

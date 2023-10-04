@@ -24,7 +24,6 @@ export default {
       height: '100%',
       autoplay: true,
       showOnStart: false,
-      resizeMode: 'cover',
       disableFullscreen: true,
       posterResizeMode: 'cover',
       muted: true,
