@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
@@ -15,10 +15,60 @@ export const onSendAudioNote = async (): Promise<any> => {
 };
 
 const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
+  const [videoPlayerProps, setNewPlayerProps] = useState({
+    autoplay: true,
+    showOnStart: true,
+    alwaysShowControls: true,
+    controlAnimationTiming: 0,
+    disableBack: true,
+    disableVolume: false,
+    disablePlayPause: false,
+    disableFullscreen: true,
+    disableSeekButtons: true,
+    tapAnywhereToPause: true,
+  });
+
+  const onEnd = () => {
+    setNewPlayerProps(prevState => ({
+      ...prevState,
+      disableVolume: false,
+      disablePlayPause: false,
+      disableOverlay: false,
+    }));
+  };
+
+  const onPause = () => {
+    setNewPlayerProps(prevState => ({
+      ...prevState,
+      disableVolume: false,
+      disablePlayPause: false,
+      disableOverlay: false,
+    }));
+  };
+
+  const onPlay = () => {
+    setTimeout(
+      () =>
+        setNewPlayerProps(prevState => ({
+          ...prevState,
+          disableVolume: true,
+          disablePlayPause: true,
+          disableOverlay: true,
+        })),
+      1000,
+    );
+  };
+
   return (
     <>
       <View className="flex-1" style={{marginBottom: BOTTOM_APPBAR_HEIGHT}}>
-        <VideoPlayer {...video} />
+        <VideoPlayer
+          {...video}
+          {...videoPlayerProps}
+          onPlay={onPlay}
+          onPause={onPause}
+          onEnd={onEnd}
+        />
       </View>
       <AudioPlayerRecorder {...audioPlayer} />
     </>

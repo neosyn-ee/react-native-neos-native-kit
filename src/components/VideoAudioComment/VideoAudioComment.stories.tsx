@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 import {SingletonHooksContainer} from 'react-singleton-hook';
@@ -22,11 +24,7 @@ export default {
   args: {
     video: {
       height: '100%',
-      autoplay: true,
-      showOnStart: false,
-      disableFullscreen: true,
       posterResizeMode: 'cover',
-      muted: true,
       thumb:
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg',
       source: {
