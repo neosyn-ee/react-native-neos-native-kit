@@ -78,8 +78,6 @@ export const Player: FC<PlayerProps> = memo(
         disableVolume={disableControls}
         disableTimer={disableControls}
         disableBack={!isFullscreen || disableControls}
-        controlAnimationTiming={250}
-        controlTimeoutDelay={3000}
         paused={paused}
         resizeMode={resizeMode}
         {...props}
