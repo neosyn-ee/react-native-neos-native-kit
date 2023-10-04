@@ -624,6 +624,30 @@ _NativeWindStyleSheet.create({
       paddingTop: 12,
       paddingBottom: 12,
     },
+    absolute: {
+      position: 'absolute',
+    },
+    'bottom-0': {
+      bottom: 0,
+    },
+    'left-0': {
+      left: 0,
+    },
+    'left-1': {
+      left: 4,
+    },
+    'right-0': {
+      right: 0,
+    },
+    'right-1': {
+      right: 4,
+    },
+    'top-10': {
+      top: 40,
+    },
+    'top-4': {
+      top: 16,
+    },
     'mb-2': {
       marginBottom: 8,
     },
@@ -633,10 +657,18 @@ _NativeWindStyleSheet.create({
     'h-full': {
       height: '100%',
     },
+    'w-full': {
+      width: '100%',
+    },
     'flex-1': {
       flexGrow: 1,
       flexShrink: 1,
       flexBasis: '0%',
+    },
+    'flex-auto': {
+      flexGrow: 1,
+      flexShrink: 1,
+      flexBasis: 'auto',
     },
     'flex-row': {
       flexDirection: 'row',
@@ -650,11 +682,23 @@ _NativeWindStyleSheet.create({
     'bg-[#fff]': {
       backgroundColor: '#fff',
     },
+    'p-1': {
+      paddingTop: 4,
+      paddingRight: 4,
+      paddingBottom: 4,
+      paddingLeft: 4,
+    },
     'p-3': {
       paddingTop: 12,
       paddingRight: 12,
       paddingBottom: 12,
       paddingLeft: 12,
+    },
+    'p-4': {
+      paddingTop: 16,
+      paddingRight: 16,
+      paddingBottom: 16,
+      paddingLeft: 16,
     },
     'font-black': {
       fontWeight: '900',
@@ -666,6 +710,9 @@ _NativeWindStyleSheet.create({
     'gap-3.children@0': {
       marginLeft: 12,
       marginTop: 12,
+    },
+    elevation: {
+      elevation: 3,
     },
   },
   atRules: {

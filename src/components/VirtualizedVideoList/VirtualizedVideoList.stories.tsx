@@ -8,7 +8,7 @@ import {VirtualizedVideoList} from '@components/VirtualizedVideoList';
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
 export default {
-  title: 'Example/VirtualizedVideoList',
+  title: 'VirtualizedVideoList',
   component: VirtualizedVideoList,
   tags: ['autodocs'],
   decorators: [

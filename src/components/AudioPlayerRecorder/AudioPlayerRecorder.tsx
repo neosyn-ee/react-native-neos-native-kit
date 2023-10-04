@@ -60,6 +60,7 @@ const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = ({
   onSendAudioNote,
+  setPaused,
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
 }: AudioPlayerRecorderProps): JSX.Element => {
@@ -93,6 +94,7 @@ const AudioPlayerRecorder = ({
       AVFormatIDKeyIOS: AVEncodingOption.aac,
     };
     try {
+      setPaused?.(prev => (prev ? prev : true));
       await audioRecorderPlayer.startRecorder(path, audioSet);
       setIsRecording(true);
       setReadyToPlay(false);
@@ -133,6 +135,7 @@ const AudioPlayerRecorder = ({
       return;
     }
     try {
+      setPaused?.(prev => (prev ? prev : true));
       await audioRecorderPlayer.startPlayer(path);
       setIsPlaying(true);
       audioRecorderPlayer.setVolume(1.0);
