@@ -60,7 +60,7 @@ const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = ({
   onSendAudioNote,
-  setPaused,
+  setMuted,
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
 }: AudioPlayerRecorderProps): JSX.Element => {
@@ -94,7 +94,7 @@ const AudioPlayerRecorder = ({
       AVFormatIDKeyIOS: AVEncodingOption.aac,
     };
     try {
-      setPaused?.(prev => (prev ? prev : true));
+      setMuted?.(true);
       await audioRecorderPlayer.startRecorder(path, audioSet);
       setIsRecording(true);
       setReadyToPlay(false);
@@ -114,6 +114,7 @@ const AudioPlayerRecorder = ({
   const onStopRecord = useCallback(async (): Promise<void> => {
     try {
       // Stop the recording and see what we've got
+      setMuted?.(false);
       await audioRecorderPlayer.stopRecorder();
       audioRecorderPlayer.removeRecordBackListener();
       setIsRecording(false);
@@ -135,7 +136,7 @@ const AudioPlayerRecorder = ({
       return;
     }
     try {
-      setPaused?.(prev => (prev ? prev : true));
+      setMuted?.(true);
       await audioRecorderPlayer.startPlayer(path);
       setIsPlaying(true);
       audioRecorderPlayer.setVolume(1.0);
@@ -185,6 +186,7 @@ const AudioPlayerRecorder = ({
       return;
     }
     try {
+      setMuted?.(false);
       await audioRecorderPlayer.stopPlayer();
       audioRecorderPlayer.removePlayBackListener();
       setIsPlaying(false);
@@ -198,6 +200,7 @@ const AudioPlayerRecorder = ({
       return;
     }
     try {
+      setMuted?.(false);
       await audioRecorderPlayer.pausePlayer();
       setIsPlaying(false);
     } catch (error) {

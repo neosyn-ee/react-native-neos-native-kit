@@ -15,7 +15,7 @@ export const onSendAudioNote = async (): Promise<any> => {
 };
 
 const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
-  const [paused, setPaused] = useState<boolean>();
+  const [muted, setMuted] = useState<boolean>(false);
   const [videoPlayerProps, setNewPlayerProps] = useState({
     autoplay: true,
     showOnStart: true,
@@ -56,7 +56,7 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
   };
 
   const onPlay = () => {
-    setPaused(false);
+    setMuted(false);
     hideControls();
   };
 
@@ -66,13 +66,13 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
         <VideoPlayer
           {...video}
           {...videoPlayerProps}
-          paused={paused}
+          muted={muted}
           onPlay={onPlay}
           onPause={onPause}
           onEnd={onEnd}
         />
       </View>
-      <AudioPlayerRecorder {...audioPlayer} setPaused={setPaused} />
+      <AudioPlayerRecorder {...audioPlayer} setMuted={setMuted} />
     </>
   );
 };
