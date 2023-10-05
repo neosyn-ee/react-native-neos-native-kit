@@ -17,17 +17,29 @@ export const Player: FC<PlayerProps> = memo(
   ({
     source,
     isFullscreen,
+    paused,
+    setPaused,
     setFullscreen,
     playerInfo,
     disableControls,
+    resizeMode,
     ...props
   }) => {
     const videoRef = useRef<Video | null>(null);
 
-    const handleOnLoadOrPlay = () => {
+    const handleOnLoad = () => {
       if (playerInfo?.current.elapsedSecs) {
         videoRef.current!.seek(playerInfo?.current.elapsedSecs);
       }
+    };
+    const handleOnPlay = () => {
+      handleOnLoad();
+      if (paused) {
+        setPaused(false);
+      }
+    };
+    const handleOnPause = () => {
+      setPaused(true);
     };
     const handleOnEnterFullscreen = () => {
       setFullscreen?.(true);
@@ -39,9 +51,6 @@ export const Player: FC<PlayerProps> = memo(
       playerInfo!.current.elapsedSecs = currentTime;
     };
     const handleOnSeek = ({seekTime}: OnSeekData) => {
-      const {
-        props: {paused},
-      } = videoRef.current!;
       if (paused) {
         playerInfo!.current.elapsedSecs = seekTime;
       }
@@ -53,10 +62,10 @@ export const Player: FC<PlayerProps> = memo(
         className="h-full"
         source={source}
         isFullscreen={isFullscreen}
-        resizeMode="contain"
         toggleResizeModeOnFullscreen={false}
-        onPlay={handleOnLoadOrPlay}
-        onLoad={handleOnLoadOrPlay}
+        onLoad={handleOnLoad}
+        onPlay={handleOnPlay}
+        onPause={handleOnPause}
         onBack={handleOnExitFullscreen}
         onEnterFullscreen={handleOnEnterFullscreen}
         onExitFullscreen={handleOnExitFullscreen}
@@ -69,9 +78,8 @@ export const Player: FC<PlayerProps> = memo(
         disableVolume={disableControls}
         disableTimer={disableControls}
         disableBack={!isFullscreen || disableControls}
-        controlAnimationTiming={250}
-        controlTimeoutDelay={3000}
-        showOnStart={false}
+        paused={paused}
+        resizeMode={resizeMode}
         {...props}
       />
     );
@@ -82,16 +90,19 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   width,
   height,
   thumb,
-  isFullscreen,
-  autoplay,
+  isFullscreen = false,
+  autoplay = false,
   fullscreenOrientation,
   fullscreenAutorotate,
   disableControlsWhen,
   ...props
 }) => {
-  const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen ?? false);
+  const [fullscreen, setFullscreen] = useState<boolean>(isFullscreen);
+  const [paused, setPaused] = useState<boolean>(!autoplay);
   const {isLandscape} = useScreenOrientation();
-  const playerInfo = useRef({elapsedSecs: 0, paused: false});
+  const playerInfo = useRef({
+    elapsedSecs: 0,
+  });
   const handleFullscreenChanges = () => {
     if (fullscreenAutorotate) {
       const autoFullscreenOnRotateTriggered: boolean =
@@ -106,6 +117,9 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       }
     }
   };
+  useEffect(() => {
+    setPaused(!autoplay);
+  }, [autoplay]);
   useEffect(handleFullscreenChanges, [isLandscape]);
   if (fullscreen) {
     StatusBar.setHidden(true);
@@ -120,11 +134,13 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const RenderedPlayer = (
     <Player
       poster={thumb ?? undefined}
+      setPaused={setPaused}
       setFullscreen={setFullscreen}
       isFullscreen={fullscreen}
       playerInfo={playerInfo}
       disableControls={disableControls}
-      paused={!autoplay || playerInfo.current.paused}
+      disableOverlay={disableControls}
+      paused={paused}
       {...props}
     />
   );

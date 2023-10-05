@@ -1,1 +1,1 @@
-export * as VirtualizedVideoList from './VirtualizedVideoList';
+export {default as VirtualizedVideoList} from './VirtualizedVideoList';

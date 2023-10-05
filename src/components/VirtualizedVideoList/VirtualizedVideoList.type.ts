@@ -5,5 +5,5 @@ export type VirtualizedVideoListProps = {
   paginated?: boolean;
   pagesNum?: number;
   viewAreaCoveragePercentThreshold?: number;
-  fetchData: (page: number) => Promise<void | number>;
+  fetchData?: (page: number) => Promise<void | number>;
 };

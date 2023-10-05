@@ -8,7 +8,7 @@ import VideoPlayer from './VideoPlayer';
 import {VideoPlayerProps} from './VideoPlayer.type';
 
 export default {
-  title: 'Example/VideoPlayer',
+  title: 'VideoPlayer',
   component: VideoPlayer,
   argTypes: {
     source: {
