@@ -29,7 +29,7 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
     tapAnywhereToPause: true,
   });
 
-  const onEnd = () => {
+  const showControls = () => {
     setNewPlayerProps(prevState => ({
       ...prevState,
       disableVolume: false,
@@ -38,27 +38,26 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
     }));
   };
 
-  const onPause = () => {
+  const hideControls = () => {
     setNewPlayerProps(prevState => ({
       ...prevState,
-      disableVolume: false,
-      disablePlayPause: false,
-      disableOverlay: false,
+      disableVolume: true,
+      disablePlayPause: true,
+      disableOverlay: true,
     }));
+  };
+
+  const onEnd = () => {
+    showControls();
+  };
+
+  const onPause = () => {
+    showControls();
   };
 
   const onPlay = () => {
     setPaused(false);
-    setTimeout(
-      () =>
-        setNewPlayerProps(prevState => ({
-          ...prevState,
-          disableVolume: true,
-          disablePlayPause: true,
-          disableOverlay: true,
-        })),
-      1000,
-    );
+    hideControls();
   };
 
   return (
