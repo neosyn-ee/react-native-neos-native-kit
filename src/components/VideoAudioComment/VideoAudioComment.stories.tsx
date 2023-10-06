@@ -5,9 +5,15 @@ import {ComponentMeta} from '@storybook/react-native';
 import {SingletonHooksContainer} from 'react-singleton-hook';
 
 import {VideoAudioComment} from '@components/VideoAudioComment';
+import {delay} from '@utils/helpers';
 
-import {onSendAudioNote} from './VideoAudioComment';
 import {VideoAudioCommentProps} from './VideoAudioComment.types';
+
+const onSendAudioNote = async (): Promise<any> => {
+  await delay(500);
+  // throw new Error('This is a fake error message');
+  return {status: 'ok', message: 'Audio note sent successfully'};
+};
 
 export default {
   component: VideoAudioComment,
@@ -44,6 +50,7 @@ export default {
 
 export const Default: StoryObj<VideoAudioCommentProps> = {
   args: {
+    onSendAudioNote,
     audioPlayer: {
       onSendAudioNote,
       progressDisplayMode: 'soundwave',
