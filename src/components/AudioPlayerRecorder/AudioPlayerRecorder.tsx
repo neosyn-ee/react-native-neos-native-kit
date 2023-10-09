@@ -11,7 +11,7 @@ import AudioRecorderPlayer, {
   PlayBackType,
   RecordBackType,
 } from 'react-native-audio-recorder-player';
-import ReactNativeBlobUtil from 'react-native-blob-util';
+import RNFetchBlob from 'react-native-blob-util';
 import {
   ActivityIndicator,
   Avatar,
@@ -56,9 +56,9 @@ const BlinkingMicIcon = memo((): JSX.Element => {
 });
 
 const BOTTOM_APPBAR_HEIGHT = 80;
-const FS = ReactNativeBlobUtil.fs;
 
 const AudioPlayerRecorder = ({
+  fileName = 'nota audio',
   onSendAudioNote,
   setMuted,
   progressDisplayMode = 'progressBar',
@@ -82,7 +82,9 @@ const AudioPlayerRecorder = ({
 
   const audioRecorderPlayer = new AudioRecorderPlayer();
   audioRecorderPlayer.setSubscriptionDuration(0.09);
-  const path = isAndroid() ? `${FS.dirs.CacheDir}/sound.m4a` : 'sound.m4a';
+  const path = isAndroid()
+    ? `${RNFetchBlob.fs.dirs.CacheDir}/${fileName}.m4a`
+    : `${fileName}.m4a`;
   const progress = useSharedValue(0);
 
   const onStartRecord = useCallback(async (): Promise<void> => {
@@ -211,8 +213,8 @@ const AudioPlayerRecorder = ({
   const onDiscardRecord = useCallback(async (): Promise<void> => {
     onStopPlay();
     try {
-      const fileExists = await FS.exists(path);
-      fileExists && FS.unlink(path);
+      const fileExists = await RNFetchBlob.fs.exists(path);
+      fileExists && RNFetchBlob.fs.unlink(path);
       setIsPlayerEnabled(false);
       setReadyToPlay(false);
     } catch (error) {
@@ -223,26 +225,32 @@ const AudioPlayerRecorder = ({
   const onSendAudio = useCallback(async () => {
     setIsSent(IsSentEnum.Sending);
     try {
-      await onSendAudioNote();
-      setIsSent(IsSentEnum.Sent);
-      const date = new Date(Date.now());
-      const formatted = date.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-      setSendingTime(formatted);
+      const fileExists = await RNFetchBlob.fs.exists(path);
+      const fileContent = await RNFetchBlob.fs.readFile(path, 'base64');
+      const res =
+        fileExists &&
+        fileContent &&
+        (await onSendAudioNote(fileName, undefined, fileContent));
+      if (res) {
+        setIsSent(IsSentEnum.Sent);
+        const date = new Date(Date.now());
+        const formatted = date.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        setSendingTime(formatted);
+      }
     } catch (error) {
       setIsSent(IsSentEnum.Error);
-      console.error(error);
     }
   }, []);
 
   useEffect(() => {
     return () => {
       // remove file from cache by specifying a path
-      FS.exists(path).then(exist => {
+      RNFetchBlob.fs.exists(path).then(exist => {
         if (exist) {
-          FS.unlink(path);
+          RNFetchBlob.fs.unlink(path);
         }
       });
     };
@@ -251,11 +259,12 @@ const AudioPlayerRecorder = ({
   useEffect(() => {
     !readyToPlay && isPlayerEnabled && setIsPlayerEnabled(false);
     readyToPlay &&
-      FS.exists(path)
+      RNFetchBlob.fs
+        .exists(path)
         .then(exist => {
           return new Promise((resolve, reject) => {
             if (exist) {
-              resolve(FS.readFile(path, 'base64'));
+              resolve(RNFetchBlob.fs.readFile(path, 'base64'));
             } else {
               const error = new Error("File doesn't exist");
               reject(error);
