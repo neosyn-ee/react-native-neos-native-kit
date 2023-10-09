@@ -1,5 +1,10 @@
 export type AudioPlayerRecorderProps = {
-  onSendAudioNote: () => Promise<any>;
+  fileName?: string;
+  onSendAudioNote: (
+    fileName: string,
+    filePath?: string,
+    fileSource?: string,
+  ) => Promise<any>;
   setMuted?: React.Dispatch<React.SetStateAction<boolean>>;
   progressDisplayMode?: 'progressBar' | 'soundwave';
   playTimeDisplayMode?: 'default' | 'countdown';
