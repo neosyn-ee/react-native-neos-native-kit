@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Linking, Text, View} from 'react-native';
 
 import {
   Camera,
@@ -9,9 +9,11 @@ import {
 
 import {useIsForeground} from '@hooks/useIsForeground';
 
+import CaptureButton from './CaptureButton';
+
 const CameraScreen = () => {
   const camera = useRef<Camera>(null);
-  const [isCameraInitialized, setCameraInitialized] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
   const [_hasMicrophonePermission, setHasMicrophonePermission] =
     useState(false);
   const [cameraPosition, _setCameraPosition] = useState<'front' | 'back'>(
@@ -23,17 +25,33 @@ const CameraScreen = () => {
   const isForeground = useIsForeground();
   const isActive = isForeground && isFocused;
 
+  const [_imageSource, setImageSource] = useState<string | undefined>();
+  const [flash, _setFlash] = useState<'off' | 'on'>('off');
+
   const device = useCameraDevice(cameraPosition);
-  const shouldShowCamera = isCameraInitialized && device;
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const initializeCamera = async function () {
     try {
       !hasPermission && (await requestPermission());
-      setCameraInitialized(true);
+      const permission = await Camera.getCameraPermissionStatus();
+      if (permission === 'denied') {
+        await Linking.openSettings();
+        return;
+      }
+      setShowCamera(true);
     } catch (error) {
       console.error('Error initializing camera:', error);
+    }
+  };
+
+  const capturePhoto = async function () {
+    if (camera.current !== null) {
+      const photo = await camera.current.takePhoto({flash});
+      setImageSource(photo.path);
+      // setShowCamera(false);
+      console.log(photo.path);
     }
   };
 
@@ -47,15 +65,19 @@ const CameraScreen = () => {
 
   return (
     <View className="flex-1 bg-[black]">
-      {shouldShowCamera ? (
-        <Camera
-          ref={camera}
-          className="flex-1"
-          isActive={isActive}
-          device={device}
-          video={true}
-          audio={true}
-        />
+      {showCamera && device ? (
+        <>
+          <Camera
+            ref={camera}
+            className="flex-1"
+            isActive={isActive}
+            device={device}
+            photo={true}
+            video={true}
+            audio={true}
+          />
+          <CaptureButton capturePhoto={capturePhoto} />
+        </>
       ) : (
         <Text>Loading camera...</Text>
       )}
