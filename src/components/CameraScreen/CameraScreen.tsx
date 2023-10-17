@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Linking, Text, View} from 'react-native';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {Image, Linking, Text, View} from 'react-native';
 
 import {
   Camera,
+  TakePhotoOptions,
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
@@ -25,7 +26,7 @@ const CameraScreen = () => {
   const isForeground = useIsForeground();
   const isActive = isForeground && isFocused;
 
-  const [_imageSource, setImageSource] = useState<string | undefined>();
+  const [imageSource, setImageSource] = useState<string>();
   const [flash, _setFlash] = useState<'off' | 'on'>('off');
 
   const device = useCameraDevice(cameraPosition);
@@ -46,12 +47,22 @@ const CameraScreen = () => {
     }
   };
 
+  const takePhotoOptions = useMemo<TakePhotoOptions>(
+    () => ({
+      photoCodec: 'jpeg',
+      qualityPrioritization: 'speed',
+      flash: flash,
+      quality: 90,
+      enableShutterSound: true,
+    }),
+    [flash],
+  );
+
   const capturePhoto = async function () {
     if (camera.current !== null) {
-      const photo = await camera.current.takePhoto({flash});
+      const photo = await camera.current.takePhoto(takePhotoOptions);
       setImageSource(photo.path);
-      // setShowCamera(false);
-      console.log(photo.path);
+      setShowCamera(false);
     }
   };
 
@@ -70,6 +81,7 @@ const CameraScreen = () => {
           <Camera
             ref={camera}
             className="flex-1"
+            orientation="portrait"
             isActive={isActive}
             device={device}
             photo={true}
@@ -79,7 +91,16 @@ const CameraScreen = () => {
           <CaptureButton capturePhoto={capturePhoto} />
         </>
       ) : (
-        <Text>Loading camera...</Text>
+        <>
+          {imageSource ? (
+            <Image
+              source={{uri: `file://${imageSource}`}}
+              className="w-full flex-auto"
+            />
+          ) : (
+            <Text>Loading camera...</Text>
+          )}
+        </>
       )}
     </View>
   );

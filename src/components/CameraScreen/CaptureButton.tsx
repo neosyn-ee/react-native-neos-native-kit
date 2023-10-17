@@ -15,7 +15,7 @@ import Animated, {
 
 import {CaptureButtonProps} from './CaptureButton.types';
 
-const CAPTURE_BUTTON_SIZE = 75;
+const CAPTURE_BUTTON_SIZE = 70;
 
 const CaptureButton = ({capturePhoto}: CaptureButtonProps) => {
   const pressed = useSharedValue(false);
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 30,
   },
   circle: {
     height: CAPTURE_BUTTON_SIZE,
