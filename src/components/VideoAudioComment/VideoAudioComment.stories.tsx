@@ -1,9 +1,6 @@
-import React from 'react';
-
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 import RNFetchBlob from 'react-native-blob-util';
-import {SingletonHooksContainer} from 'react-singleton-hook';
 
 import {VideoAudioComment} from '@components/VideoAudioComment';
 
@@ -32,7 +29,7 @@ const DROPBOX_API_ERRORS: Array<DropboxError> = [
   },
 ];
 
-const onSendAudioNote = async (
+export const onSendAudioNote = async (
   fileName: string,
   filePath?: string,
   fileSource?: string,
@@ -93,14 +90,6 @@ export default {
       },
     },
   },
-  decorators: [
-    Story => (
-      <>
-        <SingletonHooksContainer />
-        <Story />
-      </>
-    ),
-  ],
 } as ComponentMeta<typeof VideoAudioComment>;
 
 export const Default: StoryObj<VideoAudioCommentProps> = {
