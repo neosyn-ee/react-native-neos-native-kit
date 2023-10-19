@@ -5,8 +5,8 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {SingletonHooksContainer} from 'react-singleton-hook';
 
+import {AppServiceProvider} from '@components/AppServiceProvider';
 import FeedScreen from '@screens/FeedScreen';
 import HomeScreen from '@screens/HomeScreen';
 
@@ -15,8 +15,7 @@ import './nativewind-output';
 const Tab = createMaterialBottomTabNavigator();
 
 export default (): JSX.Element => (
-  <>
-    <SingletonHooksContainer />
+  <AppServiceProvider>
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator labeled={false} initialRouteName="Feed">
@@ -45,5 +44,5 @@ export default (): JSX.Element => (
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
-  </>
+  </AppServiceProvider>
 );
