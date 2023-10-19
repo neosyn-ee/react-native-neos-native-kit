@@ -3,7 +3,7 @@
  */
 import {AppRegistry} from 'react-native';
 
-import StorybookUIRoot from './.ondevice/Storybook';
+import StorybookUIRootWrapped from './.ondevice/Storybook';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => StorybookUIRoot);
+AppRegistry.registerComponent(appName, () => StorybookUIRootWrapped);

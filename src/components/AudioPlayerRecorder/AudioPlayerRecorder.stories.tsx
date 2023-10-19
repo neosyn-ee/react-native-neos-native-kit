@@ -2,7 +2,7 @@ import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
-import {onSendAudioNote} from '@components/VideoAudioComment/VideoAudioComment.stories';
+import {onSendAudioNote} from '@components/VideoAudioComment';
 
 import {AudioPlayerRecorderProps} from './AudioPlayerRecorder.types';
 
