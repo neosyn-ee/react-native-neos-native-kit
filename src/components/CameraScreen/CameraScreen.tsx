@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Linking, StyleSheet, View} from 'react-native';
 
 import {IconButton} from 'react-native-paper';
-import {useSharedValue} from 'react-native-reanimated';
+import Animated, {useSharedValue} from 'react-native-reanimated';
 import {
   Camera,
   CameraRuntimeError,
@@ -18,6 +18,8 @@ import {useIsForeground} from '@hooks/useIsForeground';
 import {SAFE_AREA_PADDING, SCREEN_HEIGHT, SCREEN_WIDTH} from '@utils/constants';
 
 import {CaptureButton} from './CaptureButton';
+
+const AnimatedCamera = Animated.createAnimatedComponent(Camera);
 
 const CameraScreen = () => {
   const camera = useRef<Camera>(null);
@@ -117,7 +119,7 @@ const CameraScreen = () => {
     <View className="flex-1 bg-[black]">
       {isCameraInitialized && device && (
         <>
-          <Camera
+          <AnimatedCamera
             ref={camera}
             className="flex-1"
             orientation="portrait"
