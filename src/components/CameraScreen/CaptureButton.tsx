@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'rgba(0,0,0,0.3)',
     height: CAPTURE_BUTTON_SIZE + CAPTURE_BUTTON_SIZE * 0.5,
   },
   circle: {

@@ -3,9 +3,9 @@ import {Linking, StyleSheet, View} from 'react-native';
 
 import {IconButton} from 'react-native-paper';
 import {useSharedValue} from 'react-native-reanimated';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Camera,
+  CameraRuntimeError,
   PhotoFile,
   useCameraDevice,
   useCameraPermission,
@@ -33,9 +33,11 @@ const CameraScreen = () => {
   const isForeground = useIsForeground();
   const isActive = isForeground && isFocused;
 
-  const [flash, _setFlash] = useState<'off' | 'on'>('off');
+  const [flash, setFlash] = useState<'off' | 'on'>('off');
 
   const device = useCameraDevice(cameraPosition);
+
+  const supportsFlash = device?.hasFlash ?? false;
 
   const {
     hasPermission: hasCameraPermission,
@@ -70,6 +72,10 @@ const CameraScreen = () => {
     }
   };
 
+  // Camera callbacks
+  const onError = useCallback((error: CameraRuntimeError) => {
+    console.error(error);
+  }, []);
   const onFlipCameraPressed = useCallback(() => {
     setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
   }, []);
@@ -80,6 +86,11 @@ const CameraScreen = () => {
     },
     [],
   );
+
+  const onFlashPressed = useCallback(() => {
+    setFlash(f => (f === 'off' ? 'on' : 'off'));
+  }, []);
+  //#endregion
 
   useEffect(() => {
     initializeCamera();
@@ -96,6 +107,7 @@ const CameraScreen = () => {
             ref={camera}
             className="flex-1"
             orientation="portrait"
+            onError={onError}
             isActive={isActive}
             device={device}
             photo={true}
@@ -103,13 +115,13 @@ const CameraScreen = () => {
             audio={hasMicrophonePermission}
           />
           <CaptureButton
-            flash={flash}
+            flash={supportsFlash ? flash : 'off'}
             camera={camera}
             onMediaCaptured={onMediaCaptured}
             setIsPressingButton={setIsPressingButton}
             enabled={isCameraInitialized && isActive}
           />
-          <SafeAreaView style={styles.rightButtonRow}>
+          <View style={styles.rightButtonRow}>
             <IconButton
               icon="camera-flip"
               iconColor="white"
@@ -118,7 +130,18 @@ const CameraScreen = () => {
               size={25}
               onPress={onFlipCameraPressed}
             />
-          </SafeAreaView>
+            {supportsFlash && (
+              <IconButton
+                className="mt-3"
+                icon={flash === 'off' ? 'flash-off' : 'flash'}
+                iconColor="white"
+                containerColor="rgba(140, 140, 140, 0.3)"
+                mode="outlined"
+                size={25}
+                onPress={onFlashPressed}
+              />
+            )}
+          </View>
         </>
       )}
     </View>
