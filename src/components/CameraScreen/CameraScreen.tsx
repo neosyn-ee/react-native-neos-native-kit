@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Linking, Text, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {IconButton} from 'react-native-paper';
 import {useSharedValue} from 'react-native-reanimated';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Camera,
   PhotoFile,
@@ -13,15 +14,15 @@ import {
 } from 'react-native-vision-camera';
 
 import {useIsForeground} from '@hooks/useIsForeground';
+import {SAFE_AREA_PADDING} from '@utils/constants';
 
 import {CaptureButton} from './CaptureButton';
 
 const CameraScreen = () => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
-  const [_hasMicrophonePermission, setHasMicrophonePermission] =
-    useState(false);
-  const [cameraPosition, _setCameraPosition] = useState<'front' | 'back'>(
+  const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
+  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
   );
 
@@ -47,8 +48,8 @@ const CameraScreen = () => {
 
   //#region Callbacks
   const setIsPressingButton = useCallback(
-    (_isPressingButton: boolean) => {
-      isPressingButton.value = _isPressingButton;
+    (pressed: boolean) => {
+      isPressingButton.value = pressed;
     },
     [isPressingButton],
   );
@@ -69,6 +70,10 @@ const CameraScreen = () => {
     }
   };
 
+  const onFlipCameraPressed = useCallback(() => {
+    setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
+  }, []);
+
   const onMediaCaptured = useCallback(
     (media: PhotoFile | VideoFile, _type: 'photo' | 'video') => {
       console.log(`Media captured! ${JSON.stringify(media)}`);
@@ -81,38 +86,52 @@ const CameraScreen = () => {
     Camera.getMicrophonePermissionStatus().then(status =>
       setHasMicrophonePermission(status === 'granted'),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <View className="flex-1 bg-[black]">
-        {isCameraInitialized && device ? (
-          <>
-            <Camera
-              ref={camera}
-              className="flex-1"
-              orientation="portrait"
-              isActive={isActive}
-              device={device}
-              photo={true}
-              video={true}
-              audio={true}
+    <View className="flex-1 bg-[black]">
+      {isCameraInitialized && device && (
+        <>
+          <Camera
+            ref={camera}
+            className="flex-1"
+            orientation="portrait"
+            isActive={isActive}
+            device={device}
+            photo={true}
+            video={true}
+            audio={hasMicrophonePermission}
+          />
+          <CaptureButton
+            flash={flash}
+            camera={camera}
+            onMediaCaptured={onMediaCaptured}
+            setIsPressingButton={setIsPressingButton}
+            enabled={isCameraInitialized && isActive}
+          />
+          <SafeAreaView style={styles.rightButtonRow}>
+            <IconButton
+              icon="camera-flip"
+              iconColor="white"
+              containerColor="rgba(140, 140, 140, 0.3)"
+              mode="outlined"
+              size={25}
+              onPress={onFlipCameraPressed}
             />
-            <CaptureButton
-              flash={flash}
-              camera={camera}
-              onMediaCaptured={onMediaCaptured}
-              setIsPressingButton={setIsPressingButton}
-              enabled={isCameraInitialized && isActive}
-            />
-          </>
-        ) : (
-          <Text>Loading camera...</Text>
-        )}
-      </View>
-    </GestureHandlerRootView>
+          </SafeAreaView>
+        </>
+      )}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  rightButtonRow: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    right: SAFE_AREA_PADDING.paddingRight,
+    top: SAFE_AREA_PADDING.paddingTop,
+  },
+});
 
 export default CameraScreen;

@@ -13,9 +13,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import {TakePhotoOptions} from 'react-native-vision-camera';
 
+import {CAPTURE_BUTTON_SIZE} from '@utils/constants';
+
 import {CaptureButtonProps} from './CaptureButton.types';
 
-const CAPTURE_BUTTON_SIZE = 75;
 const START_RECORDING_DELAY = 200;
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
 
