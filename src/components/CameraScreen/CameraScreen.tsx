@@ -8,13 +8,14 @@ import {
   CameraRuntimeError,
   PhotoFile,
   useCameraDevice,
+  useCameraFormat,
   useCameraPermission,
   useMicrophonePermission,
   VideoFile,
 } from 'react-native-vision-camera';
 
 import {useIsForeground} from '@hooks/useIsForeground';
-import {SAFE_AREA_PADDING} from '@utils/constants';
+import {SAFE_AREA_PADDING, SCREEN_HEIGHT, SCREEN_WIDTH} from '@utils/constants';
 
 import {CaptureButton} from './CaptureButton';
 
@@ -34,10 +35,22 @@ const CameraScreen = () => {
   const isActive = isForeground && isFocused;
 
   const [flash, setFlash] = useState<'off' | 'on'>('off');
+  const [enableHdr, setEnableHdr] = useState(false);
 
   const device = useCameraDevice(cameraPosition);
 
+  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH;
+  const format = useCameraFormat(device, [
+    {photoHDR: true},
+    {videoHDR: true},
+    {videoAspectRatio: screenAspectRatio},
+    {videoResolution: 'max'},
+    {photoAspectRatio: screenAspectRatio},
+    {photoResolution: 'max'},
+  ]);
+
   const supportsFlash = device?.hasFlash ?? false;
+  const supportsHdr = format?.supportsPhotoHDR && format?.supportsVideoHDR;
 
   const {
     hasPermission: hasCameraPermission,
@@ -76,6 +89,7 @@ const CameraScreen = () => {
   const onError = useCallback((error: CameraRuntimeError) => {
     console.error(error);
   }, []);
+
   const onFlipCameraPressed = useCallback(() => {
     setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
   }, []);
@@ -110,6 +124,8 @@ const CameraScreen = () => {
             onError={onError}
             isActive={isActive}
             device={device}
+            format={format}
+            hdr={enableHdr}
             photo={true}
             video={true}
             audio={hasMicrophonePermission}
@@ -139,6 +155,17 @@ const CameraScreen = () => {
                 mode="outlined"
                 size={25}
                 onPress={onFlashPressed}
+              />
+            )}
+            {supportsHdr && (
+              <IconButton
+                className="mt-3"
+                icon={enableHdr ? 'hdr' : 'hdr-off'}
+                iconColor="white"
+                containerColor="rgba(140, 140, 140, 0.3)"
+                mode="outlined"
+                size={25}
+                onPress={() => setEnableHdr(h => !h)}
               />
             )}
           </View>
