@@ -1,10 +1,11 @@
-import {FormatFilter} from 'react-native-vision-camera';
+import {FormatFilter, PhotoFile, VideoFile} from 'react-native-vision-camera';
 
-import {CaptureButtonProps} from './CaptureButton.types';
-
-export type onMediaCapturedCallback = CaptureButtonProps['onMediaCaptured'];
+export type onMediaCapturedCallback = (
+  media: PhotoFile | VideoFile,
+  type: 'photo' | 'video',
+) => void;
 
 export type CameraScreenProps = {
-  onMediaCaptured?: onMediaCapturedCallback;
+  onMediaCaptured: onMediaCapturedCallback;
   formatFilters?: Partial<FormatFilter>[];
 };

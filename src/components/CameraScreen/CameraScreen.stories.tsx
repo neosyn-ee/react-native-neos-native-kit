@@ -9,7 +9,7 @@ const onMediaCaptured: onMediaCapturedCallback = (
   media: PhotoFile | VideoFile,
   _type: 'photo' | 'video',
 ) => {
-  console.log(`Media captured! ${JSON.stringify(media)}`);
+  console.log('Media captured!', media);
 };
 
 export default {
