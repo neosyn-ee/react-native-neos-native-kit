@@ -1,9 +1,16 @@
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
+import {PhotoFile, VideoFile} from 'react-native-vision-camera';
 
 import CameraScreen from './CameraScreen';
+import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
 
-type CameraScreenProps = {};
+const onMediaCaptured: onMediaCapturedCallback = (
+  media: PhotoFile | VideoFile,
+  _type: 'photo' | 'video',
+) => {
+  console.log(`Media captured! ${JSON.stringify(media)}`);
+};
 
 export default {
   title: 'CameraScreen',
@@ -13,5 +20,7 @@ export default {
 } as ComponentMeta<typeof CameraScreen>;
 
 export const Default: StoryObj<CameraScreenProps> = {
-  args: {},
+  args: {
+    onMediaCaptured,
+  },
 };
