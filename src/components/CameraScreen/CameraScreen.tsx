@@ -6,22 +6,26 @@ import Animated, {useSharedValue} from 'react-native-reanimated';
 import {
   Camera,
   CameraRuntimeError,
-  PhotoFile,
   useCameraDevice,
   useCameraFormat,
   useCameraPermission,
   useMicrophonePermission,
-  VideoFile,
 } from 'react-native-vision-camera';
 
 import {useIsForeground} from '@hooks/useIsForeground';
-import {SAFE_AREA_PADDING, SCREEN_HEIGHT, SCREEN_WIDTH} from '@utils/constants';
+import {SAFE_AREA_PADDING} from '@utils/constants';
 
+import {CameraScreenProps} from './CameraScreen.types';
 import {CaptureButton} from './CaptureButton';
+
+import {DEFAULT_CAMERA_FORMAT_FILTERS} from '.';
 
 const AnimatedCamera = Animated.createAnimatedComponent(Camera);
 
-const CameraScreen = () => {
+const CameraScreen = ({
+  onMediaCaptured: _onMediaCaptured,
+  formatFilters = DEFAULT_CAMERA_FORMAT_FILTERS,
+}: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
@@ -41,15 +45,7 @@ const CameraScreen = () => {
 
   const device = useCameraDevice(cameraPosition);
 
-  const screenAspectRatio = SCREEN_HEIGHT / SCREEN_WIDTH;
-  const format = useCameraFormat(device, [
-    {photoHDR: true},
-    {videoHDR: true},
-    {videoAspectRatio: screenAspectRatio},
-    {videoResolution: 'max'},
-    {photoAspectRatio: screenAspectRatio},
-    {photoResolution: 'max'},
-  ]);
+  const format = useCameraFormat(device, formatFilters);
 
   const supportsFlash = device?.hasFlash ?? false;
   const supportsHdr = format?.supportsPhotoHDR && format?.supportsVideoHDR;
@@ -96,12 +92,7 @@ const CameraScreen = () => {
     setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
   }, []);
 
-  const onMediaCaptured = useCallback(
-    (media: PhotoFile | VideoFile, _type: 'photo' | 'video') => {
-      console.log(`Media captured! ${JSON.stringify(media)}`);
-    },
-    [],
-  );
+  const onMediaCaptured = useCallback(_onMediaCaptured, [_onMediaCaptured]);
 
   const onFlashPressed = useCallback(() => {
     setFlash(f => (f === 'off' ? 'on' : 'off'));
@@ -116,7 +107,7 @@ const CameraScreen = () => {
   }, []);
 
   return (
-    <View className="flex-1 bg-[black]">
+    <View className="flex-1 bg-[#000000]">
       {isCameraInitialized && device && (
         <>
           <AnimatedCamera

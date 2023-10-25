@@ -28,3 +28,5 @@ export const SCREEN_HEIGHT = Platform.select<number>({
 
 // Capture Button
 export const CAPTURE_BUTTON_SIZE = 78;
+
+export const SCREEN_ASPECT_RATIO = SCREEN_HEIGHT / SCREEN_WIDTH;
