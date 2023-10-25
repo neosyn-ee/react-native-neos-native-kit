@@ -45,6 +45,7 @@ const getStories = () => {
     './src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx': require('../src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx'),
     './src/components/Button/Button.stories.tsx': require('../src/components/Button/Button.stories.tsx'),
     './src/components/CameraScreen/CameraScreen.stories.tsx': require('../src/components/CameraScreen/CameraScreen.stories.tsx'),
+    './src/components/MediaScreen/MediaScreen.stories.tsx': require('../src/components/MediaScreen/MediaScreen.stories.tsx'),
     './src/components/VideoAudioComment/VideoAudioComment.stories.tsx': require('../src/components/VideoAudioComment/VideoAudioComment.stories.tsx'),
     './src/components/VideoPlayer/VideoPlayer.stories.tsx': require('../src/components/VideoPlayer/VideoPlayer.stories.tsx'),
     './src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx': require('../src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx'),

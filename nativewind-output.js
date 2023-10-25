@@ -602,6 +602,24 @@ _NativeWindStyleSheet.create({
       shadowColor: 'rgba(0, 0, 0, 0)',
       shadowOpacity: 1,
     },
+    container: {
+      width: '100%',
+    },
+    'container@0': {
+      maxWidth: 640,
+    },
+    'container@1': {
+      maxWidth: 768,
+    },
+    'container@2': {
+      maxWidth: 1024,
+    },
+    'container@3': {
+      maxWidth: 1280,
+    },
+    'container@4': {
+      maxWidth: 1536,
+    },
     btn: {
       borderTopWidth: 2,
       borderRightWidth: 2,
@@ -650,6 +668,12 @@ _NativeWindStyleSheet.create({
     },
     'mb-2': {
       marginBottom: 8,
+    },
+    'mt-3': {
+      marginTop: 12,
+    },
+    flex: {
+      display: 'flex',
     },
     'h-[60px]': {
       height: 60,
@@ -783,6 +807,13 @@ _NativeWindStyleSheet.create({
     ],
     textarea: [[['media', 'android']], [['media', 'ios']], [['media', 'web']]],
     select: [[['media', 'android']], [['media', 'ios']], [['media', 'web']]],
+    container: [
+      [['media', '(min-width: 640px)']],
+      [['media', '(min-width: 768px)']],
+      [['media', '(min-width: 1024px)']],
+      [['media', '(min-width: 1280px)']],
+      [['media', '(min-width: 1536px)']],
+    ],
     'gap-3.children': [[['selector', '(> *)']]],
   },
   masks: {
@@ -801,6 +832,9 @@ _NativeWindStyleSheet.create({
     '[multiple]': 512,
     textarea: 512,
     select: 512,
+  },
+  topics: {
+    container: ['width'],
   },
   childClasses: {
     'gap-3': ['gap-3.children'],
