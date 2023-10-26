@@ -126,6 +126,7 @@ const _CaptureButton = ({
     setIsPressingButton(true);
   };
 
+  // solo nel caso di type= "combine"
   const onTapFinalized = async () => {
     // exit "recording mode"
     try {
