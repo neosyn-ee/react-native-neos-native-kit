@@ -86,6 +86,10 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
         type: type,
       });
       setSavingState('saved');
+      Alert.alert(
+        'File saved!',
+        'The captured media file has been saved to your camera roll.',
+      );
     } catch (e) {
       const message = e instanceof Error ? e.message : JSON.stringify(e);
       setSavingState('none');
