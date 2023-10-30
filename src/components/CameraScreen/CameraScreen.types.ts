@@ -8,4 +8,5 @@ export type onMediaCapturedCallback = (
 export type CameraScreenProps = {
   onMediaCaptured: onMediaCapturedCallback;
   formatFilters?: Partial<FormatFilter>[];
+  recordingMode: 'photo' | 'video' | 'combined';
 };

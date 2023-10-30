@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -18,6 +18,7 @@ import {CAPTURE_BUTTON_SIZE} from '@utils/constants';
 import {CaptureButtonProps} from './CaptureButton.types';
 
 const START_RECORDING_DELAY = 200;
+const TAKE_PHOTO_DELAY = 100;
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
 
 const _CaptureButton = ({
@@ -26,9 +27,10 @@ const _CaptureButton = ({
   camera,
   onMediaCaptured,
   setIsPressingButton,
+  recordingMode,
 }: CaptureButtonProps) => {
   const pressDownDate = useRef<Date | undefined>(undefined);
-  const isRecording = useRef(false);
+  const [isRecording, setIsRecording] = useState(false);
   const recordingProgress = useSharedValue(0);
   const currentGesture = useSharedValue<string>('none');
 
@@ -54,7 +56,6 @@ const _CaptureButton = ({
         throw new Error('Camera ref is null!');
       }
 
-      console.log('Taking photo...');
       const photo = await camera.current.takePhoto(takePhotoOptions);
       onMediaCaptured(photo, 'photo');
     } catch (e) {
@@ -63,9 +64,8 @@ const _CaptureButton = ({
   }, [camera, onMediaCaptured, takePhotoOptions]);
 
   const onStoppedRecording = useCallback(() => {
-    isRecording.current = false;
+    setIsRecording(false);
     cancelAnimation(recordingProgress);
-    console.log('stopped recording video!');
   }, [recordingProgress]);
 
   const stopRecording = useCallback(async () => {
@@ -73,10 +73,7 @@ const _CaptureButton = ({
       if (camera.current == null) {
         throw new Error('Camera ref is null!');
       }
-
-      console.log('calling stopRecording()...');
       await camera.current.stopRecording();
-      console.log('called stopRecording()!');
     } catch (e) {
       console.error('failed to stop recording!', e);
     }
@@ -88,7 +85,6 @@ const _CaptureButton = ({
         throw new Error('Camera ref is null!');
       }
 
-      console.log('calling startRecording()...');
       camera.current.startRecording({
         flash: flash,
         onRecordingError: error => {
@@ -96,72 +92,98 @@ const _CaptureButton = ({
           onStoppedRecording();
         },
         onRecordingFinished: video => {
-          console.log(`Recording successfully finished! ${video.path}`);
           onMediaCaptured(video, 'video');
           onStoppedRecording();
         },
       });
       // TODO: wait until startRecording returns to actually find out if the recording has successfully started
-      console.log('called startRecording()!');
-      isRecording.current = true;
+      setIsRecording(true);
     } catch (e) {
       console.error('failed to start recording!', e, 'camera');
     }
   }, [camera, flash, onMediaCaptured, onStoppedRecording]);
   //#endregion
 
-  const onTapBegan = () => {
-    recordingProgress.value = 0;
-    isPressingButton.value = true;
-    const now = new Date();
-    pressDownDate.current = now;
-    const onLongPressDetected = () => {
-      if (pressDownDate.current === now) {
-        currentGesture.value = 'longPress';
-        // user is still pressing down after 200ms, so his intention is to create a video
-        startRecording();
-      }
-    };
-    setTimeout(onLongPressDetected, START_RECORDING_DELAY);
-    setIsPressingButton(true);
-  };
-
-  // solo nel caso di type= "combine"
-  const onTapFinalized = async () => {
-    // exit "recording mode"
-    try {
-      if (pressDownDate.current == null) {
-        throw new Error('PressDownDate ref .current was null!');
-      }
-      const now = new Date();
-      const diff = now.getTime() - pressDownDate.current.getTime();
-      pressDownDate.current = undefined;
-      if (diff < START_RECORDING_DELAY) {
-        // user has released the button within 200ms, so his intention is to take a single picture.
-        await takePhoto();
-      } else {
-        // user has held the button for more than 200ms, so he has been recording this entire time.
-        currentGesture.value = 'none';
-        await stopRecording();
-      }
-    } finally {
-      setIsPressingButton(false);
+  const onTapGestureStrategy = () => {
+    switch (recordingMode) {
+      case 'photo':
+      case 'video':
+        return {
+          async onTapBegan() {
+            isPressingButton.value = true;
+            if (recordingMode === 'video') {
+              if (!isRecording) {
+                startRecording();
+                setIsPressingButton(true);
+              } else {
+                currentGesture.value = 'none';
+                await stopRecording();
+              }
+            } else {
+              setTimeout(() => {
+                isPressingButton.value = false;
+              }, TAKE_PHOTO_DELAY);
+              await takePhoto();
+            }
+          },
+          onTapFinalized() {
+            setIsPressingButton(false);
+          },
+        };
+      case 'combined':
+        return {
+          onTapBegan() {
+            recordingProgress.value = 0;
+            isPressingButton.value = true;
+            const now = new Date();
+            pressDownDate.current = now;
+            const onLongPressDetected = () => {
+              if (pressDownDate.current === now) {
+                currentGesture.value = 'longPress';
+                // user is still pressing down after 200ms, so his intention is to create a video
+                startRecording();
+              }
+            };
+            setTimeout(onLongPressDetected, START_RECORDING_DELAY);
+            setIsPressingButton(true);
+          },
+          async onTapFinalized() {
+            try {
+              if (pressDownDate.current == null) {
+                throw new Error('PressDownDate ref .current was null!');
+              }
+              const now = new Date();
+              const diff = now.getTime() - pressDownDate.current.getTime();
+              pressDownDate.current = undefined;
+              if (diff < START_RECORDING_DELAY) {
+                // user has released the button within 200ms, so his intention is to take a single picture.
+                await takePhoto();
+              } else {
+                // user has held the button for more than 200ms, so he has been recording this entire time.
+                currentGesture.value = 'none';
+                await stopRecording();
+              }
+            } finally {
+              setIsPressingButton(false);
+            }
+          },
+        };
     }
   };
 
   tapGesture
     .maxDuration(99999999)
-    .onBegin(onTapBegan)
+    .onBegin(onTapGestureStrategy().onTapBegan)
     .onEnd(() => {
       isPressingButton.value = false;
     })
-    .onFinalize(onTapFinalized);
+    .onFinalize(onTapGestureStrategy().onTapFinalized);
 
   const buttonStyle = useAnimatedStyle(() => {
     let scale: number;
     let bgColor = 'transparent';
     if (enabled) {
-      if (isPressingButton.value) {
+      if (isPressingButton.value || isRecording) {
         scale = withRepeat(
           withSpring(1, {
             stiffness: 100,
@@ -170,7 +192,10 @@ const _CaptureButton = ({
           -1,
           true,
         );
-        bgColor = currentGesture.value === 'longPress' ? '#FF0000' : '#FFFFFF';
+        bgColor =
+          currentGesture.value === 'longPress' || isRecording
+            ? '#FF0000'
+            : '#FFFFFF';
       } else {
         scale = withSpring(0.9, {
           stiffness: 500,
@@ -197,7 +222,7 @@ const _CaptureButton = ({
         },
       ],
     };
-  }, [enabled, isPressingButton, currentGesture]);
+  }, [enabled, isPressingButton, currentGesture, isRecording]);
 
   return (
     <Animated.View style={[styles.container]}>

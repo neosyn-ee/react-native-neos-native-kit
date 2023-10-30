@@ -24,3 +24,24 @@ export const Default: StoryObj<CameraScreenProps> = {
     onMediaCaptured,
   },
 };
+
+export const RECModeVideo: StoryObj<CameraScreenProps> = {
+  args: {
+    onMediaCaptured,
+    recordingMode: 'video',
+  },
+};
+
+export const RECModePhoto: StoryObj<CameraScreenProps> = {
+  args: {
+    onMediaCaptured,
+    recordingMode: 'photo',
+  },
+};
+
+export const RECModeCombined: StoryObj<CameraScreenProps> = {
+  args: {
+    onMediaCaptured,
+    recordingMode: 'combined',
+  },
+};

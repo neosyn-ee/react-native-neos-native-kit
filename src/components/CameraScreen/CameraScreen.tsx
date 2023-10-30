@@ -25,6 +25,7 @@ const AnimatedCamera = Animated.createAnimatedComponent(Camera);
 const CameraScreen = ({
   onMediaCaptured: _onMediaCaptured,
   formatFilters = DEFAULT_CAMERA_FORMAT_FILTERS,
+  recordingMode = 'photo',
 }: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -129,6 +130,7 @@ const CameraScreen = ({
             onMediaCaptured={onMediaCaptured}
             setIsPressingButton={setIsPressingButton}
             enabled={isCameraInitialized && isActive}
+            recordingMode={recordingMode}
           />
           <View style={styles.rightButtonRow}>
             <IconButton

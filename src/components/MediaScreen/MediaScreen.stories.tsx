@@ -7,7 +7,7 @@ import {MediaScreenProps} from './MediaScreen.types';
 
 const SAMPLE_PHOTOFILE: PhotoFile = {
   isMirrored: false,
-  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy6309915383638771911.jpg',
+  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy2686721532453393324.jpg',
   isRawPhoto: false,
   height: 1440,
   orientation: 'landscape-right',
@@ -15,8 +15,8 @@ const SAMPLE_PHOTOFILE: PhotoFile = {
 };
 
 const SAMPLE_VIDEOFILE: VideoFile = {
-  duration: 10.787,
-  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy8602094910151002475.mp4',
+  duration: 12.68,
+  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy3831378659325484017.mp4',
 };
 
 export default {
