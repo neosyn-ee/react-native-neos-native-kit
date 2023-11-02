@@ -17,6 +17,7 @@ import {CAPTURE_BUTTON_SIZE} from '@utils/constants';
 
 import {CaptureButtonProps} from './CaptureButton.types';
 
+const FIGURE_SIZE = CAPTURE_BUTTON_SIZE * 0.75;
 const START_RECORDING_DELAY = 200;
 const TAKE_PHOTO_DELAY = 100;
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
@@ -32,7 +33,6 @@ const _CaptureButton = ({
   const pressDownDate = useRef<Date | undefined>(undefined);
   const [isRecording, setIsRecording] = useState(false);
   const recordingProgress = useSharedValue(0);
-  const currentGesture = useSharedValue<string>('none');
 
   const takePhotoOptions = useMemo<TakePhotoOptions>(
     () => ({
@@ -116,7 +116,6 @@ const _CaptureButton = ({
                 startRecording();
                 setIsPressingButton(true);
               } else {
-                currentGesture.value = 'none';
                 await stopRecording();
               }
             } else {
@@ -139,7 +138,6 @@ const _CaptureButton = ({
             pressDownDate.current = now;
             const onLongPressDetected = () => {
               if (pressDownDate.current === now) {
-                currentGesture.value = 'longPress';
                 // user is still pressing down after 200ms, so his intention is to create a video
                 startRecording();
               }
@@ -160,7 +158,6 @@ const _CaptureButton = ({
                 await takePhoto();
               } else {
                 // user has held the button for more than 200ms, so he has been recording this entire time.
-                currentGesture.value = 'none';
                 await stopRecording();
               }
             } finally {
@@ -179,55 +176,58 @@ const _CaptureButton = ({
     })
     .onFinalize(onTapGestureStrategy().onTapFinalized);
 
-  const buttonStyle = useAnimatedStyle(() => {
+  const figureStyle = useAnimatedStyle(() => {
     let scale: number;
-    let bgColor = 'transparent';
-    if (enabled) {
-      if (isPressingButton.value || isRecording) {
-        scale = withRepeat(
-          withSpring(1, {
-            stiffness: 100,
-            damping: 1000,
-          }),
-          -1,
-          true,
-        );
-        bgColor =
-          currentGesture.value === 'longPress' || isRecording
-            ? '#FF0000'
-            : '#FFFFFF';
-      } else {
-        scale = withSpring(0.9, {
-          stiffness: 500,
-          damping: 300,
-        });
-        bgColor = 'transparent';
-      }
+    let opacity: number = 1;
+    let width = FIGURE_SIZE;
+    let height = FIGURE_SIZE;
+    let borderRadius = FIGURE_SIZE / 2;
+    let backgroundColor =
+      recordingMode === 'photo' || recordingMode === 'combined'
+        ? 'rgba(255, 255, 255, 0.75)'
+        : 'red';
+
+    if (isPressingButton.value) {
+      backgroundColor = 'white';
+      scale = withSpring(0.9, {
+        stiffness: 100,
+        damping: 1000,
+      });
     } else {
-      scale = withSpring(0.6, {
+      scale = withSpring(1, {
         stiffness: 500,
         damping: 300,
       });
     }
 
+    if (isRecording) {
+      backgroundColor = 'red';
+      opacity = withRepeat(withSpring(0.75, {stiffness: 40}), -1, true);
+      if (recordingMode === 'video') {
+        width = 32;
+        height = 32;
+        borderRadius = 8;
+      }
+    }
+
+    const config = {duration: 200, easing: Easing.inOut(Easing.quad)};
+
     return {
-      backgroundColor: bgColor,
-      opacity: withTiming(enabled ? 1 : 0.3, {
-        duration: 100,
-        easing: Easing.linear,
-      }),
-      transform: [
-        {
-          scale: scale,
-        },
-      ],
+      width: withTiming(width, config),
+      height: withTiming(height, config),
+      borderRadius: withTiming(borderRadius, config),
+      backgroundColor: withTiming(backgroundColor, config),
+      opacity,
+      transform: [{scale}],
     };
-  }, [enabled, isPressingButton, currentGesture, isRecording]);
+  }, [enabled, isRecording, recordingMode, isPressingButton]);
 
   return (
     <Animated.View style={[styles.container]}>
       <GestureDetector gesture={tapGesture}>
-        <Animated.View style={[styles.circle, buttonStyle]} />
+        <Animated.View style={styles.circle}>
+          <Animated.View style={figureStyle} />
+        </Animated.View>
       </GestureDetector>
     </Animated.View>
   );
@@ -249,6 +249,8 @@ const styles = StyleSheet.create({
     borderRadius: CAPTURE_BUTTON_SIZE / 2,
     borderWidth: BORDER_WIDTH,
     borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 export const CaptureButton = React.memo(_CaptureButton);
