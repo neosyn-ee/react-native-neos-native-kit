@@ -73,7 +73,6 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
   const onSavePressed = useCallback(async () => {
     try {
       setSavingState('saving');
-
       const hasPermission = await requestSavePermission();
       if (!hasPermission) {
         Alert.alert(

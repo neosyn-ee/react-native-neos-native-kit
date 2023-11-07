@@ -57,7 +57,7 @@ const _CaptureButton = ({
       }
 
       const photo = await camera.current.takePhoto(takePhotoOptions);
-      onMediaCaptured(photo, 'photo');
+      onMediaCaptured(photo);
     } catch (e) {
       console.error('Failed to take photo!', e);
     }
@@ -92,7 +92,7 @@ const _CaptureButton = ({
           onStoppedRecording();
         },
         onRecordingFinished: video => {
-          onMediaCaptured(video, 'video');
+          onMediaCaptured(video);
           onStoppedRecording();
         },
       });
@@ -163,6 +163,15 @@ const _CaptureButton = ({
             } finally {
               setIsPressingButton(false);
             }
+          },
+        };
+      default:
+        return {
+          onTapBegan() {
+            console.log('tap started');
+          },
+          onTapFinalized() {
+            console.log('tap ended');
           },
         };
     }

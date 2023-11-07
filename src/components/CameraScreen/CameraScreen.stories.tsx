@@ -3,13 +3,20 @@ import {ComponentMeta} from '@storybook/react-native';
 import {PhotoFile, VideoFile} from 'react-native-vision-camera';
 
 import CameraScreen from './CameraScreen';
-import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
+import {
+  CameraScreenProps,
+  onCodeScannedCallback,
+  onMediaCapturedCallback,
+} from './CameraScreen.types';
 
 const onMediaCaptured: onMediaCapturedCallback = (
   media: PhotoFile | VideoFile,
-  _type: 'photo' | 'video',
 ) => {
   console.log('Media captured!', media);
+};
+
+const onCodeScanned: onCodeScannedCallback = value => {
+  console.log('Code found! Decoded value:', value);
 };
 
 export default {
@@ -43,5 +50,20 @@ export const RECModeCombined: StoryObj<CameraScreenProps> = {
   args: {
     onMediaCaptured,
     recordingMode: 'combined',
+  },
+};
+
+export const RECModeScanner: StoryObj<CameraScreenProps> = {
+  args: {
+    recordingMode: 'scanner',
+    onCodeScanned,
+  },
+};
+
+export const RECModeScannerNoStop: StoryObj<CameraScreenProps> = {
+  args: {
+    recordingMode: 'scanner',
+    onCodeScanned,
+    stopOnFirstCodeScan: false,
   },
 };
