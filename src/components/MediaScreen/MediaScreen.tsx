@@ -2,10 +2,13 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {
   Alert,
   Image,
+  ImageErrorEventData,
   ImageLoadEventData,
   NativeSyntheticEvent,
   PermissionsAndroid,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
@@ -43,6 +46,7 @@ const isVideoOnLoadEvent = (
 ): event is OnLoadData => 'duration' in event && 'naturalSize' in event;
 
 const MediaScreen = ({media, type}: MediaScreenProps) => {
+  const [hasImageLoadError, setHasImageLoadError] = useState(false);
   const {path} = media;
 
   const [_savingState, setSavingState] = useState<'none' | 'saving' | 'saved'>(
@@ -69,6 +73,20 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
   const onMediaLoadError = useCallback((error: LoadError) => {
     console.log(`failed to load media: ${JSON.stringify(error)}`);
   }, []);
+
+  const onImageLoadError = useCallback(
+    ({nativeEvent: {error}}: NativeSyntheticEvent<ImageErrorEventData>) => {
+      Alert.alert('Loading Error:', error, [
+        {
+          text: 'ok',
+          onPress: () => {
+            setHasImageLoadError(true);
+          },
+        },
+      ]);
+    },
+    [],
+  );
 
   const onSavePressed = useCallback(async () => {
     try {
@@ -102,12 +120,27 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
   return (
     <SafeAreaView className="flex-1 bg-[#FFFFFF]">
       {type === 'photo' && (
-        <Image
-          className="flex-1"
-          source={source}
-          resizeMode="cover"
-          onLoad={onMediaLoad}
-        />
+        <>
+          {!hasImageLoadError ? (
+            <Image
+              className="flex-1"
+              source={source}
+              resizeMode="cover"
+              onLoad={onMediaLoad}
+              onError={onImageLoadError}
+            />
+          ) : (
+            <View className="flex-1 items-center justify-center">
+              <Image
+                style={{width: 150, height: 150}}
+                source={require('@assets/img/no-image-placeholder.png')}
+              />
+              <Text className="text-base uppercase text-[#a2a2a2]">
+                No image available
+              </Text>
+            </View>
+          )}
+        </>
       )}
       {type === 'video' && (
         <VideoPlayer
