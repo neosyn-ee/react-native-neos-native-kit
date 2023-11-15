@@ -211,6 +211,7 @@ const AudioPlayerRecorder = ({
   }, []);
 
   const onDiscardRecord = useCallback(async (): Promise<void> => {
+    setIsSent(IsSentEnum.Idle);
     onStopPlay();
     try {
       const fileExists = await RNFetchBlob.fs.exists(path);
@@ -311,12 +312,21 @@ const AudioPlayerRecorder = ({
       <View className="flex-auto flex-row items-center">
         {isPlayerEnabled ? (
           <>
-            <IconButton
-              icon={isPlaying ? 'pause' : 'play'}
-              iconColor={theme.colors.primary}
-              size={25}
-              onPress={isPlaying ? () => onPausePlay() : () => onStartPlay()}
-            />
+            {isSent !== IsSentEnum.Error && isSent !== IsSentEnum.Sending ? (
+              <IconButton
+                icon={isPlaying ? 'pause' : 'play'}
+                iconColor={theme.colors.primary}
+                size={25}
+                onPress={isPlaying ? () => onPausePlay() : () => onStartPlay()}
+              />
+            ) : (
+              <IconButton
+                icon={'upload'}
+                iconColor={theme.colors.primary}
+                size={25}
+                onPress={onSendAudio}
+              />
+            )}
             <View className="flex-column flex-1 p-1">
               {progressDisplayMode === 'progressBar' ? (
                 <ProgressBar
@@ -349,7 +359,7 @@ const AudioPlayerRecorder = ({
                 </Text>
               )}
             </View>
-            {isSent === IsSentEnum.Idle && (
+            {(isSent === IsSentEnum.Idle || isSent === IsSentEnum.Error) && (
               <IconButton
                 icon="trash-can-outline"
                 iconColor={theme.colors.error}
