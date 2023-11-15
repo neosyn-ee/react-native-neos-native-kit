@@ -23,6 +23,7 @@ export const Player: FC<PlayerProps> = memo(
     playerInfo,
     disableControls,
     resizeMode,
+    muted,
     ...props
   }) => {
     const videoRef = useRef<Video | null>(null);
@@ -80,6 +81,8 @@ export const Player: FC<PlayerProps> = memo(
         disableBack={!isFullscreen || disableControls}
         paused={paused}
         resizeMode={resizeMode}
+        muted={muted}
+        volume={muted ? 0 : undefined}
         {...props}
       />
     );
