@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
+import {Alert, Linking, StyleSheet, View} from 'react-native';
 
 import {IconButton} from 'react-native-paper';
 import Animated, {useSharedValue} from 'react-native-reanimated';
@@ -30,6 +30,8 @@ const CameraScreen = ({
   onMediaCaptured: _onMediaCaptured,
   onCodeScanned: _onCodeScanned,
   stopOnFirstCodeScan = true,
+  validateValueScannedByUser,
+  validateValueScannedMessage,
 }: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -37,6 +39,8 @@ const CameraScreen = ({
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
   );
+
+  // console.log(props.validateValueScannedByUser);
 
   const isPressingButton = useSharedValue(false);
 
@@ -47,7 +51,7 @@ const CameraScreen = ({
 
   const [flash, setFlash] = useState<'off' | 'on'>('off');
   const [enableHdr, setEnableHdr] = useState(false);
-  const [scannedValue, setScannedValue] = useState<string>();
+  const [scannedValue, setScannedValue] = useState(false);
 
   const device = useCameraDevice(cameraPosition);
 
@@ -69,16 +73,41 @@ const CameraScreen = ({
   const onCodeScanned = useCallback(
     (codes: Code[]) => {
       const code = codes.find(cod => !!cod.value);
-      if (_onCodeScanned) {
+      if (_onCodeScanned && code?.value) {
         if (stopOnFirstCodeScan && !scannedValue) {
-          code?.value && _onCodeScanned(code.value);
-          setScannedValue(code?.value);
+          if (validateValueScannedByUser) {
+            setScannedValue(true);
+            const alertMsg = validateValueScannedMessage(code.value);
+            Alert.alert('Code found', alertMsg, [
+              {
+                text: 'scan again',
+                onPress: () => {
+                  setScannedValue(false);
+                },
+              },
+              {
+                text: 'ok',
+                onPress: () => {
+                  _onCodeScanned(code.value!);
+                },
+              },
+            ]);
+          } else {
+            _onCodeScanned(code.value);
+            setScannedValue(true);
+          }
         } else if (!stopOnFirstCodeScan) {
-          code?.value && _onCodeScanned(code.value);
+          _onCodeScanned(code.value);
         }
       }
     },
-    [_onCodeScanned, stopOnFirstCodeScan, scannedValue],
+    [
+      _onCodeScanned,
+      stopOnFirstCodeScan,
+      scannedValue,
+      validateValueScannedByUser,
+      validateValueScannedMessage,
+    ],
   );
 
   const setIsPressingButton = useCallback(

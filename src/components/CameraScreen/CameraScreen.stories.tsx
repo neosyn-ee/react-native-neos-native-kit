@@ -19,6 +19,13 @@ const onCodeScanned: onCodeScannedCallback = value => {
   console.log('Code found! Decoded value:', value);
 };
 
+const validateValueScannedMessage: (value: string) => string = value => {
+  if (value.length > 10) {
+    return 'Valid!';
+  }
+  return 'Invalid value';
+};
+
 export default {
   title: 'CameraScreen',
   component: CameraScreen,
@@ -57,6 +64,15 @@ export const RECModeScanner: StoryObj<CameraScreenProps> = {
   args: {
     recordingMode: 'scanner',
     onCodeScanned,
+  },
+};
+
+export const RECModeScannerWithValidation: StoryObj<CameraScreenProps> = {
+  args: {
+    recordingMode: 'scanner',
+    onCodeScanned,
+    validateValueScannedByUser: true,
+    validateValueScannedMessage,
   },
 };
 

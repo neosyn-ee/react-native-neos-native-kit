@@ -6,17 +6,30 @@ export type onMediaCapturedCallback = (
 
 export type onCodeScannedCallback = (value: string) => Promise<void> | void;
 
-export type CameraScreenProps = {formatFilters?: Partial<FormatFilter>[]} & (
+export type CameraScreenProps = {
+  formatFilters?: Partial<FormatFilter>[];
+} & (
   | {
       recordingMode: 'photo' | 'video' | 'combined';
       onMediaCaptured: onMediaCapturedCallback;
-      onCodeScanned?: never;
-      stopOnFirstCodeScan?: never;
+      onCodeScanned: never;
+      stopOnFirstCodeScan: never;
+      validateValueScannedByUser: never;
+      validateValueScannedMessage: never;
     }
-  | {
+  | ({
       recordingMode: 'scanner';
+      onMediaCaptured: never;
       stopOnFirstCodeScan?: boolean;
       onCodeScanned: onCodeScannedCallback;
-      onMediaCaptured?: never;
-    }
+    } & (
+      | {
+          validateValueScannedByUser?: true;
+          validateValueScannedMessage: (value: string) => string;
+        }
+      | {
+          validateValueScannedByUser?: false;
+          validateValueScannedMessage: never;
+        }
+    ))
 );
