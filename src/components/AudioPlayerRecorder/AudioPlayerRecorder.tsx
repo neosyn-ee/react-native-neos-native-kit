@@ -16,7 +16,9 @@ import {
   ActivityIndicator,
   Avatar,
   IconButton,
+  Portal,
   ProgressBar,
+  Snackbar,
   useTheme,
 } from 'react-native-paper';
 import Animated, {
@@ -71,6 +73,7 @@ const AudioPlayerRecorder = ({
   const [readyToPlay, setReadyToPlay] = useState<boolean>();
   const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
   const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
+  const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
   const [state, setState] = useState<AudioPlayerRecorderStateType>({
     recordSecs: 0,
     recordTime: '00:00',
@@ -301,141 +304,159 @@ const AudioPlayerRecorder = ({
   const theme = useTheme();
 
   return (
-    <View
-      className="absolute left-0 right-0 bottom-0 flex-row items-center p-4"
-      style={[
-        {
-          height: BOTTOM_APPBAR_HEIGHT + bottom,
-          backgroundColor: theme.colors.elevation.level2,
-        },
-      ]}>
-      <View className="flex-auto flex-row items-center">
-        {isPlayerEnabled ? (
-          <>
-            {isSent !== IsSentEnum.Error && isSent !== IsSentEnum.Sending ? (
-              <IconButton
-                icon={isPlaying ? 'pause' : 'play'}
-                iconColor={theme.colors.primary}
-                size={25}
-                onPress={isPlaying ? () => onPausePlay() : () => onStartPlay()}
-              />
-            ) : (
-              <IconButton
-                icon={'upload'}
-                iconColor={theme.colors.primary}
-                size={25}
-                onPress={onSendAudio}
-              />
-            )}
-            <View className="flex-column flex-1 p-1">
-              {progressDisplayMode === 'progressBar' ? (
-                <ProgressBar
-                  className="w-full"
-                  progress={progress.value}
-                  color={theme.colors.primary}
+    <>
+      <View
+        className="absolute left-0 right-0 bottom-0 flex-row items-center p-4"
+        style={[
+          {
+            height: BOTTOM_APPBAR_HEIGHT + bottom,
+            backgroundColor: theme.colors.elevation.level2,
+          },
+        ]}>
+        <View className="flex-auto flex-row items-center">
+          {isPlayerEnabled ? (
+            <>
+              {isSent !== IsSentEnum.Error && isSent !== IsSentEnum.Sending ? (
+                <IconButton
+                  icon={isPlaying ? 'pause' : 'play'}
+                  iconColor={theme.colors.primary}
+                  size={25}
+                  onPress={
+                    isPlaying ? () => onPausePlay() : () => onStartPlay()
+                  }
                 />
               ) : (
-                <Image
-                  className="flex-1 w-full"
-                  source={require('@assets/img/soundwaves.png')}
+                <IconButton
+                  icon={'upload'}
+                  iconColor={theme.colors.primary}
+                  size={25}
+                  onPress={onSendAudio}
                 />
               )}
-              <Text
-                className={playTimeClassName}
-                style={{
-                  fontSize: 13,
-                  color: theme.colors.onSecondaryContainer,
-                }}>
-                {state.playTime}
-              </Text>
-              {sendingTime && (
+              <View className="flex-column flex-1 p-1">
+                {progressDisplayMode === 'progressBar' ? (
+                  <ProgressBar
+                    className="w-full"
+                    progress={progress.value}
+                    color={theme.colors.primary}
+                  />
+                ) : (
+                  <Image
+                    className="flex-1 w-full"
+                    source={require('@assets/img/soundwaves.png')}
+                  />
+                )}
                 <Text
-                  className={sendingTimeClassName}
+                  className={playTimeClassName}
                   style={{
                     fontSize: 13,
                     color: theme.colors.onSecondaryContainer,
                   }}>
-                  {sendingTime}
+                  {state.playTime}
                 </Text>
-              )}
-            </View>
-            {(isSent === IsSentEnum.Idle || isSent === IsSentEnum.Error) && (
-              <IconButton
-                icon="trash-can-outline"
-                iconColor={theme.colors.error}
-                size={25}
-                onPress={() => onDiscardRecord()}
-              />
-            )}
-            {isSent === IsSentEnum.Sent && (
-              <IconButton icon="check-circle" iconColor="#50C878" size={25} />
-            )}
-            {isSent === IsSentEnum.Sending && (
-              <IconButton
-                icon={() => (
-                  <ActivityIndicator
-                    animating={true}
-                    size={20}
-                    color={theme.colors.secondary}
-                  />
+                {sendingTime && (
+                  <Text
+                    className={sendingTimeClassName}
+                    style={{
+                      fontSize: 13,
+                      color: theme.colors.onSecondaryContainer,
+                    }}>
+                    {sendingTime}
+                  </Text>
                 )}
-                size={25}
-              />
-            )}
-            {isSent === IsSentEnum.Error && (
-              <IconButton
-                icon="alert-circle-outline"
-                iconColor={theme.colors.error}
-                size={25}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            {isRecorderEnabled ? (
-              <>
-                <BlinkingMicIcon />
+              </View>
+              {(isSent === IsSentEnum.Idle || isSent === IsSentEnum.Error) && (
+                <IconButton
+                  icon="trash-can-outline"
+                  iconColor={theme.colors.error}
+                  size={25}
+                  onPress={() => onDiscardRecord()}
+                />
+              )}
+              {isSent === IsSentEnum.Sent && (
+                <IconButton icon="check-circle" iconColor="#50C878" size={25} />
+              )}
+              {isSent === IsSentEnum.Sending && (
+                <IconButton
+                  icon={() => (
+                    <ActivityIndicator
+                      animating={true}
+                      size={20}
+                      color={theme.colors.secondary}
+                    />
+                  )}
+                  size={25}
+                />
+              )}
+              {isSent === IsSentEnum.Error && (
+                <IconButton
+                  icon="alert-circle-outline"
+                  iconColor={theme.colors.error}
+                  size={25}
+                  onPress={() => {
+                    setSnackbarVisible(true);
+                  }}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {isRecorderEnabled ? (
+                <>
+                  <BlinkingMicIcon />
+                  <Text
+                    className="flex-1"
+                    style={{
+                      fontSize: 13,
+                      color: theme.colors.onSecondaryContainer,
+                    }}>
+                    {state.recordTime}
+                  </Text>
+                </>
+              ) : (
                 <Text
                   className="flex-1"
                   style={{
                     fontSize: 13,
                     color: theme.colors.onSecondaryContainer,
                   }}>
-                  {state.recordTime}
+                  Hold down the button to record your comment
                 </Text>
-              </>
-            ) : (
-              <Text
-                className="flex-1"
-                style={{
-                  fontSize: 13,
-                  color: theme.colors.onSecondaryContainer,
-                }}>
-                Hold down the button to record your comment
-              </Text>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
+        </View>
+        <View className="flex-auto items-center">
+          {isSent === IsSentEnum.Idle ? (
+            <IconButton
+              icon={readyToPlay ? 'send' : 'microphone'}
+              mode="contained"
+              iconColor={theme.colors.onPrimary}
+              containerColor={theme.colors.primary}
+              size={20}
+              onPress={readyToPlay ? () => onSendAudio() : undefined}
+              onLongPress={readyToPlay ? undefined : () => onStartRecord()}
+              onPressOut={
+                readyToPlay || !isRecording ? undefined : () => onStopRecord()
+              }
+            />
+          ) : (
+            <Avatar.Text size={35} label="FD" />
+          )}
+        </View>
       </View>
-      <View className="flex-auto items-center">
-        {isSent === IsSentEnum.Idle ? (
-          <IconButton
-            icon={readyToPlay ? 'send' : 'microphone'}
-            mode="contained"
-            iconColor={theme.colors.onPrimary}
-            containerColor={theme.colors.primary}
-            size={20}
-            onPress={readyToPlay ? () => onSendAudio() : undefined}
-            onLongPress={readyToPlay ? undefined : () => onStartRecord()}
-            onPressOut={
-              readyToPlay || !isRecording ? undefined : () => onStopRecord()
-            }
-          />
-        ) : (
-          <Avatar.Text size={35} label="FD" />
-        )}
-      </View>
-    </View>
+      <Portal>
+        <Snackbar
+          icon="close-circle"
+          duration={3000}
+          style={{backgroundColor: 'rgba(186, 26, 26, 0.9)'}}
+          visible={snackbarVisible}
+          onIconPress={() => setSnackbarVisible(false)}
+          onDismiss={() => {}}>
+          An error has occurred during the file transfer.
+        </Snackbar>
+      </Portal>
+    </>
   );
 };
 

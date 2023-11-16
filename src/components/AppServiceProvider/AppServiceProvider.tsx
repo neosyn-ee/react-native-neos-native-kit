@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {PaperProvider} from 'react-native-paper';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -9,12 +10,14 @@ import {SingletonHooksContainer} from 'react-singleton-hook';
 
 const AppServiceProvider = ({children}: {children?: ReactNode}) => {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <SingletonHooksContainer />
-        {children}
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <PaperProvider>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <SingletonHooksContainer />
+          {children}
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </PaperProvider>
   );
 };
 
