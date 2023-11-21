@@ -35,7 +35,6 @@ export default {
 
 export const Default: StoryObj<VideoAudioCommentProps> = {
   args: {
-    onSendAudioNote,
     audioPlayer: {
       onSendAudioNote,
       progressDisplayMode: 'soundwave',
