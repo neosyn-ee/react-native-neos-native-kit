@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {View} from 'react-native';
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
 import {VideoPlayer} from '@components/VideoPlayer';
+import {PlayerInfoObject} from '@components/VideoPlayer/VideoPlayer.type';
 
 import {VideoAudioCommentProps} from './VideoAudioComment.types';
 
@@ -22,6 +23,8 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
     disableSeekButtons: true,
     tapAnywhereToPause: true,
   });
+
+  const playerInfoRef = useRef<React.MutableRefObject<PlayerInfoObject>>(null);
 
   const showControls = () => {
     setNewPlayerProps(prevState => ({
@@ -54,10 +57,16 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
     hideControls();
   };
 
+  const playerInfoElapsedSecs = useCallback(
+    () => playerInfoRef.current?.current.elapsedSecs ?? 0,
+    [playerInfoRef],
+  );
+
   return (
     <>
       <View className="flex-1" style={{marginBottom: BOTTOM_APPBAR_HEIGHT}}>
         <VideoPlayer
+          ref={playerInfoRef}
           {...video}
           {...videoPlayerProps}
           muted={muted}
@@ -66,7 +75,11 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
           onEnd={onEnd}
         />
       </View>
-      <AudioPlayerRecorder {...audioPlayer} setMuted={setMuted} />
+      <AudioPlayerRecorder
+        {...audioPlayer}
+        setMuted={setMuted}
+        playerInfoElapsedSecs={playerInfoElapsedSecs}
+      />
     </>
   );
 };

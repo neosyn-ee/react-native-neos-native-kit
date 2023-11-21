@@ -60,11 +60,12 @@ const BlinkingMicIcon = memo((): JSX.Element => {
 const BOTTOM_APPBAR_HEIGHT = 80;
 
 const AudioPlayerRecorder = ({
-  fileName = 'nota audio',
+  fileName = 'nota-audio',
   onSendAudioNote,
   setMuted,
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
+  playerInfoElapsedSecs,
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -74,6 +75,8 @@ const AudioPlayerRecorder = ({
   const [isPlayerEnabled, setIsPlayerEnabled] = useState<boolean>();
   const [isRecorderEnabled, setIsRecorderEnabled] = useState<boolean>();
   const [snackbarVisible, setSnackbarVisible] = useState<boolean>(false);
+  const [videoTimeInSecsOnRecStarted, setVideoTimeInSecsOnRecStarted] =
+    useState<number>(0);
   const [state, setState] = useState<AudioPlayerRecorderStateType>({
     recordSecs: 0,
     recordTime: '00:00',
@@ -100,6 +103,8 @@ const AudioPlayerRecorder = ({
     };
     try {
       setMuted?.(true);
+      playerInfoElapsedSecs &&
+        setVideoTimeInSecsOnRecStarted(playerInfoElapsedSecs());
       await audioRecorderPlayer.startRecorder(path, audioSet);
       setIsRecording(true);
       setReadyToPlay(false);
@@ -114,7 +119,7 @@ const AudioPlayerRecorder = ({
     } catch (error) {
       console.error('Oops! Failed to start recording:', error);
     }
-  }, []);
+  }, [path]);
 
   const onStopRecord = useCallback(async (): Promise<void> => {
     try {
@@ -184,7 +189,7 @@ const AudioPlayerRecorder = ({
     } catch (error) {
       console.error('Oops! Failed to play the recorded note:', error);
     }
-  }, []);
+  }, [path, progressDisplayMode, playTimeDisplayMode]);
 
   const onStopPlay = useCallback(async (): Promise<void> => {
     if (isPlaying === false) {
@@ -198,7 +203,7 @@ const AudioPlayerRecorder = ({
     } catch (error) {
       console.error('Oops! Failed to stop player:', error);
     }
-  }, []);
+  }, [isPlaying]);
 
   const onPausePlay = useCallback(async (): Promise<void> => {
     if (isPlaying === false) {
@@ -211,7 +216,7 @@ const AudioPlayerRecorder = ({
     } catch (error) {
       console.error('Oops! Failed to pause the recorded note:', error);
     }
-  }, []);
+  }, [isPlaying]);
 
   const onDiscardRecord = useCallback(async (): Promise<void> => {
     setIsSent(IsSentEnum.Idle);
@@ -224,7 +229,7 @@ const AudioPlayerRecorder = ({
     } catch (error) {
       console.error('Oops! Failed to remove the recorded note:', error);
     }
-  }, []);
+  }, [path]);
 
   const onSendAudio = useCallback(async () => {
     setIsSent(IsSentEnum.Sending);
@@ -234,7 +239,12 @@ const AudioPlayerRecorder = ({
       const res =
         fileExists &&
         fileContent &&
-        (await onSendAudioNote(fileName, undefined, fileContent));
+        (await onSendAudioNote(
+          fileName,
+          undefined,
+          fileContent,
+          videoTimeInSecsOnRecStarted,
+        ));
       if (res) {
         setIsSent(IsSentEnum.Sent);
         const date = new Date(Date.now());
@@ -246,8 +256,9 @@ const AudioPlayerRecorder = ({
       }
     } catch (error) {
       setIsSent(IsSentEnum.Error);
+      console.error(error);
     }
-  }, []);
+  }, [path, onSendAudioNote, videoTimeInSecsOnRecStarted]);
 
   useEffect(() => {
     return () => {
@@ -281,7 +292,7 @@ const AudioPlayerRecorder = ({
             setIsPlayerEnabled(true);
           }
         })
-        .catch(error => console.log(`Error: ${error.message}`));
+        .catch(error => console.error(`Error: ${error.message}`));
   }, [readyToPlay]);
 
   useEffect(() => {

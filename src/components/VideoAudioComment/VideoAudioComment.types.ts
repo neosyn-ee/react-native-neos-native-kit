@@ -8,5 +8,5 @@ export type VideoAudioCommentProps = {
 
 export type DropboxError = {
   code: number;
-  desc: string;
+  name: string;
 };

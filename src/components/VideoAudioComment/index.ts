@@ -5,24 +5,28 @@ export {default as VideoAudioComment} from './VideoAudioComment';
 
 const DROPBOX_API_ERRORS: Array<DropboxError> = [
   {
+    code: 400,
+    name: 'Bad Request',
+  },
+  {
     code: 401,
-    desc: 'Access Unauthorized',
+    name: 'Access Unauthorized',
   },
   {
     code: 403,
-    desc: 'Access Denied',
+    name: 'Access Denied',
   },
   {
     code: 409,
-    desc: 'Endpoint Conflict',
+    name: 'Endpoint Conflict',
   },
   {
     code: 429,
-    desc: 'Rate Limit Reached',
+    name: 'Rate Limit Reached',
   },
   {
     code: 500,
-    desc: 'Internal Server Error',
+    name: 'Internal Server Error',
   },
 ];
 
@@ -30,8 +34,12 @@ export const onSendAudioNote = async (
   fileName: string,
   filePath?: string,
   fileSource?: string,
+  videoTimeInSecsOnRecStarted?: number,
 ): Promise<any> => {
   try {
+    console.log(
+      `Started recording when video elapsed time was: ${videoTimeInSecsOnRecStarted} secs`,
+    );
     // Post binary data from existing file
     const res = await RNFetchBlob.fetch(
       'POST',
@@ -50,16 +58,14 @@ export const onSendAudioNote = async (
     );
     const {
       respInfo: {status},
+      data,
     } = res;
     const errCodes = DROPBOX_API_ERRORS.map(err => err.code);
     if (errCodes.includes(status)) {
-      const error = DROPBOX_API_ERRORS.find(err => err.code === status);
-      const msg = `${status} ${error?.desc}`;
-      throw new Error(msg);
+      throw new Error(data);
     }
     return res.json();
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
