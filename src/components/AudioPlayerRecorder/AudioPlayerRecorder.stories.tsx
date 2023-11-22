@@ -1,9 +1,8 @@
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
-import {SingletonHooksContainer} from 'react-singleton-hook';
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
-import {onSendAudioNote} from '@components/VideoAudioComment/VideoAudioComment';
+import {onSendAudioNote} from '@components/VideoAudioComment';
 
 import {AudioPlayerRecorderProps} from './AudioPlayerRecorder.types';
 
@@ -21,14 +20,6 @@ export default {
       options: ['default', 'countdown'],
     },
   },
-  decorators: [
-    Story => (
-      <>
-        <SingletonHooksContainer />
-        <Story />
-      </>
-    ),
-  ],
 } as ComponentMeta<typeof AudioPlayerRecorder>;
 
 export const Default: StoryObj<AudioPlayerRecorderProps> = {

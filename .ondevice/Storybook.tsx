@@ -1,4 +1,10 @@
-import { getStorybookUI } from '@storybook/react-native';
+import {AppServiceProvider} from '@components/AppServiceProvider';
+import {getStorybookUI} from '@storybook/react-native';
 import './storybook.requires';
 const StorybookUIRoot = getStorybookUI({});
-export default StorybookUIRoot;
+const StorybookUIRootWrapped = () => (
+  <AppServiceProvider>
+    <StorybookUIRoot />
+  </AppServiceProvider>
+);
+export default StorybookUIRootWrapped;

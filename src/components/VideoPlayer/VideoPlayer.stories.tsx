@@ -1,8 +1,5 @@
-import React from 'react';
-
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
-import {SingletonHooksContainer} from 'react-singleton-hook';
 
 import VideoPlayer from './VideoPlayer';
 import {VideoPlayerProps} from './VideoPlayer.type';
@@ -19,14 +16,6 @@ export default {
     },
   },
   tags: ['autodocs'],
-  decorators: [
-    Story => (
-      <>
-        <SingletonHooksContainer />
-        <Story />
-      </>
-    ),
-  ],
 } as ComponentMeta<typeof VideoPlayer>;
 
 export const Default: StoryObj<VideoPlayerProps> = {

@@ -1,1 +1,1 @@
-export * as PostSingle from './Post';
+export {default as Post} from './Post';

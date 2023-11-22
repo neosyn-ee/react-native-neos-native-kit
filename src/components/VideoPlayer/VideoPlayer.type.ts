@@ -13,15 +13,17 @@ export type PlayerProps = CorePlayerProps &
     setPaused: React.Dispatch<React.SetStateAction<boolean>>;
   };
 
+export type PlayerInfoObject = {
+  elapsedSecs: number;
+};
+
 export type VideoPlayerProps = CorePlayerProps &
   VideoSizeProps & {
     autoplay?: boolean;
     thumb?: string;
     disableControlsWhen?: disableControlsType;
     setFullscreen?: React.Dispatch<React.SetStateAction<boolean>>;
-    playerInfo?: React.MutableRefObject<{
-      elapsedSecs: number;
-    }>;
+    playerInfo?: React.MutableRefObject<PlayerInfoObject>;
   };
 
 export type VideoSizeProps = {

@@ -4,10 +4,12 @@ export type AudioPlayerRecorderProps = {
     fileName: string,
     filePath?: string,
     fileSource?: string,
+    videoTimeInSecsOnRecStarted?: number,
   ) => Promise<any>;
   setMuted?: React.Dispatch<React.SetStateAction<boolean>>;
   progressDisplayMode?: 'progressBar' | 'soundwave';
   playTimeDisplayMode?: 'default' | 'countdown';
+  playerInfoElapsedSecs?: () => number;
 };
 
 export type AudioPlayerRecorderStateType = {
