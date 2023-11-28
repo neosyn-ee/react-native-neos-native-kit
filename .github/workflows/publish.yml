@@ -18,7 +18,7 @@ jobs:
           scope: '@octocat'
       - run: yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
       - run: yarn
-      - run: yarn publish --access=public
+      - run: yarn publish --access=public --force
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create changelog file
