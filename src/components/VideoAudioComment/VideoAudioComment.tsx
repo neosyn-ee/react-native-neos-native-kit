@@ -1,0 +1,87 @@
+import React, {useCallback, useRef, useState} from 'react';
+import {View} from 'react-native';
+
+import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
+import {VideoPlayer} from '@components/VideoPlayer';
+import {PlayerInfoObject} from '@components/VideoPlayer/VideoPlayer.type';
+
+import {VideoAudioCommentProps} from './VideoAudioComment.types';
+
+const BOTTOM_APPBAR_HEIGHT = 80;
+
+const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
+  const [muted, setMuted] = useState<boolean>(false);
+  const [videoPlayerProps, setNewPlayerProps] = useState({
+    autoplay: true,
+    showOnStart: true,
+    alwaysShowControls: true,
+    controlAnimationTiming: 0,
+    disableBack: true,
+    disableVolume: false,
+    disablePlayPause: false,
+    disableFullscreen: true,
+    disableSeekButtons: true,
+    tapAnywhereToPause: true,
+  });
+
+  const playerInfoRef = useRef<React.MutableRefObject<PlayerInfoObject>>(null);
+
+  const showControls = () => {
+    setNewPlayerProps(prevState => ({
+      ...prevState,
+      disableVolume: false,
+      disablePlayPause: false,
+      disableOverlay: false,
+    }));
+  };
+
+  const hideControls = () => {
+    setNewPlayerProps(prevState => ({
+      ...prevState,
+      disableVolume: true,
+      disablePlayPause: true,
+      disableOverlay: true,
+    }));
+  };
+
+  const onEnd = () => {
+    showControls();
+  };
+
+  const onPause = () => {
+    showControls();
+  };
+
+  const onPlay = () => {
+    setMuted(false);
+    hideControls();
+  };
+
+  const playerInfoElapsedSecs = useCallback(
+    () => playerInfoRef.current?.current.elapsedSecs ?? 0,
+    [playerInfoRef],
+  );
+
+  return (
+    <>
+      <View className="flex-1" style={{marginBottom: BOTTOM_APPBAR_HEIGHT}}>
+        <VideoPlayer
+          ref={playerInfoRef}
+          {...video}
+          {...videoPlayerProps}
+          muted={muted}
+          onPlay={onPlay}
+          onPause={onPause}
+          onEnd={onEnd}
+        />
+      </View>
+      <AudioPlayerRecorder
+        {...audioPlayer}
+        setMuted={setMuted}
+        playerInfoElapsedSecs={playerInfoElapsedSecs}
+      />
+    </>
+  );
+};
+
+export default VideoAudioComment;

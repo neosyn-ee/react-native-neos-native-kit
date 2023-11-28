@@ -3,6 +3,7 @@ module.exports = {
   extends: '@react-native',
   plugins: ['import'],
   rules: {
+    'react-hooks/exhaustive-deps': 'warn',
     // this is for sorting WITHIN an import
     'sort-imports': ['error', {ignoreCase: true, ignoreDeclarationSort: true}],
     // this is for sorting imports
