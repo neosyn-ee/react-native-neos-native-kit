@@ -1,7 +1,26 @@
 {
   "name": "react-native-magic-kit",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
+  "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neosyn-ee/react-native-core"
+  },
+  "author": "Neosyn <info@neosyn.it> (https://github.com/neosyn-ee)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/neosyn-ee/react-native-core/issues"
+  },
+  "homepage": "https://github.com/neosyn-ee/react-native-core#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
