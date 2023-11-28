@@ -2,6 +2,7 @@
   "name": "react-native-magic-kit",
   "version": "1.0.1",
   "private": false,
+  "type": "module",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
     "react-native",
@@ -114,6 +115,7 @@
     "postcss-loader": "^7.3.3",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
+    "simple-git": "^3.21.0",
     "tailwindcss": "3.3.2",
     "typescript": "4.8.4"
   },
