@@ -2,7 +2,7 @@
   "name": "react-native-magic-kit",
   "version": "1.0.1",
   "private": false,
-  "type": "module",
+  "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
     "react-native",
