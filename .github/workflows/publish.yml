@@ -1,7 +1,9 @@
 name: Publish Package to npmjs
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+      - 'release/**'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,3 +21,21 @@ jobs:
       - run: yarn publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create changelog file
+        run: cd scripts && node auto-changelog.js
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref }}
+        run: |
+          prerelease_flag=""
+
+          if [[ "${{ github.ref }}" == 'refs/heads/release/'* ]]; then
+            prerelease_flag="--prerelease"
+          fi
+
+          gh release create "$tag" -F CHANGELOG.md \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${{ steps.vars.outputs.tag }} ${tag#v}" \
+            $prerelease_flag
