@@ -9,8 +9,6 @@ import {AppServiceProvider} from '@components/AppServiceProvider';
 import FeedScreen from '@screens/FeedScreen';
 import HomeScreen from '@screens/HomeScreen';
 
-import './nativewind-output';
-
 const Tab = createMaterialBottomTabNavigator();
 
 export default (): JSX.Element => (

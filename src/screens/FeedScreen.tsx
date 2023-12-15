@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 
 import fakeData from 'storage/database/post';
+import tw from "twrnc"
 
 import {PostType} from '@components/Post/Post.types';
 import VirtualizedVideoList from '@components/VirtualizedVideoList/VirtualizedVideoList';
@@ -25,7 +26,7 @@ const FeedScreen: FC = () => {
   };
 
   return (
-    <SafeAreaView className="h-full">
+    <SafeAreaView style={tw`h-full`}>
       <VirtualizedVideoList
         data={data}
         fetchData={fetchData}

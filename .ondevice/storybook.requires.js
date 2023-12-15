@@ -6,34 +6,34 @@ import {
   addParameters,
   addArgsEnhancer,
   clearDecorators,
-} from '@storybook/react-native';
+} from "@storybook/react-native";
 
 global.STORIES = [
   {
-    titlePrefix: '',
-    directory: './src/components',
-    files: '**/*.stories.?(ts|tsx|js|jsx)',
+    titlePrefix: "",
+    directory: "./src/components",
+    files: "**/*.stories.?(ts|tsx|js|jsx)",
     importPathMatcher:
-      '^\\.[\\\\/](?:src[\\\\/]components(?:[\\\\/](?!\\.)(?:(?:(?!(?:^|[\\\\/])\\.).)*?)[\\\\/]|[\\\\/]|$)(?!\\.)(?=.)[^\\\\/]*?\\.stories\\.(?:ts|tsx|js|jsx)?)$',
+      "^\\.[\\\\/](?:src\\/components(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(?:ts|tsx|js|jsx)?)$",
   },
 ];
 
-import '@storybook/addon-ondevice-notes/register';
-import '@storybook/addon-ondevice-controls/register';
-import '@storybook/addon-ondevice-backgrounds/register';
+import "@storybook/addon-ondevice-notes/register";
+import "@storybook/addon-ondevice-controls/register";
+import "@storybook/addon-ondevice-backgrounds/register";
 
-import {decorators, parameters} from './preview';
+import { decorators, parameters } from "./preview";
 
 if (decorators) {
   if (__DEV__) {
     // stops the warning from showing on every HMR
-    require('react-native').LogBox.ignoreLogs([
-      '`clearDecorators` is deprecated and will be removed in Storybook 7.0',
+    require("react-native").LogBox.ignoreLogs([
+      "`clearDecorators` is deprecated and will be removed in Storybook 7.0",
     ]);
   }
   // workaround for global decorators getting infinitely applied on HMR, see https://github.com/storybookjs/react-native/issues/185
   clearDecorators();
-  decorators.forEach(decorator => addDecorator(decorator));
+  decorators.forEach((decorator) => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -42,13 +42,12 @@ if (parameters) {
 
 const getStories = () => {
   return {
-    './src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx': require('../src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx'),
-    './src/components/Button/Button.stories.tsx': require('../src/components/Button/Button.stories.tsx'),
-    './src/components/CameraScreen/CameraScreen.stories.tsx': require('../src/components/CameraScreen/CameraScreen.stories.tsx'),
-    './src/components/MediaScreen/MediaScreen.stories.tsx': require('../src/components/MediaScreen/MediaScreen.stories.tsx'),
-    './src/components/VideoAudioComment/VideoAudioComment.stories.tsx': require('../src/components/VideoAudioComment/VideoAudioComment.stories.tsx'),
-    './src/components/VideoPlayer/VideoPlayer.stories.tsx': require('../src/components/VideoPlayer/VideoPlayer.stories.tsx'),
-    './src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx': require('../src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx'),
+    "./src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx": require("../src/components/AudioPlayerRecorder/AudioPlayerRecorder.stories.tsx"),
+    "./src/components/CameraScreen/CameraScreen.stories.tsx": require("../src/components/CameraScreen/CameraScreen.stories.tsx"),
+    "./src/components/MediaScreen/MediaScreen.stories.tsx": require("../src/components/MediaScreen/MediaScreen.stories.tsx"),
+    "./src/components/VideoAudioComment/VideoAudioComment.stories.tsx": require("../src/components/VideoAudioComment/VideoAudioComment.stories.tsx"),
+    "./src/components/VideoPlayer/VideoPlayer.stories.tsx": require("../src/components/VideoPlayer/VideoPlayer.stories.tsx"),
+    "./src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx": require("../src/components/VirtualizedVideoList/VirtualizedVideoList.stories.tsx"),
   };
 };
 

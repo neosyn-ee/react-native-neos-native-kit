@@ -1,5 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {View} from 'react-native';
+import tw from "twrnc"
 
 import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
 import {VideoPlayer} from '@components/VideoPlayer';
@@ -64,7 +65,7 @@ const VideoAudioComment = ({video, audioPlayer}: VideoAudioCommentProps) => {
 
   return (
     <>
-      <View className="flex-1" style={{marginBottom: BOTTOM_APPBAR_HEIGHT}}>
+      <View style={tw`flex-1 mb-[${BOTTOM_APPBAR_HEIGHT}]`}>
         <VideoPlayer
           ref={playerInfoRef}
           {...video}

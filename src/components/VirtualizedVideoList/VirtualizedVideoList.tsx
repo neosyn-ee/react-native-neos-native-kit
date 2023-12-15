@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, ViewToken} from 'react-native';
+import tw from "twrnc"
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -128,7 +129,7 @@ const VirtualizedVideoList = ({
   }, [data]);
 
   return (
-    <View className="flex-1">
+    <View style={tw`flex-1`}>
       {posts.length ? (
         <Animated.FlatList
           data={posts}

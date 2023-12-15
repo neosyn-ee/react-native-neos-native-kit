@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import {Text, View} from 'react-native';
+import tw from "twrnc"
 
 import VideoPlayer from '@components/VideoPlayer/VideoPlayer';
 
@@ -14,14 +15,14 @@ import {PostProps} from './Post.types';
 
 export const PostBody = ({children}: PropsWithChildren) => {
   return (
-    <View className="p6">
+    <View style={tw`p-6`}>
       <Text>{children}</Text>
     </View>
   );
 };
 
 export const PostActions = ({children}: PropsWithChildren) => {
-  return <View className="flex-row gap-3 mb-2">{children}</View>;
+  return <View style={tw`flex-row gap-3 mb-2`}>{children}</View>;
 };
 
 const Post = memo(
@@ -76,9 +77,9 @@ const Post = memo(
           bodyContent
         );
       return (
-        <View className="bg-[#fff]">
+        <View style={tw`bg-[#fff]`}>
           <VideoPlayer {...video} source={source} autoplay={autoplay} />
-          <View className="p-3">
+          <View style={tw`p-3`}>
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
             {bodyContent && renderedBody}
           </View>

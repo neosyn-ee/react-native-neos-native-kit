@@ -1,9 +1,10 @@
 import React, {memo} from 'react';
 import {ActivityIndicator, View} from 'react-native';
+import tw from "twrnc"
 
 const Spinner = memo((): JSX.Element => {
   return (
-    <View className="h-[60px] justify-center items-center">
+    <View style={tw`h-[60px] justify-center items-center`}>
       <ActivityIndicator size="large" color="#007AFF" />
     </View>
   );

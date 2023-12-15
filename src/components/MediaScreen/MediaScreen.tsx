@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import tw from "twrnc"
 
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {IconButton} from 'react-native-paper';
@@ -118,24 +119,24 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
   }, [path, type]);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#FFFFFF]">
+    <SafeAreaView style={tw`flex-1 bg-[#FFFFFF]`}>
       {type === 'photo' && (
         <>
           {!hasImageLoadError ? (
             <Image
-              className="flex-1"
+              style={tw`flex-1`}
               source={source}
               resizeMode="cover"
               onLoad={onMediaLoad}
               onError={onImageLoadError}
             />
           ) : (
-            <View className="flex-1 items-center justify-center">
+            <View style={tw`flex-1 items-center justify-center`}>
               <Image
                 style={{width: 150, height: 150}}
                 source={require('@assets/img/no-image-placeholder.png')}
               />
-              <Text className="text-base uppercase text-[#a2a2a2]">
+              <Text style={tw`text-base uppercase text-[#a2a2a2]`}>
                 No image available
               </Text>
             </View>
