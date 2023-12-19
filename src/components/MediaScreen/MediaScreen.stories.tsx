@@ -5,18 +5,18 @@ import {PhotoFile, VideoFile} from 'react-native-vision-camera';
 import MediaScreen from './MediaScreen';
 import {MediaScreenProps} from './MediaScreen.types';
 
-const SAMPLE_PHOTOFILE: PhotoFile = {
+export const SAMPLE_PHOTOFILE: PhotoFile = {
   isMirrored: false,
-  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy2686721532453393324.jpg',
+  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy3430819119143105519.jpg',
   isRawPhoto: false,
   height: 1440,
   orientation: 'landscape-right',
   width: 3200,
 };
 
-const SAMPLE_VIDEOFILE: VideoFile = {
+export const SAMPLE_VIDEOFILE: VideoFile = {
   duration: 12.68,
-  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy3831378659325484017.mp4',
+  path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy9145641682697322369.mp4',
 };
 
 export default {

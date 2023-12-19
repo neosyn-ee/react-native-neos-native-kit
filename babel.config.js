@@ -32,7 +32,6 @@ module.exports = {
         alias: getAliases(),
       },
     ],
-    ['nativewind/babel'],
     'react-native-reanimated/plugin',
   ],
 };

@@ -1,5 +1,5 @@
 import RNFetchBlob from 'react-native-blob-util';
-
+import Config from "react-native-config";
 import {DropboxError} from './VideoAudioComment.types';
 export {default as VideoAudioComment} from './VideoAudioComment';
 
@@ -45,7 +45,7 @@ export const onSendAudioNote = async (
       'POST',
       'https://content.dropboxapi.com/2/files/upload',
       {
-        Authorization: 'Bearer [YOUR_DROPBOX_ACCESS_TOKEN]',
+        Authorization: `Bearer ${Config.DROPBOX_ACCESS_TOKEN}`,
         'Dropbox-API-Arg': JSON.stringify({
           path: `/${fileName}.m4a`,
           mode: 'add',

@@ -9,7 +9,7 @@ import {
   onMediaCapturedCallback,
 } from './CameraScreen.types';
 
-const onMediaCaptured: onMediaCapturedCallback = (
+export const onMediaCaptured: onMediaCapturedCallback = (
   media: PhotoFile | VideoFile,
 ) => {
   console.log('Media captured!', media);

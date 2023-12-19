@@ -8,15 +8,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {AppServiceProvider} from '@components/AppServiceProvider';
 import FeedScreen from '@screens/FeedScreen';
 import HomeScreen from '@screens/HomeScreen';
-
-import './nativewind-output';
+import AudioScreen from '@screens/AudioScreen';
+import VideoAudioCommentScreen from '@screens/VideoAudioCommentScreen';
+import PhotoScreen from '@screens/PhotoScreen';
+import VideoScreen from '@screens/VideoScreen';
+import CameraTest from '@screens/CameraTest';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default (): JSX.Element => (
   <AppServiceProvider>
     <NavigationContainer>
-      <Tab.Navigator labeled={false} initialRouteName="Feed">
+      <Tab.Navigator labeled={false} initialRouteName="camera">
         <Tab.Screen
           name="Home"
           component={HomeScreen}
@@ -33,6 +36,71 @@ export default (): JSX.Element => (
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
                 name="view-list"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Audio"
+          component={AudioScreen}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons
+                name="microphone"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="VideoAudio"
+          component={VideoAudioCommentScreen}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons
+                name="comment"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Photo"
+          component={PhotoScreen}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons
+                name="account-box-outline"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Video"
+          component={VideoScreen}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons
+                name="file-video-outline"
+                color={color}
+                size={26}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="camera"
+          component={CameraTest}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons
+                name="camera"
                 color={color}
                 size={26}
               />

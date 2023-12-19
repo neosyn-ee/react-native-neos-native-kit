@@ -1,6 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
+import tw from 'twrnc';
 
 import AudioRecorderPlayer, {
   AudioEncoderAndroidType,
@@ -57,7 +57,7 @@ const BlinkingMicIcon = memo((): JSX.Element => {
   );
 });
 
-const BOTTOM_APPBAR_HEIGHT = 80;
+const BOTTOM_APPBAR_HEIGHT = 20;
 
 const AudioPlayerRecorder = ({
   fileName = 'nota-audio',
@@ -66,6 +66,7 @@ const AudioPlayerRecorder = ({
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
   playerInfoElapsedSecs,
+  text = 'Hold down the button to record your comment'
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -317,14 +318,10 @@ const AudioPlayerRecorder = ({
   return (
     <>
       <View
-        className="absolute left-0 right-0 bottom-0 flex-row items-center p-4"
-        style={[
-          {
-            height: BOTTOM_APPBAR_HEIGHT + bottom,
-            backgroundColor: theme.colors.elevation.level2,
-          },
-        ]}>
-        <View className="flex-auto flex-row items-center">
+        style={tw`absolute left-0 right-0 bottom-0 flex-row items-center p-4 h-[${
+          BOTTOM_APPBAR_HEIGHT + bottom
+        }] bg-[#ffff]`}>
+        <View style={tw`flex-auto flex-row items-center`}>
           {isPlayerEnabled ? (
             <>
               {isSent !== IsSentEnum.Error && isSent !== IsSentEnum.Sending ? (
@@ -344,34 +341,25 @@ const AudioPlayerRecorder = ({
                   onPress={onSendAudio}
                 />
               )}
-              <View className="flex-column flex-1 p-1">
+              <View style={tw`flex-1 p-1`}>
                 {progressDisplayMode === 'progressBar' ? (
                   <ProgressBar
-                    className="w-full"
+                    style={tw`w-full`}
                     progress={progress.value}
                     color={theme.colors.primary}
                   />
                 ) : (
                   <Image
-                    className="flex-1 w-full"
+                    style={tw`flex-1 w-full`}
                     source={require('@assets/img/soundwaves.png')}
                   />
                 )}
-                <Text
-                  className={playTimeClassName}
-                  style={{
-                    fontSize: 13,
-                    color: theme.colors.onSecondaryContainer,
-                  }}>
+                <Text style={tw`${playTimeClassName} font-normal`}>
                   {state.playTime}
                 </Text>
                 {sendingTime && (
                   <Text
-                    className={sendingTimeClassName}
-                    style={{
-                      fontSize: 13,
-                      color: theme.colors.onSecondaryContainer,
-                    }}>
+                    style={tw`${sendingTimeClassName} font-normal`}>
                     {sendingTime}
                   </Text>
                 )}
@@ -415,29 +403,19 @@ const AudioPlayerRecorder = ({
               {isRecorderEnabled ? (
                 <>
                   <BlinkingMicIcon />
-                  <Text
-                    className="flex-1"
-                    style={{
-                      fontSize: 13,
-                      color: theme.colors.onSecondaryContainer,
-                    }}>
+                  <Text style={tw`flex-1`}>
                     {state.recordTime}
                   </Text>
                 </>
               ) : (
-                <Text
-                  className="flex-1"
-                  style={{
-                    fontSize: 13,
-                    color: theme.colors.onSecondaryContainer,
-                  }}>
-                  Hold down the button to record your comment
+                <Text style={tw`flex-1`}>
+                  {text}
                 </Text>
               )}
             </>
           )}
         </View>
-        <View className="flex-auto items-center">
+        <View style={tw`flex-auto items-center`}>
           {isSent === IsSentEnum.Idle ? (
             <IconButton
               icon={readyToPlay ? 'send' : 'microphone'}

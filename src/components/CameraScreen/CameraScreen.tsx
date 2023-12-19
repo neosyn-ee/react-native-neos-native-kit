@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, Linking, StyleSheet, View} from 'react-native';
+import tw from "twrnc"
 
 import {IconButton} from 'react-native-paper';
 import Animated, {useSharedValue} from 'react-native-reanimated';
@@ -173,12 +174,12 @@ const CameraScreen = ({
   }, []);
 
   return (
-    <View className="flex-1 bg-[#000000]">
+    <View style={tw`flex-1 bg-[#000000]`}>
       {isCameraInitialized && device && (
         <>
           <AnimatedCamera
             ref={camera}
-            className="flex-1 relative"
+            style={tw`flex-1 relative`}
             orientation="portrait"
             onError={onError}
             isActive={isActive}
@@ -213,7 +214,7 @@ const CameraScreen = ({
             )}
             {supportsFlash && (
               <IconButton
-                className="mt-3"
+                style={tw`mt-3`}
                 icon={flash === 'off' ? 'flash-off' : 'flash'}
                 iconColor="white"
                 containerColor="rgba(140, 140, 140, 0.3)"
@@ -224,7 +225,7 @@ const CameraScreen = ({
             )}
             {supportsHdr && recordingMode !== 'scanner' && (
               <IconButton
-                className="mt-3"
+                style={tw`mt-3`}
                 icon={enableHdr ? 'hdr' : 'hdr-off'}
                 iconColor="white"
                 containerColor="rgba(140, 140, 140, 0.3)"

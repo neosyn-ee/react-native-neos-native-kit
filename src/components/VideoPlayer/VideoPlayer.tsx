@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import {Modal, StatusBar, View} from 'react-native';
+import tw from "twrnc"
 
 import RnmcVideoPlayer from 'react-native-media-console';
 import Video, {OnProgressData, OnSeekData} from 'react-native-video';
@@ -67,7 +68,7 @@ export const Player: FC<PlayerProps> = memo(
     return (
       <RnmcVideoPlayer
         videoRef={videoRef}
-        className="h-full"
+        style={tw`h-full`}
         source={source}
         isFullscreen={isFullscreen}
         toggleResizeModeOnFullscreen={false}
@@ -176,7 +177,7 @@ const VideoPlayer = forwardRef<
             visible={fullscreen}
             supportedOrientations={['portrait', 'landscape']}>
             <View
-              className="h-full"
+              style={tw`h-full`}
               pointerEvents={disableControls ? 'none' : undefined}>
               {RenderedPlayer}
             </View>
