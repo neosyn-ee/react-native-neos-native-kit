@@ -153,6 +153,7 @@ const VideoPlayer = forwardRef<
     const RenderedPlayer = (
       <Player
         poster={thumb ?? undefined}
+        posterResizeMode='cover'
         setPaused={setPaused}
         setFullscreen={setFullscreen}
         isFullscreen={fullscreen}
