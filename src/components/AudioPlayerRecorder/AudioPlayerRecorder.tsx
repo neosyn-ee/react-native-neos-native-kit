@@ -341,7 +341,7 @@ const AudioPlayerRecorder = ({
                   onPress={onSendAudio}
                 />
               )}
-              <View style={tw`flex-column flex-1 p-1`}>
+              <View style={tw`flex-1 p-1`}>
                 {progressDisplayMode === 'progressBar' ? (
                   <ProgressBar
                     style={tw`w-full`}
