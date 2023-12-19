@@ -15,7 +15,7 @@ import {PostProps} from './Post.types';
 
 export const PostBody = ({children}: PropsWithChildren) => {
   return (
-    <View style={tw`p-6`}>
+    <View>
       <Text>{children}</Text>
     </View>
   );
