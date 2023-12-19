@@ -57,7 +57,7 @@ const BlinkingMicIcon = memo((): JSX.Element => {
   );
 });
 
-const BOTTOM_APPBAR_HEIGHT = 80;
+const BOTTOM_APPBAR_HEIGHT = 20;
 
 const AudioPlayerRecorder = ({
   fileName = 'nota-audio',
@@ -66,6 +66,7 @@ const AudioPlayerRecorder = ({
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
   playerInfoElapsedSecs,
+  text = 'Hold down the button to record your comment'
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -319,7 +320,7 @@ const AudioPlayerRecorder = ({
       <View
         style={tw`absolute left-0 right-0 bottom-0 flex-row items-center p-4 h-[${
           BOTTOM_APPBAR_HEIGHT + bottom
-        }] bg-primary`}>
+        }] bg-[#ffff]`}>
         <View style={tw`flex-auto flex-row items-center`}>
           {isPlayerEnabled ? (
             <>
@@ -353,12 +354,12 @@ const AudioPlayerRecorder = ({
                     source={require('@assets/img/soundwaves.png')}
                   />
                 )}
-                <Text style={tw`${playTimeClassName} font-medium `}>
+                <Text style={tw`${playTimeClassName} font-normal`}>
                   {state.playTime}
                 </Text>
                 {sendingTime && (
                   <Text
-                    style={tw`${sendingTimeClassName} font-medium `}>
+                    style={tw`${sendingTimeClassName} font-normal`}>
                     {sendingTime}
                   </Text>
                 )}
@@ -402,13 +403,13 @@ const AudioPlayerRecorder = ({
               {isRecorderEnabled ? (
                 <>
                   <BlinkingMicIcon />
-                  <Text style={tw`flex-1 font-medium `}>
+                  <Text style={tw`flex-1`}>
                     {state.recordTime}
                   </Text>
                 </>
               ) : (
-                <Text style={tw`flex-1 font-medium `}>
-                  Hold down the button to record your comment
+                <Text style={tw`flex-1`}>
+                  {text}
                 </Text>
               )}
             </>

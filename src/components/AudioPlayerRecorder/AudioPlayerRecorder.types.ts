@@ -10,6 +10,7 @@ export type AudioPlayerRecorderProps = {
   progressDisplayMode?: 'progressBar' | 'soundwave';
   playTimeDisplayMode?: 'default' | 'countdown';
   playerInfoElapsedSecs?: () => number;
+  text?: string;
 };
 
 export type AudioPlayerRecorderStateType = {
