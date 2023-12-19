@@ -60,7 +60,7 @@ const VirtualizedVideoList = ({
       if (viewableItems.length > 1) {
         if (scrollDirection.value === 'DOWN') {
           keyToPlay = viewableItems[viewableItems.length - 1].key;
-        } else if (scrollDirection.value === 'UP') {
+        } else if (scrollDirection.value === 'UP' || !scrollDirection.value) {
           keyToPlay = viewableItems[viewableItems.length - 2].key;
         }
       }
