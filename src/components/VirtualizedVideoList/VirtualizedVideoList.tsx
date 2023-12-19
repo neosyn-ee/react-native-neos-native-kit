@@ -12,13 +12,17 @@ import Spinner from '@components/Spinner/Spinner';
 
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
-const VirtualizedVideoList = ({
+const VirtualizedVideoList = <TItem,>({
   data,
   paginated,
   pagesNum,
   viewAreaCoveragePercentThreshold,
   fetchData,
-}: VirtualizedVideoListProps): JSX.Element => {
+  initialNumToRender = 5,
+  maxToRenderPerBatch = 5,
+  windowSize = 5,
+  ...props
+}: VirtualizedVideoListProps<TItem>): JSX.Element => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -137,8 +141,8 @@ const VirtualizedVideoList = ({
           keyExtractor={({id}) => id.toString()}
           onEndReachedThreshold={0.1}
           onEndReached={paginated ? handleOnEndReached : undefined}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
+          initialNumToRender={initialNumToRender}
+          maxToRenderPerBatch={maxToRenderPerBatch}
           refreshing={refreshing}
           viewabilityConfig={{
             minimumViewTime: 100,
@@ -147,6 +151,7 @@ const VirtualizedVideoList = ({
           onViewableItemsChanged={onViewableItemsChanged}
           onScroll={scrollHandler}
           removeClippedSubviews
+          {...props}
         />
       ) : null}
       {refreshing && <Spinner />}

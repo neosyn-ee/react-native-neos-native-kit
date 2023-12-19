@@ -26,7 +26,7 @@ const FeedScreen: FC = () => {
 
   return (
     <SafeAreaView className="h-full">
-      <VirtualizedVideoList
+      <VirtualizedVideoList<PostType[]>
         data={data}
         fetchData={fetchData}
         paginated={true}
