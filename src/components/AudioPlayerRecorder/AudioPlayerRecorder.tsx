@@ -59,7 +59,7 @@ const BlinkingMicIcon = memo((): JSX.Element => {
 
 const BOTTOM_APPBAR_HEIGHT = 20;
 
-const checkPermissions = async () => {
+export const checkPermissions = async () => {
   if (Platform.OS === 'android') {
     try {
       const grants = await PermissionsAndroid.requestMultiple([
