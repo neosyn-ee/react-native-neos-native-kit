@@ -13,7 +13,7 @@ import tw from "twrnc"
 import RnmcVideoPlayer from 'react-native-media-console';
 import Video, {OnProgressData, OnSeekData} from 'react-native-video';
 
-import {useScreenOrientation} from '@hooks/useScreenOrientation';
+import {useScreenOrientation} from '../../hooks/useScreenOrientation';
 import {isAndroid} from '../../utils/helpers';
 
 import {

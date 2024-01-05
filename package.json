@@ -1,7 +1,6 @@
 {
-  "name": "react-native-magic-kit",
-  "version": "1.0.1",
-  "private": false,
+  "name": "@neosyn-ee/neos-native-kit",
+  "version": "0.0.22-alpha",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -40,7 +39,8 @@
     "e2e:android:build": "detox build --configuration android.release",
     "e2e:android:test": "detox test --configuration android.release",
     "e2e:android": "run-s e2e:android:*",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepack": "bob build"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -112,6 +112,7 @@
     "lint-staged": "^13.2.3",
     "metro-react-native-babel-preset": "0.76.7",
     "prettier": "^2.4.1",
+    "react-native-builder-bob": "^0.23.2",
     "react-test-renderer": "18.2.0",
     "simple-git": "^3.21.0",
     "tailwindcss": "3.3.2",
@@ -125,5 +126,35 @@
       "prettier --write",
       "eslint --fix"
     ]
-  }
+  },
+  "main": "lib/commonjs/index.js",
+  "react-native": "src/index.tsx",
+  "source": "src/index.tsx",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
 }

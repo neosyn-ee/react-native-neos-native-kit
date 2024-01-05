@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {PostType} from '../Post/Post.types';
+import {PostType} from '../../components/Post/Post.types';
 
 const data: PostType[] = [
   {
