@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 
-import fakeData from 'storage/database/post';
+import fakeData from '../storage/database/post';
 import tw from "twrnc"
 
 import {PostType} from '../components/Post/Post.types';

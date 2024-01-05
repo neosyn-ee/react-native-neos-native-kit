@@ -1,6 +1,6 @@
 {
   "name": "@neosyn-ee/neos-native-kit",
-  "version": "0.0.22-alpha",
+  "version": "0.0.24-alpha",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -71,7 +71,7 @@
     "react-native-static-safe-area-insets": "^2.2.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-video": "^5.2.1",
-    "react-native-vision-camera": "^3.4.0",
+    "react-native-vision-camera": "3.6.16",
     "react-native-web": "^0.18.12",
     "react-singleton-hook": "^4.0.1",
     "twrnc": "^3.6.6"

@@ -59,7 +59,7 @@ const CameraScreen = ({
   const format = useCameraFormat(device, formatFilters);
 
   const supportsFlash = device?.hasFlash ?? false;
-  const supportsHdr = format?.supportsPhotoHDR && format?.supportsVideoHDR;
+  const supportsHdr = format?.supportsPhotoHdr && format?.supportsVideoHdr;
 
   const {
     hasPermission: hasCameraPermission,
@@ -185,7 +185,8 @@ const CameraScreen = ({
             isActive={isActive}
             device={device}
             format={format}
-            hdr={enableHdr}
+            videoHdr={enableHdr}
+            photoHdr={enableHdr}
             photo={recordingMode !== 'scanner'}
             video={recordingMode !== 'scanner'}
             audio={hasMicrophonePermission}
