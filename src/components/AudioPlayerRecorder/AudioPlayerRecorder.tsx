@@ -30,7 +30,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {isAndroid} from '@utils/helpers';
+import {isAndroid} from '../../utils/helpers';
 
 import {
   AudioPlayerRecorderProps,
@@ -383,7 +383,7 @@ const AudioPlayerRecorder = ({
                 ) : (
                   <Image
                     style={tw`flex-1 w-full`}
-                    source={require('@assets/img/soundwaves.png')}
+                    source={require('../../assets/img/soundwaves.png')}
                   />
                 )}
                 <Text style={tw`${playTimeClassName} font-normal`}>

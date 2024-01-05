@@ -7,9 +7,9 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import Post from '@components/Post/Post';
-import {PostExposedInstanceValue, PostType} from '@components/Post/Post.types';
-import Spinner from '@components/Spinner/Spinner';
+import Post from '../Post/Post';
+import {PostExposedInstanceValue, PostType} from '../Post/Post.types';
+import Spinner from '../Spinner/Spinner';
 
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 

@@ -1,5 +1,5 @@
-import {AudioPlayerRecorderProps} from '@components/AudioPlayerRecorder/AudioPlayerRecorder.types';
-import {VideoPlayerProps} from '@components/VideoPlayer/VideoPlayer.type';
+import {AudioPlayerRecorderProps} from '../AudioPlayerRecorder/AudioPlayerRecorder.types';
+import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
 
 export type VideoAudioCommentProps = {
   video: VideoPlayerProps;

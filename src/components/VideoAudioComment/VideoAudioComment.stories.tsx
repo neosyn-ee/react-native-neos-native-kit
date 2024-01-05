@@ -4,7 +4,7 @@ import {ComponentMeta} from '@storybook/react-native';
 import {
   onSendAudioNote,
   VideoAudioComment,
-} from '@components/VideoAudioComment';
+} from '../VideoAudioComment';
 
 import {VideoAudioCommentProps} from './VideoAudioComment.types';
 

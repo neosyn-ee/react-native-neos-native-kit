@@ -4,9 +4,9 @@ import {SafeAreaView} from 'react-native';
 import fakeData from 'storage/database/post';
 import tw from "twrnc"
 
-import {PostType} from '@components/Post/Post.types';
-import VirtualizedVideoList from '@components/VirtualizedVideoList/VirtualizedVideoList';
-import {delay} from '@utils/helpers';
+import {PostType} from '../components/Post/Post.types';
+import VirtualizedVideoList from '../components/VirtualizedVideoList/VirtualizedVideoList';
+import {delay} from '../utils/helpers';
 
 const FeedScreen: FC = () => {
   const pageLength = 20;

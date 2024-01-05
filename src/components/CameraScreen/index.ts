@@ -1,6 +1,6 @@
 import {FormatFilter} from 'react-native-vision-camera';
 
-import {SCREEN_ASPECT_RATIO} from '@utils/constants';
+import {SCREEN_ASPECT_RATIO} from '../../utils/constants';
 
 export {default as CameraScreen} from './CameraScreen';
 
