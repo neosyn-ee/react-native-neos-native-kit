@@ -1,5 +1,5 @@
-import { MediaScreen } from "@components/MediaScreen";
-import { SAMPLE_VIDEOFILE } from "@components/MediaScreen/MediaScreen.stories";
+import { MediaScreen } from "../components/MediaScreen";
+import { SAMPLE_VIDEOFILE } from "../components/MediaScreen/MediaScreen.stories";
 import { FC } from "react";
 
 const VideoScreen: FC = () => {

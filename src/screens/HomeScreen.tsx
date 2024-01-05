@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import tw from "twrnc"
-import VideoPlayer from '@components/VideoPlayer/VideoPlayer';
+import VideoPlayer from '../components/VideoPlayer/VideoPlayer';
 
 const HomeScreen: FC = () => {
   return (

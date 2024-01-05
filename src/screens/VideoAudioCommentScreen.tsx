@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { VideoAudioComment, onSendAudioNote } from '@components/VideoAudioComment';
+import { VideoAudioComment, onSendAudioNote } from '../components/VideoAudioComment';
 
 const VideoAudioCommentScreen: FC = () => {
     return (

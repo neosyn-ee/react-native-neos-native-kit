@@ -15,8 +15,8 @@ import {
   useMicrophonePermission,
 } from 'react-native-vision-camera';
 
-import {useIsForeground} from '@hooks/useIsForeground';
-import {SAFE_AREA_PADDING} from '@utils/constants';
+import {useIsForeground} from '../../hooks/useIsForeground';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
 
 import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
 import {CaptureButton} from './CaptureButton';

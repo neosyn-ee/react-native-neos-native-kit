@@ -9,7 +9,7 @@ import React, {
 import {Text, View} from 'react-native';
 import tw from "twrnc"
 
-import VideoPlayer from '@components/VideoPlayer/VideoPlayer';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
 import {PostProps} from './Post.types';
 

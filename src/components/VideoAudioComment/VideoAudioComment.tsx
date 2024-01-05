@@ -2,9 +2,9 @@ import React, {useCallback, useRef, useState} from 'react';
 import {View} from 'react-native';
 import tw from "twrnc"
 
-import {AudioPlayerRecorder} from '@components/AudioPlayerRecorder';
-import {VideoPlayer} from '@components/VideoPlayer';
-import {PlayerInfoObject} from '@components/VideoPlayer/VideoPlayer.type';
+import {AudioPlayerRecorder} from '../AudioPlayerRecorder';
+import {VideoPlayer} from '../VideoPlayer';
+import {PlayerInfoObject} from '../VideoPlayer/VideoPlayer.type';
 
 import {VideoAudioCommentProps} from './VideoAudioComment.types';
 
