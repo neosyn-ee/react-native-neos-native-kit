@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Image, PermissionsAndroid, Platform, Text, View} from 'react-native';
+import {Image, PermissionsAndroid, Platform, View} from 'react-native';
 import tw from 'twrnc';
 
 import AudioRecorderPlayer, {
@@ -20,13 +20,14 @@ import {
   ProgressBar,
   Snackbar,
   useTheme,
+  Text
 } from 'react-native-paper';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withTiming,
+  withTiming
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
