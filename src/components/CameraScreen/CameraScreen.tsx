@@ -15,8 +15,8 @@ import {
   useMicrophonePermission,
 } from 'react-native-vision-camera';
 
-import {useIsForeground} from '@hooks/useIsForeground';
-import {SAFE_AREA_PADDING} from '@utils/constants';
+import {useIsForeground} from '../../hooks/useIsForeground';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
 
 import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
 import {CaptureButton} from './CaptureButton';
@@ -59,7 +59,7 @@ const CameraScreen = ({
   const format = useCameraFormat(device, formatFilters);
 
   const supportsFlash = device?.hasFlash ?? false;
-  const supportsHdr = format?.supportsPhotoHDR && format?.supportsVideoHDR;
+  const supportsHdr = format?.supportsPhotoHdr && format?.supportsVideoHdr;
 
   const {
     hasPermission: hasCameraPermission,
@@ -185,7 +185,8 @@ const CameraScreen = ({
             isActive={isActive}
             device={device}
             format={format}
-            hdr={enableHdr}
+            videoHdr={enableHdr}
+            photoHdr={enableHdr}
             photo={recordingMode !== 'scanner'}
             video={recordingMode !== 'scanner'}
             audio={hasMicrophonePermission}

@@ -17,6 +17,8 @@ export const SAMPLE_PHOTOFILE: PhotoFile = {
 export const SAMPLE_VIDEOFILE: VideoFile = {
   duration: 12.68,
   path: '/data/user/0/com.neosyn.reactNativeCore/cache/mrousavy9145641682697322369.mp4',
+height: 1000,
+width: 1000
 };
 
 export default {

@@ -6,16 +6,13 @@ Developer experience first:
 
 - ⚛️ [React Native](https://reactnative.dev) for building native apps using React
 - 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
-- 💎 Integrate with [NativeWind](https://www.nativewind.dev), Tailwind CSS for React Native
-- 📁 Routing with [React navigation](https://reactnavigation.org/)
 - 📏 Linter with [ESLint](https://eslint.org)
 - 💖 Code Formatter with [Prettier](https://prettier.io)
 - 🦊 Husky for Git Hooks
 - 🚫 Lint-staged for running linters on Git staged files
 - 🦺 Unit Testing with Jest and React Testing Library
 - 🧪 E2E Testing with Detox
-- 💡 Absolute Imports using `@` prefix
-- 🗂 VSCode configuration: Settings, Tasks and extension for PostCSS, ESLint, Prettier, TypeScript, Jest
+- 🗂 VSCode configuration: Settings, Tasks and extension for ESLint, Prettier, TypeScript, Jest
 
 ### Requirements
 
@@ -97,3 +94,42 @@ npm run e2e:ios
 # Or
 npm run e2e:android
 ```
+# Library Usage Guide
+
+## Global Dependencies
+- [**twrnc**]()
+
+## Components
+
+### VideoPlayer
+
+#### Dependencies
+- [**react-native-video** ^5.2.1]()
+- [**react-native-media-console** ^2.1.0]()
+- [**react-native-orientation-locker** ^1.5.0]()
+- [**react-singleton-hook** ^4.0.1]()
+
+### VirtualizedList
+
+- [**react-native-reanimated** ^3.5.2]() 
+
+**IMPORTANT**: Ensure to add the following code inside your `babel.config.js` file to properly configure the React Native Reanimated plugin:
+
+```javascript
+module.exports = {
+  plugins: ['react-native-reanimated/plugin'],
+};
+```
+## Android Permissions
+
+```android
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+
+### react native icons
+
+[Android setup](https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#android-setup)

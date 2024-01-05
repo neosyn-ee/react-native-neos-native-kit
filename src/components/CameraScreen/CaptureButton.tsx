@@ -13,7 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {TakePhotoOptions} from 'react-native-vision-camera';
 
-import {CAPTURE_BUTTON_SIZE} from '@utils/constants';
+import {CAPTURE_BUTTON_SIZE} from '../../utils/constants';
 
 import {CaptureButtonProps} from './CaptureButton.types';
 

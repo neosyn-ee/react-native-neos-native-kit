@@ -1,4 +1,4 @@
-import {VideoPlayerProps} from '@components/VideoPlayer/VideoPlayer.type';
+import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
 
 export type PostProps = {
   id: number;

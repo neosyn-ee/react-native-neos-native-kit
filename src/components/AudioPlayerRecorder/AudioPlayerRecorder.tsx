@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Image, PermissionsAndroid, Platform, Text, View} from 'react-native';
+import {Image, PermissionsAndroid, Platform, View} from 'react-native';
 import tw from 'twrnc';
 
 import AudioRecorderPlayer, {
@@ -20,17 +20,18 @@ import {
   ProgressBar,
   Snackbar,
   useTheme,
+  Text
 } from 'react-native-paper';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withTiming,
+  withTiming
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {isAndroid} from '@utils/helpers';
+import {isAndroid} from '../../utils/helpers';
 
 import {
   AudioPlayerRecorderProps,
@@ -383,7 +384,7 @@ const AudioPlayerRecorder = ({
                 ) : (
                   <Image
                     style={tw`flex-1 w-full`}
-                    source={require('@assets/img/soundwaves.png')}
+                    source={require('../../assets/img/soundwaves.png')}
                   />
                 )}
                 <Text style={tw`${playTimeClassName} font-normal`}>

@@ -1,18 +1,17 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {AppServiceProvider} from '@components/AppServiceProvider';
-import FeedScreen from '@screens/FeedScreen';
-import HomeScreen from '@screens/HomeScreen';
-import AudioScreen from '@screens/AudioScreen';
-import VideoAudioCommentScreen from '@screens/VideoAudioCommentScreen';
-import PhotoScreen from '@screens/PhotoScreen';
-import VideoScreen from '@screens/VideoScreen';
-import CameraTest from '@screens/CameraTest';
+import {AppServiceProvider} from './components/AppServiceProvider';
+import FeedScreen from './screens/FeedScreen';
+import HomeScreen from './screens/HomeScreen';
+import AudioScreen from './screens/AudioScreen';
+import VideoAudioCommentScreen from './screens/VideoAudioCommentScreen';
+import PhotoScreen from './screens/PhotoScreen';
+import VideoScreen from './screens/VideoScreen';
+import CameraTest from './screens/CameraTest';
 
 const Tab = createMaterialBottomTabNavigator();
 

@@ -1,5 +1,5 @@
-import { CameraScreen } from "@components/CameraScreen";
-import { onMediaCaptured } from "@components/CameraScreen/CameraScreen.stories";
+import { CameraScreen } from "../components/CameraScreen";
+import { onMediaCaptured } from "../components/CameraScreen/CameraScreen.stories";
 
 const CameraTest: React.FC = () => {
 
