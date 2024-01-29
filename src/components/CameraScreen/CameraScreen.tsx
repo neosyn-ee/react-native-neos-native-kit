@@ -1,7 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, Linking, StyleSheet, View} from 'react-native';
-import tw from "twrnc"
-
 import {IconButton} from 'react-native-paper';
 import Animated, {useSharedValue} from 'react-native-reanimated';
 import {
@@ -14,12 +12,12 @@ import {
   useCodeScanner,
   useMicrophonePermission,
 } from 'react-native-vision-camera';
-
-import {useIsForeground} from '../../hooks/useIsForeground';
-import {SAFE_AREA_PADDING} from '../../utils/constants';
+import tw from 'twrnc';
 
 import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
 import {CaptureButton} from './CaptureButton';
+import {useIsForeground} from '../../hooks/useIsForeground';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
 
 import {DEFAULT_CAMERA_FORMAT_FILTERS} from '.';
 

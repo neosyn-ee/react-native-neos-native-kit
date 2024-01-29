@@ -1,17 +1,16 @@
-import React from 'react';
-
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {AppServiceProvider} from './components/AppServiceProvider';
+import AudioScreen from './screens/AudioScreen';
+import CameraTest from './screens/CameraTest';
 import FeedScreen from './screens/FeedScreen';
 import HomeScreen from './screens/HomeScreen';
-import AudioScreen from './screens/AudioScreen';
-import VideoAudioCommentScreen from './screens/VideoAudioCommentScreen';
 import PhotoScreen from './screens/PhotoScreen';
+import VideoAudioCommentScreen from './screens/VideoAudioCommentScreen';
 import VideoScreen from './screens/VideoScreen';
-import CameraTest from './screens/CameraTest';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -59,11 +58,7 @@ export default (): JSX.Element => (
           component={VideoAudioCommentScreen}
           options={{
             tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons
-                name="comment"
-                color={color}
-                size={26}
-              />
+              <MaterialCommunityIcons name="comment" color={color} size={26} />
             ),
           }}
         />
@@ -98,11 +93,7 @@ export default (): JSX.Element => (
           component={CameraTest}
           options={{
             tabBarIcon: ({color}) => (
-              <MaterialCommunityIcons
-                name="camera"
-                color={color}
-                size={26}
-              />
+              <MaterialCommunityIcons name="camera" color={color} size={26} />
             ),
           }}
         />

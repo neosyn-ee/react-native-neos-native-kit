@@ -1,3 +1,4 @@
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Alert,
@@ -10,18 +11,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import tw from "twrnc"
-
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {IconButton} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoadError, OnLoadData} from 'react-native-video';
-
-import {VideoPlayer} from '../VideoPlayer';
-import {SAFE_AREA_PADDING} from '../../utils/constants';
-import {isAndroid} from '../../utils/helpers';
+import tw from 'twrnc';
 
 import {MediaScreenProps} from './MediaScreen.types';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
+import {isAndroid} from '../../utils/helpers';
+import {VideoPlayer} from '../VideoPlayer';
 
 const requestSavePermission = async (): Promise<boolean> => {
   if (isAndroid()) {
