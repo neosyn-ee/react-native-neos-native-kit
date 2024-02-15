@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, Linking, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import Animated, {useSharedValue} from 'react-native-reanimated';
 import {
@@ -163,12 +169,15 @@ const CameraScreen = ({
   }, []);
   // #end region Camera callbacks
 
-  useEffect(() => {
-    initializeCamera();
-    Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'granted'),
+  const checkPermission = async () => {
+    const permissionMic = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setHasMicrophonePermission(permissionMic === 'granted');
+  };
+
+  useEffect(() => {
+    initializeCamera().then(() => checkPermission());
   }, []);
 
   return (

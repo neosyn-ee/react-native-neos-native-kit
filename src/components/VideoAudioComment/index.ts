@@ -1,5 +1,6 @@
 import RNFetchBlob from 'react-native-blob-util';
-import Config from "react-native-config";
+import Config from 'react-native-config';
+
 import {DropboxError} from './VideoAudioComment.types';
 export {default as VideoAudioComment} from './VideoAudioComment';
 

@@ -1,7 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Image, PermissionsAndroid, Platform, View} from 'react-native';
-import tw from 'twrnc';
-
 import AudioRecorderPlayer, {
   AudioEncoderAndroidType,
   AudioSet,
@@ -19,25 +17,25 @@ import {
   Portal,
   ProgressBar,
   Snackbar,
+  Text,
   useTheme,
-  Text
 } from 'react-native-paper';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withTiming
+  withTiming,
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
-import {isAndroid} from '../../utils/helpers';
+import tw from 'twrnc';
 
 import {
   AudioPlayerRecorderProps,
   AudioPlayerRecorderStateType,
   IsSentEnum,
 } from './AudioPlayerRecorder.types';
+import {isAndroid} from '../../utils/helpers';
 
 const BlinkingMicIcon = memo((): JSX.Element => {
   const opacity = useSharedValue(0);
@@ -68,9 +66,9 @@ export const checkPermissions = async () => {
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
       ]);
-  
+
       console.log('write external stroage', grants);
-  
+
       if (
         grants['android.permission.WRITE_EXTERNAL_STORAGE'] ===
           PermissionsAndroid.RESULTS.GRANTED &&
@@ -89,7 +87,7 @@ export const checkPermissions = async () => {
       return;
     }
   }
-}
+};
 
 const AudioPlayerRecorder = ({
   fileName = 'nota-audio',
@@ -98,7 +96,7 @@ const AudioPlayerRecorder = ({
   progressDisplayMode = 'progressBar',
   playTimeDisplayMode = 'default',
   playerInfoElapsedSecs,
-  text = 'Hold down the button to record your comment'
+  text = 'Hold down the button to record your comment',
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -294,7 +292,7 @@ const AudioPlayerRecorder = ({
   }, [path, onSendAudioNote, videoTimeInSecsOnRecStarted]);
 
   useEffect(() => {
-    checkPermissions()
+    checkPermissions();
     return () => {
       // remove file from cache by specifying a path
       RNFetchBlob.fs.exists(path).then(exist => {
@@ -391,8 +389,7 @@ const AudioPlayerRecorder = ({
                   {state.playTime}
                 </Text>
                 {sendingTime && (
-                  <Text
-                    style={tw`${sendingTimeClassName} font-normal`}>
+                  <Text style={tw`${sendingTimeClassName} font-normal`}>
                     {sendingTime}
                   </Text>
                 )}
@@ -436,14 +433,10 @@ const AudioPlayerRecorder = ({
               {isRecorderEnabled ? (
                 <>
                   <BlinkingMicIcon />
-                  <Text style={tw`flex-1`}>
-                    {state.recordTime}
-                  </Text>
+                  <Text style={tw`flex-1`}>{state.recordTime}</Text>
                 </>
               ) : (
-                <Text style={tw`flex-1`}>
-                  {text}
-                </Text>
+                <Text style={tw`flex-1`}>{text}</Text>
               )}
             </>
           )}
