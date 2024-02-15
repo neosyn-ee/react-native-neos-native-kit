@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-
-import VideoPlayer from '@components/VideoPlayer/VideoPlayer';
+import tw from "twrnc"
+import VideoPlayer from '../components/VideoPlayer/VideoPlayer';
 
 const HomeScreen: FC = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="bg-secondary">
+        <View>
           <VideoPlayer
             autoplay
             // poster="https://fastly.picsum.photos/id/805/1920/1080.jpg?hmac=ojjmQ6qddjxToiegG5R2YbQMusmeXlivOqSfBXkbJUk"

@@ -12,14 +12,14 @@ export type CameraScreenProps = {
   | {
       recordingMode: 'photo' | 'video' | 'combined';
       onMediaCaptured: onMediaCapturedCallback;
-      onCodeScanned: never;
-      stopOnFirstCodeScan: never;
-      validateValueScannedByUser: never;
-      validateValueScannedMessage: never;
+      onCodeScanned?: never;
+      stopOnFirstCodeScan?: never;
+      validateValueScannedByUser?: never;
+      validateValueScannedMessage?: never;
     }
   | ({
       recordingMode: 'scanner';
-      onMediaCaptured: never;
+      onMediaCaptured?: never;
       stopOnFirstCodeScan?: boolean;
       onCodeScanned: onCodeScannedCallback;
     } & (

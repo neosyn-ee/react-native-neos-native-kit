@@ -1,4 +1,4 @@
-import {AppServiceProvider} from '@components/AppServiceProvider';
+import {AppServiceProvider} from '../src/components/AppServiceProvider';
 import {getStorybookUI} from '@storybook/react-native';
 import './storybook.requires';
 const StorybookUIRoot = getStorybookUI({});

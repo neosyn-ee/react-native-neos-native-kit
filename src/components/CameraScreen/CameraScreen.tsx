@@ -1,6 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, Linking, StyleSheet, View} from 'react-native';
-
+import {
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import Animated, {useSharedValue} from 'react-native-reanimated';
 import {
@@ -13,12 +18,12 @@ import {
   useCodeScanner,
   useMicrophonePermission,
 } from 'react-native-vision-camera';
-
-import {useIsForeground} from '@hooks/useIsForeground';
-import {SAFE_AREA_PADDING} from '@utils/constants';
+import tw from 'twrnc';
 
 import {CameraScreenProps, onMediaCapturedCallback} from './CameraScreen.types';
 import {CaptureButton} from './CaptureButton';
+import {useIsForeground} from '../../hooks/useIsForeground';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
 
 import {DEFAULT_CAMERA_FORMAT_FILTERS} from '.';
 
@@ -58,7 +63,7 @@ const CameraScreen = ({
   const format = useCameraFormat(device, formatFilters);
 
   const supportsFlash = device?.hasFlash ?? false;
-  const supportsHdr = format?.supportsPhotoHDR && format?.supportsVideoHDR;
+  const supportsHdr = format?.supportsPhotoHdr && format?.supportsVideoHdr;
 
   const {
     hasPermission: hasCameraPermission,
@@ -164,27 +169,31 @@ const CameraScreen = ({
   }, []);
   // #end region Camera callbacks
 
-  useEffect(() => {
-    initializeCamera();
-    Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'granted'),
+  const checkPermission = async () => {
+    const permissionMic = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setHasMicrophonePermission(permissionMic === 'granted');
+  };
+
+  useEffect(() => {
+    initializeCamera().then(() => checkPermission());
   }, []);
 
   return (
-    <View className="flex-1 bg-[#000000]">
+    <View style={tw`flex-1 bg-[#000000]`}>
       {isCameraInitialized && device && (
         <>
           <AnimatedCamera
             ref={camera}
-            className="flex-1 relative"
+            style={tw`flex-1 relative`}
             orientation="portrait"
             onError={onError}
             isActive={isActive}
             device={device}
             format={format}
-            hdr={enableHdr}
+            videoHdr={enableHdr}
+            photoHdr={enableHdr}
             photo={recordingMode !== 'scanner'}
             video={recordingMode !== 'scanner'}
             audio={hasMicrophonePermission}
@@ -213,7 +222,7 @@ const CameraScreen = ({
             )}
             {supportsFlash && (
               <IconButton
-                className="mt-3"
+                style={tw`mt-3`}
                 icon={flash === 'off' ? 'flash-off' : 'flash'}
                 iconColor="white"
                 containerColor="rgba(140, 140, 140, 0.3)"
@@ -224,7 +233,7 @@ const CameraScreen = ({
             )}
             {supportsHdr && recordingMode !== 'scanner' && (
               <IconButton
-                className="mt-3"
+                style={tw`mt-3`}
                 icon={enableHdr ? 'hdr' : 'hdr-off'}
                 iconColor="white"
                 containerColor="rgba(140, 140, 140, 0.3)"

@@ -1,24 +1,29 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, ViewToken} from 'react-native';
+import tw from "twrnc"
 
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 
-import Post from '@components/Post/Post';
-import {PostExposedInstanceValue, PostType} from '@components/Post/Post.types';
-import Spinner from '@components/Spinner/Spinner';
+import Post from '../Post/Post';
+import {PostExposedInstanceValue, PostType} from '../Post/Post.types';
+import Spinner from '../Spinner/Spinner';
 
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
-const VirtualizedVideoList = ({
+const VirtualizedVideoList = <TItem,>({
   data,
   paginated,
   pagesNum,
   viewAreaCoveragePercentThreshold,
   fetchData,
-}: VirtualizedVideoListProps): JSX.Element => {
+  initialNumToRender = 5,
+  maxToRenderPerBatch = 5,
+  windowSize = 5,
+  ...props
+}: VirtualizedVideoListProps<TItem>): JSX.Element => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -60,7 +65,7 @@ const VirtualizedVideoList = ({
       if (viewableItems.length > 1) {
         if (scrollDirection.value === 'DOWN') {
           keyToPlay = viewableItems[viewableItems.length - 1].key;
-        } else if (scrollDirection.value === 'UP') {
+        } else if (scrollDirection.value === 'UP' || !scrollDirection.value) {
           keyToPlay = viewableItems[viewableItems.length - 2].key;
         }
       }
@@ -128,7 +133,7 @@ const VirtualizedVideoList = ({
   }, [data]);
 
   return (
-    <View className="flex-1">
+    <View style={tw`flex-1`}>
       {posts.length ? (
         <Animated.FlatList
           data={posts}
@@ -137,8 +142,8 @@ const VirtualizedVideoList = ({
           keyExtractor={({id}) => id.toString()}
           onEndReachedThreshold={0.1}
           onEndReached={paginated ? handleOnEndReached : undefined}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
+          initialNumToRender={initialNumToRender}
+          maxToRenderPerBatch={maxToRenderPerBatch}
           refreshing={refreshing}
           viewabilityConfig={{
             minimumViewTime: 100,
@@ -147,6 +152,7 @@ const VirtualizedVideoList = ({
           onViewableItemsChanged={onViewableItemsChanged}
           onScroll={scrollHandler}
           removeClippedSubviews
+          {...props}
         />
       ) : null}
       {refreshing && <Spinner />}

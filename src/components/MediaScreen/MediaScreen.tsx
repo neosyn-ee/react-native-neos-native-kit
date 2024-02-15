@@ -1,3 +1,4 @@
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Alert,
@@ -10,17 +11,15 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {IconButton} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LoadError, OnLoadData} from 'react-native-video';
-
-import {VideoPlayer} from '@components/VideoPlayer';
-import {SAFE_AREA_PADDING} from '@utils/constants';
-import {isAndroid} from '@utils/helpers';
+import tw from 'twrnc';
 
 import {MediaScreenProps} from './MediaScreen.types';
+import {SAFE_AREA_PADDING} from '../../utils/constants';
+import {isAndroid} from '../../utils/helpers';
+import {VideoPlayer} from '../VideoPlayer';
 
 const requestSavePermission = async (): Promise<boolean> => {
   if (isAndroid()) {
@@ -118,24 +117,24 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
   }, [path, type]);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#FFFFFF]">
+    <SafeAreaView style={tw`flex-1 bg-[#FFFFFF]`}>
       {type === 'photo' && (
         <>
           {!hasImageLoadError ? (
             <Image
-              className="flex-1"
+              style={tw`flex-1`}
               source={source}
               resizeMode="cover"
               onLoad={onMediaLoad}
               onError={onImageLoadError}
             />
           ) : (
-            <View className="flex-1 items-center justify-center">
+            <View style={tw`flex-1 items-center justify-center`}>
               <Image
                 style={{width: 150, height: 150}}
-                source={require('@assets/img/no-image-placeholder.png')}
+                source={require('../../assets/img/no-image-placeholder.png')}
               />
-              <Text className="text-base uppercase text-[#a2a2a2]">
+              <Text style={tw`text-base uppercase text-[#a2a2a2]`}>
                 No image available
               </Text>
             </View>

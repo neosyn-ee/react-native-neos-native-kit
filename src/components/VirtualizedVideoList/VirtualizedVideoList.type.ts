@@ -1,6 +1,7 @@
-import {type PostType} from '@components/Post/Post.types';
+import {type PostType} from '../Post/Post.types';
+import { VirtualizedListWithoutRenderItemProps } from 'react-native';
 
-export type VirtualizedVideoListProps = {
+export type VirtualizedVideoListProps<TItem> = VirtualizedListWithoutRenderItemProps<TItem> & {
   data: Array<PostType>;
   paginated?: boolean;
   pagesNum?: number;
