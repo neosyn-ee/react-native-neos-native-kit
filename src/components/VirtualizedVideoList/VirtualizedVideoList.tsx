@@ -112,6 +112,10 @@ const VirtualizedVideoList = <TItem,>({
     ({item: itemProps}: {item: PostType}): JSX.Element => (
       <Post
         {...itemProps}
+        video={{
+          ...itemProps.video,
+          videoContainerStyle: props.contentContainerStyle,
+        }}
         ref={(postRef: PostExposedInstanceValue) =>
           (mediaRefs.current[itemProps.id] = postRef)
         }
@@ -135,7 +139,7 @@ const VirtualizedVideoList = <TItem,>({
       {posts.length ? (
         <Animated.FlatList
           data={posts}
-          windowSize={5}
+          windowSize={windowSize}
           renderItem={renderItem}
           keyExtractor={({id}) => id.toString()}
           onEndReachedThreshold={0.1}

@@ -66,7 +66,6 @@ export const Player: FC<PlayerProps> = memo(
     return (
       <RnmcVideoPlayer
         videoRef={videoRef}
-        style={tw`h-full`}
         source={source}
         isFullscreen={isFullscreen}
         toggleResizeModeOnFullscreen={false}

@@ -3,7 +3,8 @@ import type {Animated, StyleProp, ViewStyle} from 'react-native';
 import type Reanimated from 'react-native-reanimated';
 import type {StyleProps} from 'react-native-reanimated';
 
-import {VideoProperties, VideoResource} from './video';
+import VideoResource from './video';
+import {VideoProperties} from './video';
 
 export declare type WithRequiredProperty<
   Type,

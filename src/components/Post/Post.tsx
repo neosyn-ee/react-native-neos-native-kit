@@ -7,11 +7,10 @@ import React, {
   useState,
 } from 'react';
 import {Text, View} from 'react-native';
-import tw from "twrnc"
-
-import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import tw from 'twrnc';
 
 import {PostProps} from './Post.types';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
 export const PostBody = ({children}: PropsWithChildren) => {
   return (
