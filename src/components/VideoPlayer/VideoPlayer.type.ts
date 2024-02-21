@@ -1,6 +1,6 @@
 import {DimensionValue} from 'react-native';
 
-import {VideoPlayerProps as CorePlayerProps} from 'react-native-media-console';
+import {VideoPlayerProps as CorePlayerProps} from './mediaConsole';
 
 type disableControlsType = {
   default: boolean;

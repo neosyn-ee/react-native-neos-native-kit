@@ -1,12 +1,11 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {View} from 'react-native';
-import tw from "twrnc"
+import tw from 'twrnc';
 
+import {VideoAudioCommentProps} from './VideoAudioComment.types';
 import {AudioPlayerRecorder} from '../AudioPlayerRecorder';
 import {VideoPlayer} from '../VideoPlayer';
 import {PlayerInfoObject} from '../VideoPlayer/VideoPlayer.type';
-
-import {VideoAudioCommentProps} from './VideoAudioComment.types';
 
 const BOTTOM_APPBAR_HEIGHT = 80;
 

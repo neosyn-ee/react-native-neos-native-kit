@@ -8,13 +8,9 @@ import React, {
   useState,
 } from 'react';
 import {Modal, StatusBar, View} from 'react-native';
-import tw from "twrnc"
-
 import RnmcVideoPlayer from 'react-native-media-console';
 import Video, {OnProgressData, OnSeekData} from 'react-native-video';
-
-import {useScreenOrientation} from '../../hooks/useScreenOrientation';
-import {isAndroid} from '../../utils/helpers';
+import tw from 'twrnc';
 
 import {
   PlayerInfoObject,
@@ -22,6 +18,8 @@ import {
   VideoPlayerProps,
   VideoSizeProps,
 } from './VideoPlayer.type';
+import {useScreenOrientation} from '../../hooks/useScreenOrientation';
+import {isAndroid} from '../../utils/helpers';
 
 export const Player: FC<PlayerProps> = memo(
   ({
@@ -153,7 +151,7 @@ const VideoPlayer = forwardRef<
     const RenderedPlayer = (
       <Player
         poster={thumb ?? undefined}
-        posterResizeMode='cover'
+        posterResizeMode="cover"
         setPaused={setPaused}
         setFullscreen={setFullscreen}
         isFullscreen={fullscreen}
@@ -161,6 +159,7 @@ const VideoPlayer = forwardRef<
         disableControls={disableControls}
         disableOverlay={disableControls}
         paused={paused}
+        resizeMode="contain"
         {...props}
       />
     );

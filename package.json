@@ -1,6 +1,6 @@
 {
   "name": "@neosyn-ee/react-native-neos-native-kit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -61,7 +61,7 @@
     "react-native-blob-util": "^0.19.1",
     "react-native-config": "^1.5.1",
     "react-native-gesture-handler": "^2.12.1",
-    "react-native-media-console": "^2.1.0",
+    "react-native-media-console": "2.1.0",
     "react-native-orientation-locker": "^1.5.0",
     "react-native-paper": "^5.10.3",
     "react-native-permissions": "^3.9.2",

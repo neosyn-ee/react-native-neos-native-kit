@@ -14098,7 +14098,7 @@ react-native-gesture-handler@^2.12.1:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-react-native-media-console@^2.1.0:
+react-native-media-console@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-media-console/-/react-native-media-console-2.1.0.tgz#f7efafcfea3f636ccae217abeef02e5497a80737"
   integrity sha512-KeVnu+cBJUgMwKagKDwYufSeMkrG6+pRRu+kQWVbjJR7Q0wKgAUDkvtocrZcy7sv5fTvpizNPqGq1k7bmCB2NQ==

@@ -1,16 +1,15 @@
+import AppServiceProvider from './components/AppServiceProvider/AppServiceProvider';
 import AudioPlayerRecorder, {
   checkPermissions,
 } from './components/AudioPlayerRecorder/AudioPlayerRecorder';
-import AppServiceProvider from './components/AppServiceProvider/AppServiceProvider';
-import {onSendAudioNote} from './components/VideoAudioComment';
-
-import VideoPlayer from './components/VideoPlayer/VideoPlayer';
-import Spinner from './components/Spinner/Spinner';
-import VirtualizedVideoList from './components/VirtualizedVideoList/VirtualizedVideoList';
 import CameraScreen from './components/CameraScreen/CameraScreen';
 import MediaScreen from './components/MediaScreen/MediaScreen';
-import VideoAudioComment from './components/VideoAudioComment/VideoAudioComment';
 import Post from './components/Post/Post';
+import Spinner from './components/Spinner/Spinner';
+import {onSendAudioNote} from './components/VideoAudioComment';
+import VideoAudioComment from './components/VideoAudioComment/VideoAudioComment';
+import VideoPlayer from './components/VideoPlayer/VideoPlayer';
+import VirtualizedVideoList from './components/VirtualizedVideoList/VirtualizedVideoList';
 
 export {delay, isAndroid} from './utils/helpers';
 

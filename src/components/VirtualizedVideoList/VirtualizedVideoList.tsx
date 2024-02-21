@@ -1,17 +1,15 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, ViewToken} from 'react-native';
-import tw from "twrnc"
-
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import tw from 'twrnc';
 
+import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 import Post from '../Post/Post';
 import {PostExposedInstanceValue, PostType} from '../Post/Post.types';
 import Spinner from '../Spinner/Spinner';
-
-import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
 const VirtualizedVideoList = <TItem,>({
   data,
