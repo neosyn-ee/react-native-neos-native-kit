@@ -3,8 +3,10 @@ import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
 export type PostProps = {
   id: number;
   video: VideoPlayerProps;
-  bodyContent?: JSX.Element | string;
+  headerComponent?: JSX.Element;
   actionsContent?: JSX.Element;
+  bodyContent?: JSX.Element | string;
+  overlayComponent?: JSX.Element;
 };
 
 export type PostType = PostProps;

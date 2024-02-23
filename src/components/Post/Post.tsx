@@ -27,7 +27,13 @@ export const PostActions = ({children}: PropsWithChildren) => {
 const Post = memo(
   forwardRef(
     (
-      {video, bodyContent, actionsContent}: PostProps,
+      {
+        video,
+        bodyContent,
+        actionsContent,
+        headerComponent,
+        overlayComponent,
+      }: PostProps,
       parentRef,
     ): JSX.Element => {
       const [autoplay, setAutoplay] = useState<boolean>(false);
@@ -77,11 +83,14 @@ const Post = memo(
         );
       return (
         <View style={bodyContent || actionsContent ? tw`bg-[#fff]` : tw``}>
-          <VideoPlayer {...video} source={source} autoplay={autoplay} />
+          {headerComponent}
+          <View style={tw`relative`}>
+            <VideoPlayer {...video} source={source} autoplay={autoplay} />
+            <View style={tw`absolute`}>{overlayComponent}</View>
+          </View>
           <View style={tw`p-3`}>
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
             {bodyContent && renderedBody}
-            {video.extraComponent}
           </View>
         </View>
       );
