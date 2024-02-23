@@ -76,11 +76,12 @@ const Post = memo(
           bodyContent
         );
       return (
-        <View style={tw`bg-[#fff]`}>
+        <View style={bodyContent || actionsContent ? tw`bg-[#fff]` : tw``}>
           <VideoPlayer {...video} source={source} autoplay={autoplay} />
           <View style={tw`p-3`}>
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
             {bodyContent && renderedBody}
+            {video.extraComponent}
           </View>
         </View>
       );

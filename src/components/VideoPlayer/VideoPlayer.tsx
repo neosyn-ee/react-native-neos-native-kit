@@ -88,6 +88,7 @@ export const Player: FC<PlayerProps> = memo(
         resizeMode={resizeMode}
         muted={muted}
         volume={muted ? 0 : undefined}
+        containerStyle={props.videoContainerStyle}
         {...props}
       />
     );

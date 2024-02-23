@@ -1,3 +1,4 @@
+import React from 'react';
 import {DimensionValue, StyleProp, ViewStyle} from 'react-native';
 
 import {VideoPlayerProps as CorePlayerProps} from './mediaConsole';
@@ -26,6 +27,7 @@ export type VideoPlayerProps = CorePlayerProps &
     setFullscreen?: React.Dispatch<React.SetStateAction<boolean>>;
     playerInfo?: React.MutableRefObject<PlayerInfoObject>;
     videoContainerStyle?: StyleProp<ViewStyle>;
+    extraComponent?: React.ReactNode;
   };
 
 export type VideoSizeProps = {
