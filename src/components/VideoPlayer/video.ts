@@ -248,11 +248,15 @@ export interface VideoProperties extends ViewProps {
   translateY?: number | undefined;
   rotation?: number | undefined;
 }
-
 export default class Video extends React.Component<VideoProperties> {
+  //@ts-ignore
   presentFullscreenPlayer(): void;
+  //@ts-ignore
   dismissFullscreenPlayer(): void;
+  //@ts-ignore
   restoreUserInterfaceForPictureInPictureStopCompleted(restored: boolean): void;
+  //@ts-ignore
   save(): Promise<void>;
+  //@ts-ignore
   seek(time: number, tolerance?: number): void;
 }
