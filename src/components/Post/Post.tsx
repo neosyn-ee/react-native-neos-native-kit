@@ -82,7 +82,7 @@ const Post = memo(
           bodyContent
         );
       return (
-        <View style={bodyContent || actionsContent ? tw`bg-[#fff]` : tw``}>
+        <View>
           {headerComponent}
           <View style={tw`relative`}>
             <VideoPlayer {...video} source={source} autoplay={autoplay} />
