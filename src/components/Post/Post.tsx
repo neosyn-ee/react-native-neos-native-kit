@@ -86,7 +86,7 @@ const Post = memo(
           {headerComponent}
           <View style={tw`relative`}>
             <VideoPlayer {...video} source={source} autoplay={autoplay} />
-            <View style={tw`absolute`}>{overlayComponent}</View>
+            {overlayComponent}
           </View>
           <View style={tw`p-3`}>
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
