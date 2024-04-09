@@ -134,6 +134,13 @@ const VirtualizedVideoList = <TItem,>({
     });
   }, [data]);
 
+  const SpinnerComponent = (loading: boolean) => (loading ? <Spinner /> : null);
+
+  const onRefresh = async () => {
+    setPosts([]);
+    await fetchData?.(currentPage);
+  };
+
   return (
     <View style={tw`flex-1`}>
       {posts.length ? (
@@ -154,10 +161,11 @@ const VirtualizedVideoList = <TItem,>({
           onViewableItemsChanged={onViewableItemsChanged}
           onScroll={scrollHandler}
           removeClippedSubviews
+          onRefresh={onRefresh}
+          ListFooterComponent={SpinnerComponent(refreshing)}
           {...props}
         />
       ) : null}
-      {refreshing && <Spinner />}
     </View>
   );
 };
