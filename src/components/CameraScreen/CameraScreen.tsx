@@ -37,6 +37,9 @@ const CameraScreen = ({
   stopOnFirstCodeScan = true,
   validateValueScannedByUser,
   validateValueScannedMessage,
+  fileType,
+  videoBitRate,
+  videoCodec,
 }: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -207,6 +210,9 @@ const CameraScreen = ({
               setIsPressingButton={setIsPressingButton}
               enabled={isCameraInitialized && isActive}
               recordingMode={recordingMode}
+              fileType={fileType}
+              videoBitRate={videoBitRate}
+              videoCodec={videoCodec}
             />
           )}
           <View style={styles.rightButtonRow}>
