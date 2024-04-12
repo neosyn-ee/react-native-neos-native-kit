@@ -10,6 +10,7 @@ export type onCodeScannedCallback = (value: string) => Promise<void> | void;
 
 export type CameraScreenProps = {
   formatFilters?: Partial<FormatFilter>[];
+  onPressClose?: () => void;
 } & (
   | ({
       recordingMode: 'photo' | 'video' | 'combined';

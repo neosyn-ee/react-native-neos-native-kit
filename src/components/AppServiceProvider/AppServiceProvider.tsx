@@ -1,5 +1,4 @@
 import React, {ReactNode} from 'react';
-
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {PaperProvider} from 'react-native-paper';
 import {

@@ -1,6 +1,6 @@
 {
   "name": "@neosyn-ee/react-native-neos-native-kit",
-  "version": "1.2.2",
+  "version": "1.2.9",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
-    "@react-native-camera-roll/camera-roll": "^6.0.0",
+    "@react-native-camera-roll/camera-roll": "^7.5.2",
     "@react-native-community/datetimepicker": "^6.7.5",
     "@react-native-community/slider": "^4.4.2",
     "@react-navigation/material-bottom-tabs": "^6.2.16",

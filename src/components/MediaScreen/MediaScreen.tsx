@@ -44,7 +44,17 @@ const isVideoOnLoadEvent = (
   event: OnLoadData | NativeSyntheticEvent<ImageLoadEventData>,
 ): event is OnLoadData => 'duration' in event && 'naturalSize' in event;
 
-const MediaScreen = ({media, type}: MediaScreenProps) => {
+const MediaScreen = ({
+  media,
+  type,
+  onPressClose,
+  icon,
+  albumName,
+  modalSaveTextSuccess,
+  modalSaveTextError,
+  onSaveCloudPressed,
+  onSaveLocalPressed,
+}: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
   const {path} = media;
 
@@ -98,23 +108,36 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
         );
         return;
       }
-      await CameraRoll.save(`file://${path}`, {
+      await CameraRoll.saveAsset(`file://${path}`, {
         type: type,
+        ...(albumName && {album: albumName}),
       });
+      onSaveLocalPressed && onSaveLocalPressed();
       setSavingState('saved');
       Alert.alert(
-        'File saved!',
-        'The captured media file has been saved to your camera roll.',
+        modalSaveTextSuccess.title,
+        modalSaveTextSuccess.description,
+        modalSaveTextSuccess.buttons,
       );
     } catch (e) {
       const message = e instanceof Error ? e.message : JSON.stringify(e);
-      setSavingState('none');
-      Alert.alert(
-        'Failed to save!',
+      console.error(
         `An unexpected error occured while trying to save your ${type}. ${message}`,
       );
+      setSavingState('none');
+      Alert.alert(modalSaveTextError.title, modalSaveTextError.description);
     }
-  }, [path, type]);
+  }, [
+    albumName,
+    modalSaveTextError.description,
+    modalSaveTextError.title,
+    modalSaveTextSuccess.buttons,
+    modalSaveTextSuccess.description,
+    modalSaveTextSuccess.title,
+    onSaveLocalPressed,
+    path,
+    type,
+  ]);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-[#FFFFFF]`}>
@@ -159,11 +182,20 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
       )}
       <IconButton
         style={styles.closeButton}
-        icon="close"
+        icon={icon ?? 'close'}
         iconColor="white"
         size={30}
-        onPress={() => console.log('close button pressed')}
+        onPress={onPressClose}
       />
+      {onSaveCloudPressed && (
+        <IconButton
+          style={styles.saveCloud}
+          icon="cloud"
+          iconColor="white"
+          size={30}
+          onPress={onSaveCloudPressed}
+        />
+      )}
       <IconButton
         style={styles.saveButton}
         icon="folder-download"
@@ -184,6 +216,11 @@ const styles = StyleSheet.create({
   saveButton: {
     position: 'absolute',
     top: SAFE_AREA_PADDING.paddingTop,
+    right: SAFE_AREA_PADDING.paddingRight,
+  },
+  saveCloud: {
+    position: 'absolute',
+    top: SAFE_AREA_PADDING.paddingTop + 40,
     right: SAFE_AREA_PADDING.paddingRight,
   },
 });
