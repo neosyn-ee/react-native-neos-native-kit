@@ -30,6 +30,7 @@ const _CaptureButton = ({
   fileType,
   videoBitRate,
   videoCodec,
+  timeMustStopRecording,
 }: CaptureButtonProps) => {
   const pressDownDate = useRef<Date | undefined>(undefined);
   const [isRecording, setIsRecording] = useState(false);
@@ -85,6 +86,11 @@ const _CaptureButton = ({
       if (camera.current === null) {
         throw new Error('Camera ref is null!');
       }
+      if (timeMustStopRecording) {
+        setTimeout(() => {
+          camera.current?.stopRecording();
+        }, timeMustStopRecording);
+      }
 
       camera.current.startRecording({
         fileType: fileType,
@@ -100,6 +106,7 @@ const _CaptureButton = ({
           onStoppedRecording();
         },
       });
+
       // TODO: wait until startRecording returns to actually find out if the recording has successfully started
       setIsRecording(true);
     } catch (e) {

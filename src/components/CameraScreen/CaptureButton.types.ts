@@ -8,6 +8,13 @@ export type FilteredRecordVideoOptions = Omit<
   'onRecordingError' | 'onRecordingFinished' | 'flash'
 >;
 
+export type ManualStopRecordingOptions = {
+  /**
+   * Stop recording after delay milliseconds.
+   */
+  timeMustStopRecording?: number;
+};
+
 export type CaptureButtonProps = {
   flash: 'off' | 'on';
   enabled: boolean;
@@ -15,4 +22,5 @@ export type CaptureButtonProps = {
   onMediaCaptured: onMediaCapturedCallback;
   setIsPressingButton: (isPressingButton: boolean) => void;
   recordingMode: CameraScreenProps['recordingMode'];
-} & FilteredRecordVideoOptions;
+} & FilteredRecordVideoOptions &
+  ManualStopRecordingOptions;

@@ -41,6 +41,7 @@ const CameraScreen = ({
   videoBitRate,
   videoCodec,
   onPressClose,
+  timeMustStopRecording,
 }: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -222,6 +223,7 @@ const CameraScreen = ({
               fileType={fileType}
               videoBitRate={videoBitRate}
               videoCodec={videoCodec}
+              timeMustStopRecording={timeMustStopRecording}
             />
           )}
           <View style={styles.rightButtonRow}>

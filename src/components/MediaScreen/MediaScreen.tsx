@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   },
   saveCloud: {
     position: 'absolute',
-    top: SAFE_AREA_PADDING.paddingTop + 40,
+    top: SAFE_AREA_PADDING.paddingTop + 55,
     right: SAFE_AREA_PADDING.paddingRight,
   },
 });
