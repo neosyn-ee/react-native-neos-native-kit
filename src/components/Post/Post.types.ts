@@ -1,4 +1,11 @@
+import {VideoProperties} from 'react-native-video';
+
 import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
+
+export type VideoData = {
+  id: number;
+  source: VideoProperties['source'];
+};
 
 export type PostProps = {
   id: number;
@@ -7,6 +14,7 @@ export type PostProps = {
   actionsContent?: JSX.Element;
   bodyContent?: JSX.Element | string;
   overlayComponent?: JSX.Element;
+  onPressPost?: (videoData: VideoData) => void;
 };
 
 export type PostType = PostProps;

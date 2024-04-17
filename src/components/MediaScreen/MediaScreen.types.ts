@@ -1,9 +1,11 @@
 import {AlertButton} from 'react-native';
-import {PhotoFile, VideoFile} from 'react-native-vision-camera';
+
+import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
 
 export type MediaScreenProps = {
-  media: PhotoFile | VideoFile;
   type: 'photo' | 'video';
+  path: string;
+  isLocalPath?: boolean;
   onPressClose: () => void;
   /**
    * icon from react-native-vector-icons MaterialCommunityIcons
@@ -21,4 +23,4 @@ export type MediaScreenProps = {
   };
   onSaveCloudPressed?: () => void;
   onSaveLocalPressed?: () => void;
-};
+} & Omit<VideoPlayerProps, 'source'>;

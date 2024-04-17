@@ -45,7 +45,7 @@ const isVideoOnLoadEvent = (
 ): event is OnLoadData => 'duration' in event && 'naturalSize' in event;
 
 const MediaScreen = ({
-  media,
+  path,
   type,
   onPressClose,
   icon,
@@ -54,15 +54,21 @@ const MediaScreen = ({
   modalSaveTextError,
   onSaveCloudPressed,
   onSaveLocalPressed,
+  isLocalPath,
+  height = '100%',
+  width,
+  ...props
 }: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
-  const {path} = media;
 
   const [_savingState, setSavingState] = useState<'none' | 'saving' | 'saved'>(
     'none',
   );
 
-  const source = useMemo(() => ({uri: `file://${path}`}), [path]);
+  const source = useMemo(
+    () => ({uri: isLocalPath ? `file://${path}` : path}),
+    [path, isLocalPath],
+  );
 
   const onMediaLoad = useCallback(
     (event: OnLoadData | NativeSyntheticEvent<ImageLoadEventData>) => {
@@ -167,7 +173,8 @@ const MediaScreen = ({
       {type === 'video' && (
         <VideoPlayer
           source={source}
-          height="100%"
+          height={height}
+          width={width}
           onLoad={onMediaLoad}
           showOnStart={true}
           alwaysShowControls={true}
@@ -178,6 +185,7 @@ const MediaScreen = ({
           disableSeekButtons={true}
           onError={onMediaLoadError}
           disableOverlay
+          {...props}
         />
       )}
       <IconButton
@@ -196,13 +204,15 @@ const MediaScreen = ({
           onPress={onSaveCloudPressed}
         />
       )}
-      <IconButton
-        style={styles.saveButton}
-        icon="folder-download"
-        iconColor="white"
-        size={30}
-        onPress={onSavePressed}
-      />
+      {onSaveLocalPressed && (
+        <IconButton
+          style={styles.saveButton}
+          icon="folder-download"
+          iconColor="white"
+          size={30}
+          onPress={onSavePressed}
+        />
+      )}
     </SafeAreaView>
   );
 };

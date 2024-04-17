@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import tw from 'twrnc';
 
 import {PostProps} from './Post.types';
@@ -28,11 +28,13 @@ const Post = memo(
   forwardRef(
     (
       {
+        id,
         video,
         bodyContent,
         actionsContent,
         headerComponent,
         overlayComponent,
+        onPressPost,
       }: PostProps,
       parentRef,
     ): JSX.Element => {
@@ -81,8 +83,15 @@ const Post = memo(
         ) : (
           bodyContent
         );
+      const _onPressPost = () => {
+        const file = {
+          id,
+          source: video.source,
+        };
+        onPressPost && onPressPost(file);
+      };
       return (
-        <View>
+        <Pressable onPress={_onPressPost}>
           {headerComponent}
           <View style={tw`relative`}>
             <VideoPlayer {...video} source={source} autoplay={autoplay} />
@@ -92,7 +101,7 @@ const Post = memo(
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
             {bodyContent && renderedBody}
           </View>
-        </View>
+        </Pressable>
       );
     },
   ),

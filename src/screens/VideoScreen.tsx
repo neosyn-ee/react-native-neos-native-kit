@@ -7,7 +7,7 @@ const VideoScreen: FC = () => {
   return (
     <MediaScreen
       type="video"
-      media={SAMPLE_VIDEOFILE}
+      path={SAMPLE_VIDEOFILE.path}
       onPressClose={() => console.log('close')}
       modalSaveTextError={{
         title: 'Error',

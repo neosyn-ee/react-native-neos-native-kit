@@ -6,8 +6,8 @@ import {SAMPLE_PHOTOFILE} from '../components/MediaScreen/MediaScreen.stories';
 const PhotoScreen: FC = () => {
   return (
     <MediaScreen
-      media={SAMPLE_PHOTOFILE}
-      type="photo"
+      path={SAMPLE_PHOTOFILE.path}
+      type="video"
       onPressClose={() => console.log('close')}
       modalSaveTextError={{
         title: 'Error',
