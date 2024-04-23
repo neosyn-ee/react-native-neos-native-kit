@@ -57,6 +57,7 @@ const MediaScreen = ({
   isLocalPath,
   height = '100%',
   width,
+  onDeletePressed,
   ...props
 }: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
@@ -195,43 +196,59 @@ const MediaScreen = ({
         size={30}
         onPress={onPressClose}
       />
-      {onSaveCloudPressed && (
-        <IconButton
-          style={styles.saveCloud}
-          icon="cloud"
-          iconColor="white"
-          size={30}
-          onPress={onSaveCloudPressed}
-        />
-      )}
-      {onSaveLocalPressed && (
-        <IconButton
-          style={styles.saveButton}
-          icon="folder-download"
-          iconColor="white"
-          size={30}
-          onPress={onSavePressed}
-        />
-      )}
+      <View style={styles.iconContainer}>
+        {onSaveCloudPressed && (
+          <IconButton
+            style={styles.saveCloud}
+            icon="cloud"
+            iconColor="white"
+            size={30}
+            onPress={onSaveCloudPressed}
+          />
+        )}
+        {onSaveLocalPressed && (
+          <IconButton
+            style={styles.saveButton}
+            icon="folder-download"
+            iconColor="white"
+            size={30}
+            onPress={onSavePressed}
+          />
+        )}
+        {onDeletePressed && (
+          <IconButton
+            style={styles.delete}
+            icon="trash-can-outline"
+            iconColor="white"
+            size={30}
+            onPress={onSavePressed}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  iconContainer: {
+    position: 'absolute',
+    top: SAFE_AREA_PADDING.paddingTop,
+    right: SAFE_AREA_PADDING.paddingRight,
+    flexDirection: 'column',
+  },
   closeButton: {
     position: 'absolute',
     top: SAFE_AREA_PADDING.paddingTop,
     left: SAFE_AREA_PADDING.paddingLeft,
   },
   saveButton: {
-    position: 'absolute',
-    top: SAFE_AREA_PADDING.paddingTop,
-    right: SAFE_AREA_PADDING.paddingRight,
+    marginTop: 10,
   },
   saveCloud: {
-    position: 'absolute',
-    top: SAFE_AREA_PADDING.paddingTop + 55,
-    right: SAFE_AREA_PADDING.paddingRight,
+    marginTop: 10,
+  },
+  delete: {
+    marginTop: 10,
   },
 });
 

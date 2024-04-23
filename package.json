@@ -1,6 +1,6 @@
 {
   "name": "@neosyn-ee/react-native-neos-native-kit",
-  "version": "1.2.17",
+  "version": "1.2.18",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -10,14 +10,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neosyn-ee/react-native-core"
+    "url": "git+https://github.com/neosyn-ee/react-native-neos-native-kit"
   },
   "author": "Neosyn <info@neosyn.it> (https://github.com/neosyn-ee)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neosyn-ee/react-native-core/issues"
+    "url": "https://github.com/neosyn-ee/react-native-neos-native-kit/issues"
   },
-  "homepage": "https://github.com/neosyn-ee/react-native-core#readme",
+  "homepage": "https://github.com/neosyn-ee/react-native-neos-native-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

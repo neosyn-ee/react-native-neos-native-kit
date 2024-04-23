@@ -23,4 +23,5 @@ export type MediaScreenProps = {
   };
   onSaveCloudPressed?: () => void;
   onSaveLocalPressed?: () => void;
+  onDeletePressed?: () => void;
 } & Omit<VideoPlayerProps, 'source'>;
