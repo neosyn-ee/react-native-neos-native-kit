@@ -12,12 +12,12 @@ export type MediaScreenProps = {
    */
   icon?: string;
   albumName?: string;
-  modalSaveTextSuccess: {
+  modalSaveTextSuccess?: {
     title: string;
     description: string;
     buttons?: AlertButton[];
   };
-  modalSaveTextError: {
+  modalSaveTextError?: {
     title: string;
     description: string;
   };

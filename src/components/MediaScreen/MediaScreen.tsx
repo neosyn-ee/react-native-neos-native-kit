@@ -121,26 +121,25 @@ const MediaScreen = ({
       });
       onSaveLocalPressed && onSaveLocalPressed();
       setSavingState('saved');
-      Alert.alert(
-        modalSaveTextSuccess.title,
-        modalSaveTextSuccess.description,
-        modalSaveTextSuccess.buttons,
-      );
+      modalSaveTextSuccess &&
+        Alert.alert(
+          modalSaveTextSuccess.title,
+          modalSaveTextSuccess.description,
+          modalSaveTextSuccess.buttons,
+        );
     } catch (e) {
       const message = e instanceof Error ? e.message : JSON.stringify(e);
       console.error(
         `An unexpected error occured while trying to save your ${type}. ${message}`,
       );
       setSavingState('none');
-      Alert.alert(modalSaveTextError.title, modalSaveTextError.description);
+      modalSaveTextError &&
+        Alert.alert(modalSaveTextError.title, modalSaveTextError.description);
     }
   }, [
     albumName,
-    modalSaveTextError.description,
-    modalSaveTextError.title,
-    modalSaveTextSuccess.buttons,
-    modalSaveTextSuccess.description,
-    modalSaveTextSuccess.title,
+    modalSaveTextError,
+    modalSaveTextSuccess,
     onSaveLocalPressed,
     path,
     type,
@@ -221,7 +220,7 @@ const MediaScreen = ({
             icon="trash-can-outline"
             iconColor="white"
             size={30}
-            onPress={onSavePressed}
+            onPress={onDeletePressed}
           />
         )}
       </View>
