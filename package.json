@@ -80,7 +80,6 @@
     "react-native-web": "^0.18.12",
     "react-singleton-hook": "^4.0.1",
     "semantic-release": "^23.0.8",
-    "semantic-release-react-native": "^1.10.0",
     "twrnc": "^3.6.6"
   },
   "devDependencies": {

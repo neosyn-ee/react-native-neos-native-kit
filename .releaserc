@@ -5,14 +5,10 @@
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
-    "semantic-release-react-native",
     [
       "@semantic-release/git",
       {
         "assets": [
-          "ios/**/Info.plist",
-          "ios/**/*.pbxproj",
-          "android/app/build.gradle",
           "CHANGELOG.md"
         ],
         "message": "chore: ${nextRelease.version}"
