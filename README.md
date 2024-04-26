@@ -1,135 +1,54 @@
-# React Native Core
+# @neosyn-ee/react-native-neos-native-kit
 
-### Features
+[![npm version](https://badge.fury.io/js/%40neosyn-ee%2Freact-native-neos-native-kit.svg)](https://badge.fury.io/js/%40neosyn-ee%2Freact-native-neos-native-kit)
+[![GitHub issues](https://img.shields.io/github/issues/neosyn-ee/react-native-neos-native-kit)](https://github.com/neosyn-ee/react-native-neos-native-kit/issues)
+[![GitHub license](https://img.shields.io/github/license/neosyn-ee/react-native-neos-native-kit)](https://github.com/neosyn-ee/react-native-neos-native-kit/blob/main/LICENSE)
 
-Developer experience first:
+A set of ready-to-use components that makes app development a fast and effortless experience. Designed for React Native, this kit provides a comprehensive collection of components and utilities to streamline your development process.
 
-- ⚛️ [React Native](https://reactnative.dev) for building native apps using React
-- 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
-- 📏 Linter with [ESLint](https://eslint.org)
-- 💖 Code Formatter with [Prettier](https://prettier.io)
-- 🦊 Husky for Git Hooks
-- 🚫 Lint-staged for running linters on Git staged files
-- 🦺 Unit Testing with Jest and React Testing Library
-- 🧪 E2E Testing with Detox
-- 🗂 VSCode configuration: Settings, Tasks and extension for ESLint, Prettier, TypeScript, Jest
+## Features
 
-### Requirements
+- **Ready-to-Use Components**: Dive straight into development with a suite of pre-built components designed for common use cases.
+- **Cross-Platform Compatibility**: Build for both iOS and Android platforms seamlessly.
+- **Efficient Development**: Accelerate your development process by utilizing components that are designed for efficiency and ease of use.
+- **Flexible and Customizable**: Tailor components to suit your specific project needs with easy-to-customize options.
+- **Continuous Integration**: Fully compatible with common CI/CD pipelines for automated testing and deployment.
 
-- Node.js >= 20.8.1 and yarn
-- Java jdk
-- [iOS Simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Android Studio Emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+## Installation
 
-For more information: [React Native setup](https://reactnative.dev/docs/environment-setup)
-### Getting started
+Install the package via npm:
 
-Run the following command on your local environment:
-
-```shell
-git clone
-cd my-project-name
-yarn install
+```bash
+npm install @neosyn-ee/react-native-neos-native-kit
 ```
 
-Then, you can run locally in development mode with live reload:
-
-```shell
-yarn run start
-yarn run android
-# Or
-yarn run ios
+```bash
+yarn add @neosyn-ee/react-native-neos-native-kit
 ```
-#### Storybook 
-An example how to add a separate JS bundle entry point for RN Storybook and how to switch between entry points from the Dev Menu:
+## Add provider
 
-<div style="display:flex;">
-
-<img width="250" alt="iOS dev menu" src="https://user-images.githubusercontent.com/16039/232308884-0f015e13-afe1-47f4-b8ee-e888bf10d1e0.png">
-
-<img width="240" alt="Android dev menu" src="https://user-images.githubusercontent.com/16039/232308885-3f8a66a1-5823-43ad-af46-0fa70ebb8ab0.png">
-
-</div>
-
-A separate entry point helps to ensure that application's bundle won't include any Storybook code.
-
-Also switching between Storybook and app is very straightforward and convenient and it's possible to keep the app and Storybook open in different Simulators / Emulators at the same time.
-
-## How to use
-
-Check this diff:
-https://github.com/zubko/react-native-storybook-with-dev-menu/commit/7486060842a15d12ecdd5256f2fb0ddddc7e0e32 
-
-Generally the process is:
-1. Add Storybook JS bundle entry point
-2. For Android and iOS:
-    * Add extra files to the native projects
-    * Change the existing native files
-
-## Thoughts
-
-Probably it should be possible to move the code to a separate NPM package to make the integration a bit easier, but I'm lacking some knowledge of native Android module part of RN to get the `DevSupportManager` instance and application context in the module at the proper moment of time when they are constructed, so any suggestions are welcome. 
-
-Anyways, the decision of the JS entry point happens in the native app's code, so some manual changes to the native code of the app will be needed in any case.
-### Testing
-
-Testing is an important part of the development process and often the neglected one. This starter code comes up with Jest and React Testing Library for unit testing and Detox for E2E testing.
-
-#### Unit Testing
-
-To run the unit tests, run the following command:
-
-```shell
-npm run test
+```js
+ <AppServiceProvider>
+  <MyApp/>
+ </AppServiceProvider>
 ```
+# [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)
+## Updating manifests
+### IOS
 
-#### E2E Testing
+```js
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Camera.</string>
 
-To run the E2E tests, you first need to run the following command:
-
-Then, you can run the following command to run the E2E tests:
-
-```shell
-npm run e2e:ios
-# Or
-npm run e2e:android
+<!-- optionally, if you want to record audio: -->
+<key>NSMicrophoneUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Microphone.</string>
 ```
-# Library Usage Guide
+### Android
 
-## Global Dependencies
-- [**twrnc**]()
-
-## Components
-
-### VideoPlayer
-
-#### Dependencies
-- [**react-native-video** ^5.2.1]()
-- [**react-native-media-console** ^2.1.0]()
-- [**react-native-orientation-locker** ^1.5.0]()
-- [**react-singleton-hook** ^4.0.1]()
-
-### VirtualizedList
-
-- [**react-native-reanimated** ^3.5.2]() 
-
-**IMPORTANT**: Ensure to add the following code inside your `babel.config.js` file to properly configure the React Native Reanimated plugin:
-
-```javascript
-module.exports = {
-  plugins: ['react-native-reanimated/plugin'],
-};
-```
-## Android Permissions
-
-```android
-<uses-permission android:name="android.permission.INTERNET" />
+```js
 <uses-permission android:name="android.permission.CAMERA" />
+
+<!-- optionally, if you want to record audio: -->
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
-
-### react native icons
-
-[Android setup](https://github.com/oblador/react-native-vector-icons?tab=readme-ov-file#android-setup)
