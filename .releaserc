@@ -1,0 +1,41 @@
+{
+  "branches": [
+    "main",
+    "next"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "semantic-release-react-native",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "ios/**/Info.plist",
+          "ios/**/*.pbxproj",
+          "android/app/build.gradle",
+          "CHANGELOG.md"
+        ],
+        "message": "chore: ${nextRelease.version}"
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    "@semantic-release/npm",
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "android/app/build/outputs/apk/debug/app-debug.apk",
+            "label": "Android debug apk"
+          }
+        ]
+      }
+    ]
+  ]
+}
