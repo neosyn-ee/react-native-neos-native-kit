@@ -1,0 +1,83 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Install Java
+  #       uses: actions/setup-java@v3
+  #       with:
+  #         java-version: 17
+  #         distribution: adopt
+  #         cache: gradle
+
+  #     - name: Validate Gradle wrapper
+  #       uses: gradle/wrapper-validation-action@v1
+
+  #     - name: Setup Node  
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
+  #         cache: 'yarn'
+
+  #     - name: Run Yarn Install
+  #       run: |
+  #            npm i -g corepack
+  #            yarn install
+
+  #     - name: Build application
+  #       run: |
+  #            cd android
+  #            ./gradlew assembleRelease
+
+  #     - name: Upload application
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: app
+  #         path: android/app/build/outputs/apk/release/app-release.apk
+  #         retention-days: 3
+      # - name: List the .apk compiled
+      #   run: ls ./android/app/build/outputs/apk/debug/ -hal
+      # - name: Rename the .apk to the tag version
+      #   run: mv ./android/app/build/outputs/apk/debug/app-debug.apk ./android/app/build/outputs/apk/release/app_${{ github.ref_name }}.apk
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: app-dev
+      #     path: ./android/app/build/outputs/apk/debug/app_${{ github.ref_name }}.apk
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release

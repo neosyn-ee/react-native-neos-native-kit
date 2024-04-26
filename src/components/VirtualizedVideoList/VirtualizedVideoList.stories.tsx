@@ -2,10 +2,9 @@ import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 import data from 'storage/database/post';
 
-import {VirtualizedVideoList} from '../VirtualizedVideoList';
-
 import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
-import { PostType } from '../Post/Post.types';
+import {PostType} from '../Post/Post.types';
+import {VirtualizedVideoList} from '../VirtualizedVideoList';
 
 export default {
   title: 'VirtualizedVideoList',

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text} from 'react-native';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {PostType} from '../../components/Post/Post.types';

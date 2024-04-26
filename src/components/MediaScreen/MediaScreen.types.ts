@@ -1,6 +1,27 @@
-import {PhotoFile, VideoFile} from 'react-native-vision-camera';
+import {AlertButton} from 'react-native';
+
+import {VideoPlayerProps} from '../VideoPlayer/VideoPlayer.type';
 
 export type MediaScreenProps = {
-  media: PhotoFile | VideoFile;
   type: 'photo' | 'video';
-};
+  path: string;
+  isLocalPath?: boolean;
+  onPressClose: () => void;
+  /**
+   * icon from react-native-vector-icons MaterialCommunityIcons
+   */
+  icon?: string;
+  albumName?: string;
+  modalSaveTextSuccess?: {
+    title: string;
+    description: string;
+    buttons?: AlertButton[];
+  };
+  modalSaveTextError?: {
+    title: string;
+    description: string;
+  };
+  onSaveCloudPressed?: () => void;
+  onSaveLocalPressed?: () => void;
+  onDeletePressed?: () => void;
+} & Omit<VideoPlayerProps, 'source'>;

@@ -6,12 +6,11 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import {Text, View} from 'react-native';
-import tw from "twrnc"
-
-import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import {Pressable, Text, View} from 'react-native';
+import tw from 'twrnc';
 
 import {PostProps} from './Post.types';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
 export const PostBody = ({children}: PropsWithChildren) => {
   return (
@@ -28,7 +27,15 @@ export const PostActions = ({children}: PropsWithChildren) => {
 const Post = memo(
   forwardRef(
     (
-      {video, bodyContent, actionsContent}: PostProps,
+      {
+        id,
+        video,
+        bodyContent,
+        actionsContent,
+        headerComponent,
+        overlayComponent,
+        onPressPost,
+      }: PostProps,
       parentRef,
     ): JSX.Element => {
       const [autoplay, setAutoplay] = useState<boolean>(false);
@@ -76,14 +83,25 @@ const Post = memo(
         ) : (
           bodyContent
         );
+      const _onPressPost = () => {
+        const file = {
+          id,
+          source: video.source,
+        };
+        onPressPost && onPressPost(file);
+      };
       return (
-        <View style={tw`bg-[#fff]`}>
-          <VideoPlayer {...video} source={source} autoplay={autoplay} />
+        <Pressable onPress={_onPressPost}>
+          {headerComponent}
+          <View style={tw`relative`}>
+            <VideoPlayer {...video} source={source} autoplay={autoplay} />
+            {overlayComponent}
+          </View>
           <View style={tw`p-3`}>
             {actionsContent && <PostActions>{actionsContent}</PostActions>}
             {bodyContent && renderedBody}
           </View>
-        </View>
+        </Pressable>
       );
     },
   ),

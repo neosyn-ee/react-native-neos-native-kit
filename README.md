@@ -16,7 +16,7 @@ Developer experience first:
 
 ### Requirements
 
-- Node.js 14+ and yarn
+- Node.js >= 20.8.1 and yarn
 - Java jdk
 - [iOS Simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Android Studio Emulator](https://docs.expo.dev/workflow/android-studio-emulator/)

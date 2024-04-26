@@ -1,17 +1,16 @@
+import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, ViewToken} from 'react-native';
-import tw from "twrnc"
-
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import tw from 'twrnc';
 
+import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 import Post from '../Post/Post';
 import {PostExposedInstanceValue, PostType} from '../Post/Post.types';
 import Spinner from '../Spinner/Spinner';
-
-import {VirtualizedVideoListProps} from './VirtualizedVideoList.type';
 
 const VirtualizedVideoList = <TItem,>({
   data,
@@ -22,6 +21,7 @@ const VirtualizedVideoList = <TItem,>({
   initialNumToRender = 5,
   maxToRenderPerBatch = 5,
   windowSize = 5,
+  restStateOnblur,
   ...props
 }: VirtualizedVideoListProps<TItem>): JSX.Element => {
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -114,6 +114,10 @@ const VirtualizedVideoList = <TItem,>({
     ({item: itemProps}: {item: PostType}): JSX.Element => (
       <Post
         {...itemProps}
+        video={{
+          ...itemProps.video,
+          videoContainerStyle: props.contentContainerStyle,
+        }}
         ref={(postRef: PostExposedInstanceValue) =>
           (mediaRefs.current[itemProps.id] = postRef)
         }
@@ -132,12 +136,27 @@ const VirtualizedVideoList = <TItem,>({
     });
   }, [data]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        restStateOnblur && setPosts([]);
+      };
+    }, [restStateOnblur]),
+  );
+
+  const SpinnerComponent = (loading: boolean) => (loading ? <Spinner /> : null);
+
+  const onRefresh = async () => {
+    setPosts([]);
+    await fetchData?.(currentPage);
+  };
+
   return (
     <View style={tw`flex-1`}>
       {posts.length ? (
         <Animated.FlatList
           data={posts}
-          windowSize={5}
+          windowSize={windowSize}
           renderItem={renderItem}
           keyExtractor={({id}) => id.toString()}
           onEndReachedThreshold={0.1}
@@ -152,10 +171,11 @@ const VirtualizedVideoList = <TItem,>({
           onViewableItemsChanged={onViewableItemsChanged}
           onScroll={scrollHandler}
           removeClippedSubviews
+          onRefresh={onRefresh}
+          ListFooterComponent={SpinnerComponent(refreshing)}
           {...props}
         />
       ) : null}
-      {refreshing && <Spinner />}
     </View>
   );
 };

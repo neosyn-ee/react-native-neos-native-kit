@@ -44,15 +44,32 @@ const isVideoOnLoadEvent = (
   event: OnLoadData | NativeSyntheticEvent<ImageLoadEventData>,
 ): event is OnLoadData => 'duration' in event && 'naturalSize' in event;
 
-const MediaScreen = ({media, type}: MediaScreenProps) => {
+const MediaScreen = ({
+  path,
+  type,
+  onPressClose,
+  icon,
+  albumName,
+  modalSaveTextSuccess,
+  modalSaveTextError,
+  onSaveCloudPressed,
+  onSaveLocalPressed,
+  isLocalPath,
+  height = '100%',
+  width,
+  onDeletePressed,
+  ...props
+}: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
-  const {path} = media;
 
   const [_savingState, setSavingState] = useState<'none' | 'saving' | 'saved'>(
     'none',
   );
 
-  const source = useMemo(() => ({uri: `file://${path}`}), [path]);
+  const source = useMemo(
+    () => ({uri: isLocalPath ? `file://${path}` : path}),
+    [path, isLocalPath],
+  );
 
   const onMediaLoad = useCallback(
     (event: OnLoadData | NativeSyntheticEvent<ImageLoadEventData>) => {
@@ -98,23 +115,35 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
         );
         return;
       }
-      await CameraRoll.save(`file://${path}`, {
+      await CameraRoll.saveAsset(`file://${path}`, {
         type: type,
+        ...(albumName && {album: albumName}),
       });
+      onSaveLocalPressed && onSaveLocalPressed();
       setSavingState('saved');
-      Alert.alert(
-        'File saved!',
-        'The captured media file has been saved to your camera roll.',
-      );
+      modalSaveTextSuccess &&
+        Alert.alert(
+          modalSaveTextSuccess.title,
+          modalSaveTextSuccess.description,
+          modalSaveTextSuccess.buttons,
+        );
     } catch (e) {
       const message = e instanceof Error ? e.message : JSON.stringify(e);
-      setSavingState('none');
-      Alert.alert(
-        'Failed to save!',
+      console.error(
         `An unexpected error occured while trying to save your ${type}. ${message}`,
       );
+      setSavingState('none');
+      modalSaveTextError &&
+        Alert.alert(modalSaveTextError.title, modalSaveTextError.description);
     }
-  }, [path, type]);
+  }, [
+    albumName,
+    modalSaveTextError,
+    modalSaveTextSuccess,
+    onSaveLocalPressed,
+    path,
+    type,
+  ]);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-[#FFFFFF]`}>
@@ -144,7 +173,8 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
       {type === 'video' && (
         <VideoPlayer
           source={source}
-          height="100%"
+          height={height}
+          width={width}
           onLoad={onMediaLoad}
           showOnStart={true}
           alwaysShowControls={true}
@@ -155,36 +185,69 @@ const MediaScreen = ({media, type}: MediaScreenProps) => {
           disableSeekButtons={true}
           onError={onMediaLoadError}
           disableOverlay
+          {...props}
         />
       )}
       <IconButton
         style={styles.closeButton}
-        icon="close"
+        icon={icon ?? 'close'}
         iconColor="white"
         size={30}
-        onPress={() => console.log('close button pressed')}
+        onPress={onPressClose}
       />
-      <IconButton
-        style={styles.saveButton}
-        icon="folder-download"
-        iconColor="white"
-        size={30}
-        onPress={onSavePressed}
-      />
+      <View style={styles.iconContainer}>
+        {onSaveCloudPressed && (
+          <IconButton
+            style={styles.saveCloud}
+            icon="cloud"
+            iconColor="white"
+            size={30}
+            onPress={onSaveCloudPressed}
+          />
+        )}
+        {onSaveLocalPressed && (
+          <IconButton
+            style={styles.saveButton}
+            icon="folder-download"
+            iconColor="white"
+            size={30}
+            onPress={onSavePressed}
+          />
+        )}
+        {onDeletePressed && (
+          <IconButton
+            style={styles.delete}
+            icon="trash-can-outline"
+            iconColor="white"
+            size={30}
+            onPress={onDeletePressed}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  iconContainer: {
+    position: 'absolute',
+    top: SAFE_AREA_PADDING.paddingTop,
+    right: SAFE_AREA_PADDING.paddingRight,
+    flexDirection: 'column',
+  },
   closeButton: {
     position: 'absolute',
     top: SAFE_AREA_PADDING.paddingTop,
     left: SAFE_AREA_PADDING.paddingLeft,
   },
   saveButton: {
-    position: 'absolute',
-    top: SAFE_AREA_PADDING.paddingTop,
-    right: SAFE_AREA_PADDING.paddingRight,
+    marginTop: 10,
+  },
+  saveCloud: {
+    marginTop: 10,
+  },
+  delete: {
+    marginTop: 10,
   },
 });
 

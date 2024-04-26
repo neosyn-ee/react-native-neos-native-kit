@@ -1,6 +1,5 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
-
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -13,9 +12,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {TakePhotoOptions} from 'react-native-vision-camera';
 
-import {CAPTURE_BUTTON_SIZE} from '../../utils/constants';
-
 import {CaptureButtonProps} from './CaptureButton.types';
+import {CAPTURE_BUTTON_SIZE} from '../../utils/constants';
 
 const FIGURE_SIZE = CAPTURE_BUTTON_SIZE * 0.75;
 const START_RECORDING_DELAY = 200;
@@ -29,6 +27,10 @@ const _CaptureButton = ({
   onMediaCaptured,
   setIsPressingButton,
   recordingMode,
+  fileType,
+  videoBitRate,
+  videoCodec,
+  timeMustStopRecording,
 }: CaptureButtonProps) => {
   const pressDownDate = useRef<Date | undefined>(undefined);
   const [isRecording, setIsRecording] = useState(false);
@@ -84,8 +86,16 @@ const _CaptureButton = ({
       if (camera.current === null) {
         throw new Error('Camera ref is null!');
       }
+      if (timeMustStopRecording) {
+        setTimeout(() => {
+          camera.current?.stopRecording();
+        }, timeMustStopRecording);
+      }
 
       camera.current.startRecording({
+        fileType: fileType,
+        videoBitRate: videoBitRate,
+        videoCodec: videoCodec,
         flash: flash,
         onRecordingError: error => {
           console.error('Recording failed!', error);
@@ -96,12 +106,21 @@ const _CaptureButton = ({
           onStoppedRecording();
         },
       });
+
       // TODO: wait until startRecording returns to actually find out if the recording has successfully started
       setIsRecording(true);
     } catch (e) {
       console.error('failed to start recording!', e, 'camera');
     }
-  }, [camera, flash, onMediaCaptured, onStoppedRecording]);
+  }, [
+    camera,
+    fileType,
+    flash,
+    onMediaCaptured,
+    onStoppedRecording,
+    videoBitRate,
+    videoCodec,
+  ]);
   //#endregion
 
   const onTapGestureStrategy = () => {

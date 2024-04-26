@@ -1,6 +1,6 @@
 {
   "name": "@neosyn-ee/react-native-neos-native-kit",
-  "version": "1.0.3",
+  "version": "1.3.0",
   "type": "commonjs",
   "description": "A set of ready-to-use components makes app development a fast and effortless experience.",
   "keywords": [
@@ -10,14 +10,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neosyn-ee/react-native-core"
+    "url": "git+https://github.com/neosyn-ee/react-native-neos-native-kit"
   },
   "author": "Neosyn <info@neosyn.it> (https://github.com/neosyn-ee)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neosyn-ee/react-native-core/issues"
+    "url": "https://github.com/neosyn-ee/react-native-neos-native-kit/issues"
   },
-  "homepage": "https://github.com/neosyn-ee/react-native-core#readme",
+  "homepage": "https://github.com/neosyn-ee/react-native-neos-native-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -44,12 +44,17 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
-    "@react-native-camera-roll/camera-roll": "^6.0.0",
+    "@react-native-camera-roll/camera-roll": "^7.5.2",
     "@react-native-community/datetimepicker": "^6.7.5",
     "@react-native-community/slider": "^4.4.2",
     "@react-navigation/material-bottom-tabs": "^6.2.16",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.3",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^13.0.0",
     "@tsconfig/react-native": "^3.0.0",
     "@types/react-native-vector-icons": "^6.4.14",
     "@types/react-native-video": "^5.0.15",
@@ -61,7 +66,7 @@
     "react-native-blob-util": "^0.19.1",
     "react-native-config": "^1.5.1",
     "react-native-gesture-handler": "^2.12.1",
-    "react-native-media-console": "^2.1.0",
+    "react-native-media-console": "2.1.0",
     "react-native-orientation-locker": "^1.5.0",
     "react-native-paper": "^5.10.3",
     "react-native-permissions": "^3.9.2",
@@ -74,6 +79,8 @@
     "react-native-vision-camera": "^3.6.17",
     "react-native-web": "^0.18.12",
     "react-singleton-hook": "^4.0.1",
+    "semantic-release": "^23.0.8",
+    "semantic-release-react-native": "^1.10.0",
     "twrnc": "^3.6.6"
   },
   "devDependencies": {

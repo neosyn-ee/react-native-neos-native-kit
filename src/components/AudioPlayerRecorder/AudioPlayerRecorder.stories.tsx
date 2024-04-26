@@ -1,10 +1,9 @@
 import type {StoryObj} from '@storybook/react';
 import {ComponentMeta} from '@storybook/react-native';
 
+import {AudioPlayerRecorderProps} from './AudioPlayerRecorder.types';
 import {AudioPlayerRecorder} from '../AudioPlayerRecorder';
 import {onSendAudioNote} from '../VideoAudioComment';
-
-import {AudioPlayerRecorderProps} from './AudioPlayerRecorder.types';
 
 export default {
   component: AudioPlayerRecorder,

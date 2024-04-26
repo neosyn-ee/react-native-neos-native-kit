@@ -1,10 +1,13 @@
-import {type PostType} from '../Post/Post.types';
-import { VirtualizedListWithoutRenderItemProps } from 'react-native';
+import {VirtualizedListWithoutRenderItemProps} from 'react-native';
 
-export type VirtualizedVideoListProps<TItem> = VirtualizedListWithoutRenderItemProps<TItem> & {
-  data: Array<PostType>;
-  paginated?: boolean;
-  pagesNum?: number;
-  viewAreaCoveragePercentThreshold?: number;
-  fetchData?: (page: number) => Promise<void | number>;
-};
+import {type PostType} from '../Post/Post.types';
+
+export type VirtualizedVideoListProps<TItem> =
+  VirtualizedListWithoutRenderItemProps<TItem> & {
+    data: Array<PostType>;
+    paginated?: boolean;
+    pagesNum?: number;
+    viewAreaCoveragePercentThreshold?: number;
+    fetchData?: (page: number) => Promise<void | number>;
+    restStateOnblur?: boolean;
+  };

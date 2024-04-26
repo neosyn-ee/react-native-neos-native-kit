@@ -37,6 +37,11 @@ const CameraScreen = ({
   stopOnFirstCodeScan = true,
   validateValueScannedByUser,
   validateValueScannedMessage,
+  fileType,
+  videoBitRate,
+  videoCodec,
+  onPressClose,
+  timeMustStopRecording,
 }: CameraScreenProps) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -44,7 +49,6 @@ const CameraScreen = ({
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
   );
-
   // console.log(props.validateValueScannedByUser);
 
   const isPressingButton = useSharedValue(false);
@@ -199,6 +203,15 @@ const CameraScreen = ({
             audio={hasMicrophonePermission}
             codeScanner={recordingMode === 'scanner' ? codeScanner : undefined}
           />
+          {onPressClose && (
+            <IconButton
+              icon="close"
+              iconColor="white"
+              size={30}
+              style={styles.closeIcon}
+              onPress={onPressClose}
+            />
+          )}
           {recordingMode !== 'scanner' && (
             <CaptureButton
               flash={supportsFlash ? flash : 'off'}
@@ -207,6 +220,10 @@ const CameraScreen = ({
               setIsPressingButton={setIsPressingButton}
               enabled={isCameraInitialized && isActive}
               recordingMode={recordingMode}
+              fileType={fileType}
+              videoBitRate={videoBitRate}
+              videoCodec={videoCodec}
+              timeMustStopRecording={timeMustStopRecording}
             />
           )}
           <View style={styles.rightButtonRow}>
@@ -254,6 +271,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     position: 'absolute',
     right: SAFE_AREA_PADDING.paddingRight,
+    top: SAFE_AREA_PADDING.paddingTop,
+  },
+  closeIcon: {
+    position: 'absolute',
+    left: SAFE_AREA_PADDING.paddingLeft,
     top: SAFE_AREA_PADDING.paddingTop,
   },
 });

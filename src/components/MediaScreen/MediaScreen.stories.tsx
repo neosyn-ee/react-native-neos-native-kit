@@ -30,14 +30,14 @@ export default {
 
 export const PhotoPreview: StoryObj<MediaScreenProps> = {
   args: {
-    media: SAMPLE_PHOTOFILE,
+    path: SAMPLE_PHOTOFILE.path,
     type: 'photo',
   },
 };
 
 export const VideoPreview: StoryObj<MediaScreenProps> = {
   args: {
-    media: SAMPLE_VIDEOFILE,
+    path: SAMPLE_VIDEOFILE.path,
     type: 'video',
   },
 };

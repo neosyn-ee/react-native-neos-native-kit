@@ -1,6 +1,7 @@
-import {DimensionValue} from 'react-native';
+import React from 'react';
+import {DimensionValue, StyleProp, ViewStyle} from 'react-native';
 
-import {VideoPlayerProps as CorePlayerProps} from 'react-native-media-console';
+import {VideoPlayerProps as CorePlayerProps} from './mediaConsole';
 
 type disableControlsType = {
   default: boolean;
@@ -11,6 +12,7 @@ export type PlayerProps = CorePlayerProps &
   Pick<VideoPlayerProps, 'playerInfo' | 'setFullscreen'> & {
     disableControls?: boolean;
     setPaused: React.Dispatch<React.SetStateAction<boolean>>;
+    videoContainerStyle?: StyleProp<ViewStyle>;
   };
 
 export type PlayerInfoObject = {
@@ -24,6 +26,7 @@ export type VideoPlayerProps = CorePlayerProps &
     disableControlsWhen?: disableControlsType;
     setFullscreen?: React.Dispatch<React.SetStateAction<boolean>>;
     playerInfo?: React.MutableRefObject<PlayerInfoObject>;
+    videoContainerStyle?: StyleProp<ViewStyle>;
   };
 
 export type VideoSizeProps = {
