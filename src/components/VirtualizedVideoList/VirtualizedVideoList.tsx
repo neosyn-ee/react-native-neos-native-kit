@@ -1,3 +1,4 @@
+import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, ViewToken} from 'react-native';
 import Animated, {
@@ -20,6 +21,7 @@ const VirtualizedVideoList = <TItem,>({
   initialNumToRender = 5,
   maxToRenderPerBatch = 5,
   windowSize = 5,
+  restStateOnblur,
   ...props
 }: VirtualizedVideoListProps<TItem>): JSX.Element => {
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -133,6 +135,14 @@ const VirtualizedVideoList = <TItem,>({
       return [...oldData, ...data];
     });
   }, [data]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        restStateOnblur && setPosts([]);
+      };
+    }, [restStateOnblur]),
+  );
 
   const SpinnerComponent = (loading: boolean) => (loading ? <Spinner /> : null);
 

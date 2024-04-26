@@ -9,4 +9,5 @@ export type VirtualizedVideoListProps<TItem> =
     pagesNum?: number;
     viewAreaCoveragePercentThreshold?: number;
     fetchData?: (page: number) => Promise<void | number>;
+    restStateOnblur?: boolean;
   };
