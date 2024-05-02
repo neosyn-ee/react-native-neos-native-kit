@@ -10,7 +10,12 @@ import {onSendAudioNote} from './components/VideoAudioComment';
 import VideoAudioComment from './components/VideoAudioComment/VideoAudioComment';
 import VideoPlayer from './components/VideoPlayer/VideoPlayer';
 import VirtualizedVideoList from './components/VirtualizedVideoList/VirtualizedVideoList';
-import {SCREEN_ASPECT_RATIO} from './utils/constants';
+import {
+  SAFE_AREA_PADDING,
+  SCREEN_ASPECT_RATIO,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from './utils/constants';
 
 export {delay, isAndroid} from './utils/helpers';
 
@@ -45,4 +50,7 @@ export {
   VideoAudioComment,
   Post,
   SCREEN_ASPECT_RATIO,
+  SAFE_AREA_PADDING,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
 };
