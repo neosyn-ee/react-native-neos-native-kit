@@ -58,6 +58,7 @@ const MediaScreen = ({
   height = '100%',
   width,
   onDeletePressed,
+  overlayComponent,
   ...props
 }: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
@@ -196,6 +197,7 @@ const MediaScreen = ({
         onPress={onPressClose}
       />
       <View style={styles.iconContainer}>
+        {overlayComponent && <View>{overlayComponent}</View>}
         {onSaveCloudPressed && (
           <IconButton
             style={styles.saveCloud}

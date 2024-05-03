@@ -24,4 +24,5 @@ export type MediaScreenProps = {
   onSaveCloudPressed?: () => void;
   onSaveLocalPressed?: () => void;
   onDeletePressed?: () => void;
+  overlayComponent?: JSX.Element;
 } & Omit<VideoPlayerProps, 'source'>;
