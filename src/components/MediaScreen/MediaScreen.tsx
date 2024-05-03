@@ -58,6 +58,7 @@ const MediaScreen = ({
   height = '100%',
   width,
   onDeletePressed,
+  overlayComponent,
   ...props
 }: MediaScreenProps) => {
   const [hasImageLoadError, setHasImageLoadError] = useState(false);
@@ -196,6 +197,7 @@ const MediaScreen = ({
         onPress={onPressClose}
       />
       <View style={styles.iconContainer}>
+        {overlayComponent && <View>{overlayComponent}</View>}
         {onSaveCloudPressed && (
           <IconButton
             style={styles.saveCloud}
@@ -234,6 +236,7 @@ const styles = StyleSheet.create({
     top: SAFE_AREA_PADDING.paddingTop,
     right: SAFE_AREA_PADDING.paddingRight,
     flexDirection: 'column',
+    alignItems: 'center',
   },
   closeButton: {
     position: 'absolute',
@@ -241,13 +244,14 @@ const styles = StyleSheet.create({
     left: SAFE_AREA_PADDING.paddingLeft,
   },
   saveButton: {
-    marginTop: 10,
+    marginTop: SAFE_AREA_PADDING.paddingTop,
   },
   saveCloud: {
-    marginTop: 10,
+    marginTop: SAFE_AREA_PADDING.paddingTop,
   },
   delete: {
-    marginTop: 10,
+    marginTop: SAFE_AREA_PADDING.paddingTop,
+    alignSelf: 'stretch',
   },
 });
 
