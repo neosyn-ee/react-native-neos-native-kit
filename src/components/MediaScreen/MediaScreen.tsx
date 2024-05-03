@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     top: SAFE_AREA_PADDING.paddingTop,
     right: SAFE_AREA_PADDING.paddingRight,
     flexDirection: 'column',
+    alignItems: 'center',
   },
   closeButton: {
     position: 'absolute',
@@ -250,6 +251,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     marginTop: 10,
+    alignSelf: 'stretch',
   },
 });
 
