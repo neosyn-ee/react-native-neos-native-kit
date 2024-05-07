@@ -244,14 +244,13 @@ const styles = StyleSheet.create({
     left: SAFE_AREA_PADDING.paddingLeft,
   },
   saveButton: {
-    marginTop: SAFE_AREA_PADDING.paddingTop,
+    marginTop: SAFE_AREA_PADDING.paddingTop - 5,
   },
   saveCloud: {
-    marginTop: SAFE_AREA_PADDING.paddingTop,
+    marginTop: SAFE_AREA_PADDING.paddingTop - 5,
   },
   delete: {
-    marginTop: SAFE_AREA_PADDING.paddingTop,
-    alignSelf: 'stretch',
+    marginTop: SAFE_AREA_PADDING.paddingTop - 5,
   },
 });
 
