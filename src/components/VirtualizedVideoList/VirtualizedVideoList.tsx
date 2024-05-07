@@ -22,6 +22,8 @@ const VirtualizedVideoList = <TItem,>({
   maxToRenderPerBatch = 5,
   windowSize = 5,
   restStateOnblur,
+  showsHorizontalScrollIndicator = false,
+  showsVerticalScrollIndicator = false,
   ...props
 }: VirtualizedVideoListProps<TItem>): JSX.Element => {
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -173,6 +175,8 @@ const VirtualizedVideoList = <TItem,>({
           removeClippedSubviews
           onRefresh={onRefresh}
           ListFooterComponent={SpinnerComponent(refreshing)}
+          showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+          showsVerticalScrollIndicator={showsVerticalScrollIndicator}
           {...props}
         />
       ) : null}
