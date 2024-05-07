@@ -1,8 +1,4 @@
 module.exports = {
-  plugins: ['commitlint-plugin-jira-rules'],
-  extends: ['jira'],
-  rules: {
-    'jira-task-id-max-length': [0],
-  },
+  extends: ['@commitlint/config-conventional'],
   ignores: [message => message.includes('WIP')],
 };
