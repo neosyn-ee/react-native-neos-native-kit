@@ -53,7 +53,7 @@ const Post = memo(
 
       const play = () => {
         const {autoplay: isPlaying} = video;
-        if (isPlaying) {
+        if (!isPlaying) {
           return;
         }
         setAutoplay(true);
