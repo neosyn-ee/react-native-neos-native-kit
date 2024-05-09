@@ -28,8 +28,10 @@ import {SAFE_AREA_PADDING} from '../../utils/constants';
 import {DEFAULT_CAMERA_FORMAT_FILTERS} from '.';
 
 const AnimatedCamera = Animated.createAnimatedComponent(Camera);
-
-const CameraScreen = ({
+/**
+  TMedia = VideoFile | PhotoFile
+*/
+const CameraScreen = <TMedia,>({
   formatFilters = DEFAULT_CAMERA_FORMAT_FILTERS,
   recordingMode = 'photo',
   onMediaCaptured: _onMediaCaptured,
@@ -42,14 +44,13 @@ const CameraScreen = ({
   videoCodec,
   onPressClose,
   timeMustStopRecording,
-}: CameraScreenProps) => {
+}: CameraScreenProps<TMedia>) => {
   const camera = useRef<Camera>(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
   );
-  // console.log(props.validateValueScannedByUser);
 
   const isPressingButton = useSharedValue(false);
 
@@ -132,9 +133,9 @@ const CameraScreen = ({
     try {
       !hasCameraPermission && (await requestCameraPermission());
       !hasMicPermission && needsMicPermission && (await requestMicPermission());
-      const cameraPermission = await Camera.getCameraPermissionStatus();
+      const cameraPermission = Camera.getCameraPermissionStatus();
       const micPermission = needsMicPermission
-        ? await Camera.getMicrophonePermissionStatus()
+        ? Camera.getMicrophonePermissionStatus()
         : undefined;
       if (cameraPermission === 'denied' || micPermission === 'denied') {
         await Linking.openSettings();
@@ -161,7 +162,7 @@ const CameraScreen = ({
     setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
   }, []);
 
-  const onMediaCaptured = useCallback<onMediaCapturedCallback>(
+  const onMediaCaptured = useCallback<onMediaCapturedCallback<TMedia>>(
     media => {
       _onMediaCaptured && _onMediaCaptured(media);
     },
