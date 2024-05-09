@@ -1,23 +1,23 @@
-import {FormatFilter} from 'react-native-vision-camera';
+import {FormatFilter, PhotoFile, VideoFile} from 'react-native-vision-camera';
 
 import {
   FilteredRecordVideoOptions,
   ManualStopRecordingOptions,
 } from './CaptureButton.types';
 
-export type onMediaCapturedCallback<TMedia> = (
-  media: TMedia,
+export type onMediaCapturedCallback = (
+  media: PhotoFile | VideoFile,
 ) => Promise<void> | void;
 
 export type onCodeScannedCallback = (value: string) => Promise<void> | void;
 
-export type CameraScreenProps<TMedia> = {
+export type CameraScreenProps = {
   formatFilters?: Partial<FormatFilter>[];
   onPressClose?: () => void;
 } & (
   | ({
       recordingMode: 'photo' | 'video' | 'combined';
-      onMediaCaptured: onMediaCapturedCallback<TMedia>;
+      onMediaCaptured: onMediaCapturedCallback;
       onCodeScanned?: never;
       stopOnFirstCodeScan?: never;
       validateValueScannedByUser?: never;
