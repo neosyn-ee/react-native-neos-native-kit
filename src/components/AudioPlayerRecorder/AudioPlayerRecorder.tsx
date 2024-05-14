@@ -12,7 +12,6 @@ import AudioRecorderPlayer, {
 import RNFetchBlob from 'react-native-blob-util';
 import {
   ActivityIndicator,
-  Avatar,
   IconButton,
   Portal,
   ProgressBar,
@@ -442,7 +441,7 @@ const AudioPlayerRecorder = ({
           )}
         </View>
         <View style={tw`flex-auto items-center`}>
-          {isSent === IsSentEnum.Idle ? (
+          {isSent === IsSentEnum.Idle && (
             <IconButton
               icon={readyToPlay ? 'send' : 'microphone'}
               mode="contained"
@@ -455,8 +454,6 @@ const AudioPlayerRecorder = ({
                 readyToPlay || !isRecording ? undefined : () => onStopRecord()
               }
             />
-          ) : (
-            <Avatar.Text size={35} label="FD" />
           )}
         </View>
       </View>
