@@ -149,8 +149,10 @@ const VirtualizedVideoList = <TItem,>({
   const SpinnerComponent = (loading: boolean) => (loading ? <Spinner /> : null);
 
   const onRefresh = async () => {
+    const initialPage = 1;
     setPosts([]);
-    await fetchData?.(currentPage);
+    setCurrentPage(initialPage);
+    await fetchData?.(initialPage);
   };
 
   return (
