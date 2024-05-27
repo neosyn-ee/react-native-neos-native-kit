@@ -96,6 +96,7 @@ const AudioPlayerRecorder = ({
   playTimeDisplayMode = 'default',
   playerInfoElapsedSecs,
   text = 'Hold down the button to record your comment',
+  disabledButton = false,
 }: AudioPlayerRecorderProps): JSX.Element => {
   const [isRecording, setIsRecording] = useState<boolean>();
   const [isPlaying, setIsPlaying] = useState<boolean>();
@@ -453,6 +454,7 @@ const AudioPlayerRecorder = ({
               onPressOut={
                 readyToPlay || !isRecording ? undefined : () => onStopRecord()
               }
+              disabled={disabledButton}
             />
           )}
         </View>
