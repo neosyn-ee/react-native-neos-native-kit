@@ -11,6 +11,7 @@ export type AudioPlayerRecorderProps = {
   playTimeDisplayMode?: 'default' | 'countdown';
   playerInfoElapsedSecs?: () => number;
   text?: string;
+  disabledButton?: boolean;
 };
 
 export type AudioPlayerRecorderStateType = {
