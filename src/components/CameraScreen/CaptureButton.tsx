@@ -83,25 +83,29 @@ const _CaptureButton = ({
   }, [camera]);
 
   useEffect(() => {
-    console.log('use');
+    let value: number;
+    let isOnRec: boolean;
 
     const volumeListener = VolumeManager.addVolumeListener(result => {
-      let value;
+      console.log(isOnRec, 'use');
       if (
         (recordingMode === 'photo' || recordingMode === 'video') &&
-        value !== result
+        value !== result.volume
       ) {
         console.log(result.volume, 'useEffect');
-        if (!isRecording) {
+        if (!isOnRec) {
           startRecording();
           setIsPressingButton(true);
-          value = result;
+          isOnRec = true;
+          value = result.volume;
         } else {
           stopRecording();
+          value = result.volume;
+          isOnRec = false;
         }
       }
     });
-
+    // VolumeManager.setVolume(0);
     return () => volumeListener.remove();
   }, []);
 
