@@ -16187,11 +16187,6 @@ react-native-vision-camera@^3.6.17:
   resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.8.2.tgz#f4f75f84c6a19e1c3474ddc0f7f785b5a526739b"
   integrity sha512-MY39l2e3hNRPUefn2JPShOFExcw0PblbAcUGvJrIfS9pMzdIyceo0umRAx8lOGXzDUAdb+xy/tFWb8zGxKimCQ==
 
-react-native-volume-manager@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-volume-manager/-/react-native-volume-manager-1.10.0.tgz#4e73d284b31cf3b9b41df7c8ce9115454ad3e0af"
-  integrity sha512-MJbUyXCEz5q2GDJoOImvVZ+aC39mdxqvD6ZYVXPBuhbdhoThOIDZoaVAf+vC7H8ahGToLtNWVfcbgds8zzgHAg==
-
 react-native-web@^0.18.12:
   version "0.18.12"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.18.12.tgz#d4bb3a783ece2514ba0508d7805b09c0a98f5a8e"
