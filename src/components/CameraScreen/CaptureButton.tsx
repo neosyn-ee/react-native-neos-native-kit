@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {TakePhotoOptions} from 'react-native-vision-camera';
+import {VolumeManager} from 'react-native-volume-manager';
 
 import {CaptureButtonProps} from './CaptureButton.types';
 import {CAPTURE_BUTTON_SIZE} from '../../utils/constants';
@@ -80,6 +81,33 @@ const _CaptureButton = ({
       console.error('failed to stop recording!', e);
     }
   }, [camera]);
+
+  useEffect(() => {
+    let value: number;
+    let isOnRec: boolean;
+
+    const volumeListener = VolumeManager.addVolumeListener(result => {
+      console.log(isOnRec, 'use');
+      if (
+        (recordingMode === 'photo' || recordingMode === 'video') &&
+        value !== result.volume
+      ) {
+        console.log(result.volume, 'useEffect');
+        if (!isOnRec) {
+          startRecording();
+          setIsPressingButton(true);
+          isOnRec = true;
+          value = result.volume;
+        } else {
+          stopRecording();
+          value = result.volume;
+          isOnRec = false;
+        }
+      }
+    });
+    // VolumeManager.setVolume(0);
+    return () => volumeListener.remove();
+  }, []);
 
   const startRecording = useCallback(() => {
     try {
