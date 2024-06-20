@@ -76,7 +76,7 @@
     "react-native-static-safe-area-insets": "^2.2.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-video": "^6.2.0",
-    "react-native-vision-camera": "^3.6.17",
+    "react-native-vision-camera": "^4.3.2",
     "react-native-web": "^0.18.12",
     "react-singleton-hook": "^4.0.1",
     "semantic-release": "^23.0.8",
